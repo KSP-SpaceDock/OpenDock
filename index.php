@@ -2,6 +2,7 @@
 
 // Load composer dependencies
 require 'vendor/autoload.php';
+require 'src/coffee.php';
 
 // Settings
 $settings = require 'config.php';
@@ -30,6 +31,12 @@ $container['view'] = function ($container) {
 
 
 // Routes here.
+
+// Compile SCSS and CoffeeScript
+if ($settings['debug']) {
+    CoffeeCompiler::run('scripts/', 'static/');
+    SassCompiler::run("styles/", "static/");
+}
 
 // Start the app
 $app->run();
