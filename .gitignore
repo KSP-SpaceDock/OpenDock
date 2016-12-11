@@ -1,0 +1,17 @@
+*.pyc
+bin/
+config.ini
+alembic.ini
+include/
+local/
+lib/
+*.swp
+*.rdb
+storage/
+content/
+.idea/
+nbproject/
+static/
+share/
+pip-selfcheck.json
+node_modules/
