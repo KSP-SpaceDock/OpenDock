@@ -45,6 +45,14 @@ $app->get('/static/{filename}', function($request, $response, $args) {
     return $response->write(file_get_contents($file_path));
 })->setName('static');
 
+$app->get('/register', function() {
+    echo('');
+})->setName('accounts.register');
+
+$app->get('/forgot-password', function() {
+    echo('');
+})->setName('accounts.forgot_password');
+
 // Compile SCSS and CoffeeScript
 if ($container->get('settings')['debug']) {
     CoffeeCompiler::run('scripts/', 'static/');
