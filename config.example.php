@@ -8,7 +8,8 @@ return [
         'irc-channel' => 'http://webchat.esper.net/?channels=spacedock',
         'donation-link' => '',
         
-        'backend-url' => ''
+        'backend-url' => '',
+        'gameshort' => ''
     ]
 ];
 ?>

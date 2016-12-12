@@ -34,11 +34,11 @@ $container['view'] = function ($container) {
     $view->getEnvironment()->addGlobal('source_code', $container->get('settings')['source-code']);
     $view->getEnvironment()->addGlobal('irc_channel', $container->get('settings')['irc-channel']);
     $view->getEnvironment()->addGlobal('donation_link', $container->get('settings')['donation-link']);
-    $view->getEnvironment()->addGlobal('backend-url', $container->get('settings')['backend-url']);
+    $view->getEnvironment()->addGlobal('backend_url', $container->get('settings')['backend-url']);
+    $view->getEnvironment()->addGlobal('gameshort', $container->get('settings')['gameshort']);
 
     return $view;
 };
-
 
 // Routes here.
 $app->get('/', function($request, $response) {
