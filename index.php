@@ -87,6 +87,21 @@ if ($container->get('settings')['debug']) {
         // write CSS into file with the same filename
         file_put_contents('static/' . $file_name . ".css", $string_css);
     }
+    
+    // copy over image files
+    foreach (glob('images/*{jpg,png,gif,svg}', GLOB_BRACE) as $file_path) {            
+        // get path elements from that file
+        $file_path_elements = pathinfo($file_path);
+        
+        // get file's name with extension
+        $file_name = $file_path_elements['basename'];
+        
+        // get image content, put it into $string_img
+        $string_img = file_get_contents('images/' . $file_name);
+        
+        // write IMG into file with the same filename
+        file_put_contents('static/' . $file_name, $string_img);
+    }
 }
 
 // Start the app
