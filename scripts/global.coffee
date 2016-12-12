@@ -74,7 +74,7 @@ link.addEventListener('click', (e) ->
         try
             JSON.parse(this.responseText)
             document.getElementById('alert-follow').classList.remove('hidden') if follow
-        catch
+        catch error
             window.location.href = '/register'
     xhr.send()
 , false) for link in document.querySelectorAll('.follow-button, .unfollow-button')
