@@ -31,6 +31,16 @@ $container['view'] = function ($container) {
 
 
 // Routes here.
+$app->get('/', function($request, $response) {
+    return $this->view->render($response, 'index.html', [
+        'site_name' => 'SpaceDock'
+    ]);
+});
+
+$app->get('/static/{filename}', function($request, $response, $args) {
+    $file_path = join('/', array('static', $args['filename']));
+    return $response->write(file_get_contents($file_path));
+})->setName('static');
 
 // Compile SCSS and CoffeeScript
 if ($settings['debug']) {
