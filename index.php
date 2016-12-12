@@ -34,6 +34,7 @@ $container['view'] = function ($container) {
     $view->getEnvironment()->addGlobal('source_code', $container->get('settings')['source-code']);
     $view->getEnvironment()->addGlobal('irc_channel', $container->get('settings')['irc-channel']);
     $view->getEnvironment()->addGlobal('donation_link', $container->get('settings')['donation-link']);
+    $view->getEnvironment()->addGlobal('backend-url', $container->get('settings')['backend-url']);
 
     return $view;
 };

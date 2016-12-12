@@ -6,7 +6,9 @@ return [
         'support-mail' => 'opendock@example.com',
         'source-code' => 'https://github.com/KSP-SpaceDock/OpenDock',
         'irc-channel' => 'http://webchat.esper.net/?channels=spacedock',
-        'donation-link' => ''
+        'donation-link' => '',
+        
+        'backend-url' => ''
     ]
 ];
 ?>
