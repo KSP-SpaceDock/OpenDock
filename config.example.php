@@ -2,7 +2,11 @@
 return [
     'settings' => [
         'debug'=> true,
-        'site_name' => 'OpenDock'
+        'site-name' => 'OpenDock',
+        'support-mail' => 'opendock@example.com',
+        'source-code' => 'https://github.com/KSP-SpaceDock/OpenDock',
+        'irc-channel' => 'http://webchat.esper.net/?channels=spacedock',
+        'donation-link' => ''
     ]
 ];
 ?>

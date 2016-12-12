@@ -29,7 +29,11 @@ $container['view'] = function ($container) {
     ));
     
     // Add globals like this
-    $view->getEnvironment()->addGlobal('site_name', $container->get('settings')['site_name']);
+    $view->getEnvironment()->addGlobal('site_name', $container->get('settings')['site-name']);
+    $view->getEnvironment()->addGlobal('support_mail', $container->get('settings')['support-mail']);
+    $view->getEnvironment()->addGlobal('source_code', $container->get('settings')['source-code']);
+    $view->getEnvironment()->addGlobal('irc_channel', $container->get('settings')['irc-channel']);
+    $view->getEnvironment()->addGlobal('donation_link', $container->get('settings')['donation-link']);
 
     return $view;
 };
