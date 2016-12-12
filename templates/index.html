@@ -10,7 +10,7 @@
     <div class="vert-text">
         {% if not user %}
         <h3>Welcome to {{ site_name }}!</h3>
-        <p>Hosting <span id="mod-count"></span> mods for {{ "{:,}".format(user_count) }} users!</p>
+        <p>Hosting <span id="mod-count"></span> mods for <span id="user-count"></span> users!</p>
         <a data-scroll class="btn btn-circle" href="#about"><span class="glyphicon glyphicon-chevron-down"></span></a>
         {% else %}
         <h3>Welcome back, {{ user.username }}!</h3>
