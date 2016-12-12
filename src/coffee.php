@@ -16,7 +16,7 @@ class CoffeeCompiler
      * @param string $coffee_folder source folder where you have your .coffee files
      * @param string $js_folder destination folder where you want your .js files
      */
-    static public function run($coffee_folder, $coffee_folder)
+    static public function run($coffee_folder, $js_folder)
     {
         // CoffeeScript will be loaded automatically via Composer
         CoffeeScript\Init::load();
@@ -31,9 +31,20 @@ class CoffeeCompiler
             // get .coffees's content, put it into $string_coffee
             $string_coffee = file_get_contents($coffee_folder . $file_name . ".coffee");
             // compile this Coffee code to JS
-            $string_js = CoffeeScript\Compiler::compile($string_coffee, array('filename' => $file));
+            $string_js = CoffeeScript\Compiler::compile($string_coffee, array('filename' => $file_name . ".coffee"));
             // write JS into file with the same filename, but .js extension
-            file_put_contents($coffee_folder . $file_name . ".js", $string_js);
+            file_put_contents($js_folder . $file_name . ".js", $string_js);
+        }
+        // copy over .js files
+        foreach (glob($coffee_folder . "*.js") as $file_path) {            
+            // get path elements from that file
+            $file_path_elements = pathinfo($file_path);
+            // get file's name without extension
+            $file_name = $file_path_elements['filename'];
+            // get .coffees's content, put it into $string_js
+            $string_js = file_get_contents($coffee_folder . $file_name . ".js");
+            // write JS into file with the same filename, but .js extension
+            file_put_contents($js_folder . $file_name . ".js", $string_js);
         }
     }
 }
