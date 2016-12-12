@@ -6,36 +6,36 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="//cdn.jsdelivr.net/editor/0.1.0/editor.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-        <link rel="search" type="application/opensearchdescription+xml" title="{{ site_name }}" href="/static/opensearch.xml" />
-        <meta property="og:image" content="/static/SpaceDock-Icon-Text-Transparent@2x.png" />
-        <link rel="apple-touch-icon" sizes="57x57" href="/static/apple-touch-icon-57x57.png">
-        <link rel="apple-touch-icon" sizes="60x60" href="/static/apple-touch-icon-60x60.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="/static/apple-touch-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="76x76" href="/static/apple-touch-icon-76x76.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="/static/apple-touch-icon-114x114.png">
-        <link rel="apple-touch-icon" sizes="120x120" href="/static/apple-touch-icon-120x120.png">
-        <link rel="apple-touch-icon" sizes="144x144" href="/static/apple-touch-icon-144x144.png">
-        <link rel="apple-touch-icon" sizes="152x152" href="/static/apple-touch-icon-152x152.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon-180x180.png">
-        <link rel="icon" type="image/png" href="/static/favicon-32x32.png" sizes="32x32">
-        <link rel="icon" type="image/png" href="/static/android-chrome-192x192.png" sizes="192x192">
-        <link rel="icon" type="image/png" href="/static/favicon-96x96.png" sizes="96x96">
-        <link rel="icon" type="image/png" href="/static/favicon-16x16.png" sizes="16x16">
-        <link rel="manifest" href="/static/manifest.json">
-        <link rel="mask-icon" href="/static/safari-pinned-tab.svg" color="#204499">
-        <link rel="shortcut icon" href="/static/favicon.ico">
+        <link rel="search" type="application/opensearchdescription+xml" title="{{ site_name }}" href="{{ path_for('static', {'filename': 'opensearch.xml'}) }}" />
+        <meta property="og:image" content="{{ path_for('static', {'filename': 'SpaceDock-Icon-Text-Transparent@2x.png'}) }}" />
+        <link rel="apple-touch-icon" sizes="57x57" href="{{ path_for('static', {'filename': 'apple-touch-icon-57x57.png'}) }}'">
+        <link rel="apple-touch-icon" sizes="60x60" href="{{ path_for('static', {'filename': 'apple-touch-icon-60x60.png'}) }}">
+        <link rel="apple-touch-icon" sizes="72x72" href="{{ path_for('static', {'filename': 'apple-touch-icon-72x72.png'}) }}">
+        <link rel="apple-touch-icon" sizes="76x76" href="{{ path_for('static', {'filename': 'apple-touch-icon-76x76.png'}) }}">
+        <link rel="apple-touch-icon" sizes="114x114" href="{{ path_for('static', {'filename': 'apple-touch-icon-114x114.png'}) }}">
+        <link rel="apple-touch-icon" sizes="120x120" href="{{ path_for('static', {'filename': 'apple-touch-icon-120x120.png'}) }}">
+        <link rel="apple-touch-icon" sizes="144x144" href="{{ path_for('static', {'filename': 'apple-touch-icon-144x144.png'}) }}">
+        <link rel="apple-touch-icon" sizes="152x152" href="{{ path_for('static', {'filename': 'apple-touch-icon-152x152.png'}) }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ path_for('static', {'filename': 'apple-touch-icon-180x180.png'}) }}">
+        <link rel="icon" type="image/png" href="{{ path_for('static', {'filename': 'favicon-32x32.png'}) }}" sizes="32x32">
+        <link rel="icon" type="image/png" href="{{ path_for('static', {'filename': 'android-chrome-192x192.png'}) }}" sizes="192x192">
+        <link rel="icon" type="image/png" href="{{ path_for('static', {'filename': 'favicon-96x96.png'}) }}" sizes="96x96">
+        <link rel="icon" type="image/png" href="{{ path_for('static', {'filename': 'favicon-16x16.png'}) }}" sizes="16x16">
+        <link rel="manifest" href="{{ path_for('static', {'filename': 'manifest.json'}) }}">
+        <link rel="mask-icon" href="{{ path_for('static', {'filename': 'safari-pinned-tab.svg'}) }}" color="#204499">
+        <link rel="shortcut icon" href="{{ path_for('static', {'filename': 'favicon.ico'}) }}">
         <meta name="msapplication-TileColor" content="#204499">
-        <meta name="msapplication-TileImage" content="/static/mstile-144x144.png">
-        <meta name="msapplication-config" content="/static/browserconfig.xml">
+        <meta name="msapplication-TileImage" content="{{ path_for('static', {'filename': 'mstile-144x144.png'}) }}">
+        <meta name="msapplication-config" content="{{ path_for('static', {'filename': 'browserconfig.xml'}) }}">
         <meta name="theme-color" content="#204499">
         {% block title %}
         <title>{{ site_name }}</title>
         {% endblock %}
-        <link href="/static/bootstrap.min.css" rel="stylesheet">
+        <link href="{{ path_for('static', {'filename': 'bootstrap.min.css'}) }}" rel="stylesheet">
         {% block styles %}
         {% endblock %}
         {% if user.dark_theme %}
-        <link href="/static/bootstrap_dark.min.css" rel="stylesheet">
+        <link href="{{ path_for('static', {'filename': 'bootstrap_dark.min.css'}) }}" rel="stylesheet">
         {% endif %}
         <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -111,8 +111,8 @@ case 5:o=this.x64Xor(o,this.x64LeftShift([0,e.charCodeAt(u+4)],32));case 4:o=thi
                     </button>
                     <a class="navbar-brand" href="/">
                       <div itemscope itemtype="http://schema.org/Organization">
-                        <img src="/static/SpaceDock-Icon-Text-Transparent.svg"
-                        onerror="this.src='/static/SpaceDock-Icon-Text-Transparent@2x.png'; this.onerror=null;"
+                        <img src="{{ path_for('static', {'filename': 'SpaceDock-Icon-Text-Transparent.svg'}) }}"
+                        onerror="this.src='{{ path_for('static', {'filename': 'SpaceDock-Icon-Text-Transparent@2x.png'}) }}'; this.onerror=null;"
                         width="183" height="43" alt="SpaceDock" itemprop="logo" />
                       </div>
                     </a>
@@ -255,10 +255,10 @@ case 5:o=this.x64Xor(o,this.x64LeftShift([0,e.charCodeAt(u+4)],32));case 4:o=thi
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
         <script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
-        <script src="/static/bootstrap.min.js"></script>
-        <script src="/static/underscore.min.js"></script>
-        <script src="/static/chart.js"></script>
-        <script src="/static/global.js"></script>
+        <script src="{{ path_for('static', {'filename': 'bootstrap.min.js'}) }}"></script>
+        <script src="{{ path_for('static', {'filename': 'underscore.min.js'}) }}"></script>
+        <script src="{{ path_for('static', {'filename': 'chart.js'}) }}"></script>
+        <script src="{{ path_for('static', {'filename': 'global.js'}) }}"></script>
         {% if not dnt %}
         {% if analytics_id and analytics_domain %}
         <script>
