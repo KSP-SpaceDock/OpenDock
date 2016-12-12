@@ -53,6 +53,10 @@ $app->get('/forgot-password', function($request, $response) {
     return $this->view->render($response, 'forgot.html');
 })->setName('accounts.forgot_password');
 
+$app->get('/privacy', function($request, $response) {
+    return $this->view->render($response, 'privacy.html');
+})->setName('privacy');
+
 $app->post('/register', function() {
     echo('');
 })->setName('accounts.register');
