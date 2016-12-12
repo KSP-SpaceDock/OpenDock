@@ -16,6 +16,7 @@ static/*.js
 static/*.png
 static/*.jpg
 static/*.svg
+static/*.ico
 share/
 pip-selfcheck.json
 node_modules/

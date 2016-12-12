@@ -89,7 +89,7 @@ if ($container->get('settings')['debug']) {
     }
     
     // copy over image files
-    foreach (glob('images/*{jpg,png,gif,svg}', GLOB_BRACE) as $file_path) {            
+    foreach (glob('images/*{jpg,png,gif,svg,ico}', GLOB_BRACE) as $file_path) {            
         // get path elements from that file
         $file_path_elements = pathinfo($file_path);
         
