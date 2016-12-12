@@ -11,7 +11,11 @@ storage/
 content/
 .idea/
 nbproject/
-static/*
+static/*.css
+static/*.js
+static/*.png
+static/*.jpg
+static/*.svg
 share/
 pip-selfcheck.json
 node_modules/
