@@ -45,13 +45,13 @@ $app->get('/static/{filename}', function($request, $response, $args) {
     return $response->write(file_get_contents($file_path));
 })->setName('static');
 
-$app->get('/register', function() {
+$app->get('/forgot-password', function($request, $response) {
+    return $this->view->render($response, 'forgot.html');
+})->setName('accounts.forgot_password');
+
+$app->post('/register', function() {
     echo('');
 })->setName('accounts.register');
-
-$app->get('/forgot-password', function() {
-    echo('');
-})->setName('accounts.forgot_password');
 
 // Compile SCSS and CoffeeScript
 if ($container->get('settings')['debug']) {
