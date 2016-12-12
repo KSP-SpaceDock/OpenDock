@@ -35,16 +35,5 @@ class CoffeeCompiler
             // write JS into file with the same filename, but .js extension
             file_put_contents($js_folder . $file_name . ".js", $string_js);
         }
-        // copy over .js files
-        foreach (glob($coffee_folder . "*.js") as $file_path) {            
-            // get path elements from that file
-            $file_path_elements = pathinfo($file_path);
-            // get file's name without extension
-            $file_name = $file_path_elements['filename'];
-            // get .coffees's content, put it into $string_js
-            $string_js = file_get_contents($coffee_folder . $file_name . ".js");
-            // write JS into file with the same filename, but .js extension
-            file_put_contents($js_folder . $file_name . ".js", $string_js);
-        }
     }
 }
