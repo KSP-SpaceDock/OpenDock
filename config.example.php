@@ -1,7 +1,8 @@
 <?php
-
 return [
-    "debug" => true
+    'settings' => [
+        'debug'=> true,
+        'site_name' => 'OpenDock'
+    ]
 ];
-
 ?>

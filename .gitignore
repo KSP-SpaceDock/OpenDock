@@ -18,3 +18,6 @@ node_modules/
 vendor/
 composer.lock
 composer.json~
+config.php
+composer.phar
+cache/
