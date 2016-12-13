@@ -23,6 +23,7 @@ $(document).ready () ->
                 $('#new-row').append(mod_box(element))
             if data.data.yours.length > 2
                 $('#yours-row-wrapper').show()
+                $('#featured-div-edit-me').attr('style', 'margin-bottom: 0; margin-top: 20px;')
                 $.each data.data.yours, (index, element) ->
                     $('#yours-row').append(mod_box(element))
             else                
@@ -31,7 +32,7 @@ $(document).ready () ->
         # Current user
         if window.user != null
             $('#username-display').text(window.user.username)
-            $('#user-profile-link').attr('href', '/profile/' + window.user.username); # TODO: Change to {{ path_for }}
+            $('#user-profile-link').attr('href', '{{ path_for("profile", {"filename": ""}) }}' + window.user.username); 
             $('#login-container').show()
             $('#noLogin-container').hide()
             $('#about-wrapper').hide()   

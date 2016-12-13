@@ -33,9 +33,9 @@
     </div>
 </div>
 
-<div class="well" style="margin-bottom: 0; {% if user and yours|length >= 3 %}margin-top: 20px;{% endif %}">
+<div class="well" style="margin-bottom: 0;" id="featured-div-edit-me">
     <div class="container">
-        <a href="/browse/featured" class="btn btn-primary pull-right" style="margin-top: 5px;">
+        <a href="{{ path_for('browse.featured') }}" class="btn btn-primary pull-right" style="margin-top: 5px;">
             Browse Featured Mods
             <span class="glyphicon glyphicon-chevron-right"></span>
         </a>
@@ -48,7 +48,7 @@
 
 <div class="well" style="margin-bottom: 0; margin-top: 20px;">
     <div class="container">
-        <a href="/browse/new" class="btn btn-primary pull-right" style="margin-top: 5px;">
+        <a href="{{ path_for('browse.new') }}" class="btn btn-primary pull-right" style="margin-top: 5px;">
             Browse New Mods
             <span class="glyphicon glyphicon-chevron-right"></span>
         </a>
@@ -63,7 +63,7 @@
 
     <div class="well" style="margin-bottom: 0; margin-top: 20px;">
         <div class="container">
-            <a href="/browse/updated" class="btn btn-primary pull-right" style="margin-top: 5px;">
+            <a href="{{ path_for('browse.updated') }}" class="btn btn-primary pull-right" style="margin-top: 5px;">
                 Browse Freshest Mods
                 <span class="glyphicon glyphicon-chevron-right"></span>
             </a>
@@ -76,7 +76,7 @@
     
     <div class="well" style="margin-bottom: 0; margin-top: 20px;">
         <div class="container">
-            <a href="/browse/top" class="btn btn-primary pull-right" style="margin-top: 5px;">
+            <a href="{{ path_for('browse.top') }}" class="btn btn-primary pull-right" style="margin-top: 5px;">
                 Browse Popular Mods
                 <span class="glyphicon glyphicon-chevron-right"></span>
             </a>
@@ -98,13 +98,13 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <a class="btn btn-lg btn-block btn-default" href="/browse/updated">
+                <a class="btn btn-lg btn-block btn-default" href="{{ path_for('browse.updated') }}">
                     Browse Recently Updated Mods
                     <span class="glyphicon glyphicon-chevron-right"></span>
                 </a>
             </div>
             <div class="col-md-6">
-                <a class="btn btn-lg btn-block btn-default" href="/browse/top">
+                <a class="btn btn-lg btn-block btn-default" href="{{ path_for('browse.top') }}">
                     Browse Popular Mods
                     <span class="glyphicon glyphicon-chevron-right"></span>
                 </a>
