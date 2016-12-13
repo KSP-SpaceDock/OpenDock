@@ -46,8 +46,8 @@ $app->get('/', function($request, $response) {
 });
 
 $app->get('/static/{filename}', function($request, $response, $args) {
-    $file_path = join('/', array('static', $args['filename']));
-    return $response->write(file_get_contents($file_path));
+    $file_path = join('/', array('..', 'static', $args['filename']));
+    return $this->view->render($response, $file_path);
 })->setName('static');
 
 $app->get('/forgot-password', function($request, $response) {
