@@ -21,6 +21,12 @@ $(document).ready () ->
                 $('#recent-row').append(mod_box(element))
             $.each data.data.new, (index, element) ->
                 $('#new-row').append(mod_box(element))
+            if data.data.yours.length > 2
+                $('#yours-row-wrapper').show()
+                $.each data.data.yours, (index, element) ->
+                    $('#yours-row').append(mod_box(element))
+            else                
+                $('#yours-row-wrapper').hide()
         
         # Current user
         if window.user != null

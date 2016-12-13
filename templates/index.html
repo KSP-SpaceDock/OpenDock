@@ -18,24 +18,20 @@
     </div>
 </div>
 
-{% if user and yours|length >= 3 %}
-<div class="well" style="margin-bottom: 0;">
+<div id="yours-row-wrapper">
+    <div class="well" style="margin-bottom: 0;">
+        <div class="container">
+            <a href="#" class="btn btn-primary pull-right" id="user-profile-link" style="margin-top: 5px;">
+                Your Profile
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+            <h1>Your Mods <small>Recently updated mods you follow</small></h1>
+        </div>
+    </div>
     <div class="container">
-        <a href="#" class="btn btn-primary pull-right" id="user-profile-link" style="margin-top: 5px;">
-            Your Profile
-            <span class="glyphicon glyphicon-chevron-right"></span>
-        </a>
-        <h1>Your Mods <small>Recently updated mods you follow</small></h1>
+        <div class="row" id="yours-row"></div>
     </div>
 </div>
-<div class="container">
-    <div class="row">
-        {% for mod in yours %}
-        {% include "mod-box.html" %}
-        {% endfor %}
-    </div>
-</div>
-{% endif %}
 
 <div class="well" style="margin-bottom: 0; {% if user and yours|length >= 3 %}margin-top: 20px;{% endif %}">
     <div class="container">
