@@ -45,6 +45,19 @@ $app->get('/', function($request, $response) {
     return $this->view->render($response, 'index.html');
 });
 
+$app->get('/privacy', function($request, $response) {
+    return $this->view->render($response, 'privacy.html');
+})->setName('privacy');
+
+$app->get('/markdown', function($request, $response) {
+    return $this->view->render($response, 'markdown.html');
+})->setName('privacy');
+
+$app->get('/about', function($request, $response) {
+    return $this->view->render($response, 'about.html');
+})->setName('privacy');
+
+
 $app->get('/static/{filename}', function($request, $response, $args) {
     $file_path = join('/', array('..', 'static', $args['filename']));
     return $this->view->render($response, $file_path);
@@ -54,9 +67,7 @@ $app->get('/forgot-password', function($request, $response) {
     return $this->view->render($response, 'forgot.html');
 })->setName('accounts.forgot_password');
 
-$app->get('/privacy', function($request, $response) {
-    return $this->view->render($response, 'privacy.html');
-})->setName('privacy');
+
 
 $app->get('/browse/new[/{page}]', function($request, $response, $args) {
     $page = "";
