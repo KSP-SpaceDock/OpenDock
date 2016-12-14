@@ -63,7 +63,7 @@ $app->get('/browse/new[/{page}]', function($request, $response, $args) {
     if (isset($args['page'])) {
         $page = $args['page'];
     } else {
-        $page = '0';
+        $page = '1';
     }
     return $this->view->render($response, 'browse-list.html', [
         'page' => $page,
@@ -79,7 +79,7 @@ $app->get('/browse/updated[/{page}]', function($request, $response, $args) {
     if (isset($args['page'])) {
         $page = $args['page'];
     } else {
-        $page = '0';
+        $page = '1';
     }
     return $this->view->render($response, 'browse-list.html', [
         'page' => $page,
@@ -95,7 +95,7 @@ $app->get('/browse/top[/{page}]', function($request, $response, $args) {
     if (isset($args['page'])) {
         $page = $args['page'];
     } else {
-        $page = '0';
+        $page = '1';
     }
     return $this->view->render($response, 'browse-list.html', [
         'page' => $page,
@@ -105,6 +105,22 @@ $app->get('/browse/top[/{page}]', function($request, $response, $args) {
         'search' => 'false'
     ]);
 })->setName('browse.top');
+
+$app->get('/browse/featured[/{page}]', function($request, $response, $args) {
+    $page = "";
+    if (isset($args['page'])) {
+        $page = $args['page'];
+    } else {
+        $page = '1';
+    }
+    return $this->view->render($response, 'browse-list.html', [
+        'page' => $page,
+        'url' => '/browse/featured',
+        'name' => 'Featured Mods', 
+        //'rss' => '/browse/featured.rss',
+        'search' => 'false'
+    ]);
+})->setName('browse.featured');
 
 $app->post('/register', function() {
     echo('');

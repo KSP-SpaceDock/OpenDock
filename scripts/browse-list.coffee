@@ -17,6 +17,10 @@ $(document).ready () ->
             $.getJSON backend + '/api/browse/' + gameshort + '/top?site=' + page + '&count=30&callback=?', (data) ->
                 $.each data.data, (index, element) ->
                     $('#modcontainer').append(mod_box(element))
+        if url == '/browse/featured'
+            $.getJSON backend + '/api/browse/' + gameshort + '/featured?site=' + page + '&count=30&callback=?', (data) ->
+                $.each data.data, (index, element) ->
+                    $('#modcontainer').append(mod_box(element.mod))
         $('#nosearchresult').hide() # Temp
         
 mod_box = (mod) ->
