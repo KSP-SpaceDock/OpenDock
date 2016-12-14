@@ -50,7 +50,7 @@ mod_box = (mod) ->
     '<div class="item col-md-4">
     <div class="thumbnail">
         <div class="ksp-update">KSP ' + mod.default_version.game_version + '</div>
-        ' + (if mod.id in window.user.following then '<div class="following-mod">Following</div>' else '') + '
+        ' + (if window.user != null && mod.id in window.user.following then '<div class="following-mod">Following</div>' else '') + '
         <a href="{{ url_for("mods.mod", id=mod.id, mod_name=mod.name) }}">
             <div class="header-img" style="
             ' + (if mod.backgroundMedia == undefined then 'background-image: url(/static/background.png);' else 'background-image: url(' + backend + '/api/mods/' + gameshort + '/' + mod.id + '/thumbnail);') + '
