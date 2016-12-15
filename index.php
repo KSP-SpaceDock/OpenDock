@@ -51,11 +51,11 @@ $app->get('/privacy', function($request, $response) {
 
 $app->get('/markdown', function($request, $response) {
     return $this->view->render($response, 'markdown.html');
-})->setName('privacy');
+})->setName('markdown');
 
 $app->get('/about', function($request, $response) {
     return $this->view->render($response, 'about.html');
-})->setName('privacy');
+})->setName('about');
 
 
 $app->get('/static/{filename}', function($request, $response, $args) {
