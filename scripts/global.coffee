@@ -136,12 +136,26 @@ if donation_alert
     , false)
     
 window.userContext = (callback) ->
+    $.loadingBlockShow({
+        imgPath: '/static/default.svg',
+        text: '',
+        style: {
+            position: 'fixed',
+            width: '100%',
+            height: '100%',
+            background: 'rgba(0, 0, 0, .8)',
+            left: 0,
+            top: 0,
+            zIndex: 10000
+        }
+    });
     if window.user == undefined
         $.getJSON backend + '/api/users/current?callback=?', (data) ->
             if data.error
                 window.user = null
             else
                 window.user = data.data
-            callback()        
+            callback($.loadingBlockHide)        
     else
-        callback()
+        callback($.loadingBlockHide)
+    

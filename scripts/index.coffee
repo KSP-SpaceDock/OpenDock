@@ -1,5 +1,5 @@
 $(document).ready () ->
-    window.userContext () ->    
+    window.userContext (done) ->    
         $.getJSON backend + '/api/mods/' + gameshort + '?callback=?', (data) ->
             if window.user == null
                 $('#mod-count-nologin').text(data.count)
@@ -28,6 +28,7 @@ $(document).ready () ->
                     $('#yours-row').append(mod_box(element))
             else                
                 $('#yours-row-wrapper').hide()
+            done()
         
         # Current user
         if window.user != null

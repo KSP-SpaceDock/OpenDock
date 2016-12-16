@@ -1,5 +1,5 @@
 $(document).ready () ->
-    window.userContext () -> 
+    window.userContext (done) -> 
         if !search && page > 1
             $('#previous-button').attr('href', url + '?page=' + (page - 1))
         $.getJSON backend + '/api/mods/' + gameshort + '?callback=?', (data) ->
@@ -9,18 +9,22 @@ $(document).ready () ->
             $.getJSON backend + '/api/browse/' + gameshort + '/new?site=' + page + '&count=30&callback=?', (data) ->
                 $.each data.data, (index, element) ->
                     $('#modcontainer').append(mod_box(element))
+                    done()
         if url == '/browse/updated'
             $.getJSON backend + '/api/browse/' + gameshort + '/updated?site=' + page + '&count=30&callback=?', (data) ->
                 $.each data.data, (index, element) ->
                     $('#modcontainer').append(mod_box(element))
+                    done()
         if url == '/browse/top'
             $.getJSON backend + '/api/browse/' + gameshort + '/top?site=' + page + '&count=30&callback=?', (data) ->
                 $.each data.data, (index, element) ->
                     $('#modcontainer').append(mod_box(element))
+                    done()
         if url == '/browse/featured'
             $.getJSON backend + '/api/browse/' + gameshort + '/featured?site=' + page + '&count=30&callback=?', (data) ->
                 $.each data.data, (index, element) ->
                     $('#modcontainer').append(mod_box(element.mod))
+                    done()
         $('#nosearchresult').hide() # Temp
         
 mod_box = (mod) ->
