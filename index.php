@@ -57,11 +57,18 @@ $app->get('/about', function($request, $response) {
     return $this->view->render($response, 'about.html');
 })->setName('about');
 
-
 $app->get('/static/{filename}', function($request, $response, $args) {
     $file_path = join('/', array('..', 'static', $args['filename']));
     return $this->view->render($response, $file_path);
 })->setName('static');
+
+$app->get('/login', function($request, $response) {
+    return $this->view->render($response, 'login.html');
+})->setName('accounts.login');
+
+$app->get('/account-pending', function($request, $response) {
+    return $this->view->render($response, 'account-pending.html');
+})->setName('accounts.account_pending');
 
 $app->get('/forgot-password', function($request, $response) {
     return $this->view->render($response, 'forgot.html');

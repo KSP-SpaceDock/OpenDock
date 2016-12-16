@@ -2,6 +2,9 @@
 {% block styles %}
 <link rel="stylesheet" type="text/css" href="{{ path_for('static', {'filename': 'stylesheet.css'}) }}" />
 {% endblock %}
+{% block scripts %}
+<script src="{{ path_for('static', {'filename' : 'login.js'}) }}"></script>
+{% endblock %}
 {% block body %}
 <div class="well">
     <div class="container">
@@ -10,57 +13,37 @@
 </div>
 <div class="container">
     <div class="row">
-        {% if reset %}
-        <p>Your password has been reset. You can now log in.</p>
-        {% endif %}
+        <p id="resetNotice">Your password has been reset. You can now log in.</p>
         <form class="form-horizontal col-md-6" role="form" action="/login" method="POST">
             <div class="form-group">
                 <label for="username" class="col-sm-2 control-label">Username</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="username" placeholder="Username" name="username" value="{{ username }}">
+                    <input type="text" class="form-control" id="username2" placeholder="Username" name="username">
                 </div>
             </div>
             <div class="form-group">
                 <label for="password" class="col-sm-2 control-label">Password</label>
                 <div class="col-sm-10">
-                    <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                    <input type="password" class="form-control" id="password2" placeholder="Password" name="password">
                 </div>
             </div>
             <div class="form-group">
                 <div class="checkbox">
                     <label class="col-sm-10 col-sm-offset-2">
-                        <input type="checkbox" name="remember-me" id="remember-me">
+                        <input type="checkbox" name="remember-me" id="remember-me2">
                         Remember Me
                     </label>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-10 col-sm-offset-2">
-                    <input type="submit" value="Log In" class="btn btn-primary">
+                    <input type="button" value="Log In" class="btn btn-primary" id="loginSubmit2">
                 </div>
             </div>
-            {% if return_to %}
-            <input type="hidden" name="return_to" value="{{ return_to }}">
-            {% endif %}
         </form>
         <div class="col-md-6">
-            {% if errors %}
-            <p class="text-danger">{{ errors }}</p>
-            {% endif %}
             <p>Have you <a href="/forgot-password">forgotten your password</a>?</p>
-            <p>Or maybe you want to <a href="/register">create a new account</a>?</p>
-            {% for provider in oauth_providers %}
-              {% set provider_icon = oauth_providers[provider].icon %}
-              {% set provider_full_name = oauth_providers[provider].full_name %}
-              <form action="/login-oauth" method="POST">
-                <p>
-                  <input type="hidden" name="provider" value="{{provider}}">
-                  Or <button type="submit" class="btn btn-primary">
-                    <i class="fa fa-{{provider_icon}}"></i> Log In using {{provider_full_name}}
-                  </button>
-                </p>
-              </form>
-            {% endfor %}
+            <p>Or maybe you want to <a href="/register">create a new account</a>?</p>            
         </div>
     </div>
 </div>

@@ -158,4 +158,16 @@ window.userContext = (callback) ->
             callback($.loadingBlockHide)        
     else
         callback($.loadingBlockHide)
+        
+window.findGetParameter = (parameterName) ->
+    result = null
+    tmp = [];
+    items = location.search.substr(1).split("&")
+    index = 0
+    while index < items.length 
+        tmp = items[index].split("=")
+        if tmp[0] == parameterName 
+            result = decodeURIComponent(tmp[1]);
+        index++
+    result
     

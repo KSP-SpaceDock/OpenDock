@@ -32,6 +32,7 @@
         <title>{{ site_name }}</title>
         {% endblock %}
         <link href="{{ path_for('static', {'filename': 'bootstrap.min.css'}) }}" rel="stylesheet">
+        <link href="{{ path_for('static', {'filename': 'zebra_dialog.css'}) }}" rel="stylesheet">
         {% block styles %}
         {% endblock %}
         {% if user.dark_theme %}
@@ -91,7 +92,7 @@
                                         </label>
                                     </div>
                                     <input type="hidden" name="return_to" id="return_to">
-                                    <input type="submit" value="Log In" class="btn btn-primary" id="loginSubmit">
+                                    <input type="button" value="Log In" class="btn btn-primary" id="loginSubmit">
                                 </form>
                                 <li class="divider"></li>
                                 <li>
@@ -189,6 +190,7 @@
         <script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
         <script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
         <script src="{{ path_for('static', {'filename': 'jquery.loading.block.js'}) }}"></script>
+        <script src="{{ path_for('static', {'filename': 'zebra_dialog.js'}) }}"></script>
         <script src="{{ path_for('static', {'filename': 'bootstrap.min.js'}) }}"></script>
         <script src="{{ path_for('static', {'filename': 'underscore.min.js'}) }}"></script>
         <script src="{{ path_for('static', {'filename': 'chart.js'}) }}"></script>
