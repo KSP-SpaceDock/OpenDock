@@ -31,7 +31,7 @@
         {% block title %}
         <title>{{ site_name }}</title>
         {% endblock %}
-        <link href="{{ path_for('static', {'filename': 'bootstrap.min.css'}) }}" rel="stylesheet">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link href="{{ path_for('static', {'filename': 'zebra_dialog.css'}) }}" rel="stylesheet">
         {% block styles %}
         {% endblock %}
@@ -191,7 +191,7 @@
         <script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
         <script src="{{ path_for('static', {'filename': 'jquery.loading.block.js'}) }}"></script>
         <script src="{{ path_for('static', {'filename': 'zebra_dialog.js'}) }}"></script>
-        <script src="{{ path_for('static', {'filename': 'bootstrap.min.js'}) }}"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script src="{{ path_for('static', {'filename': 'underscore.min.js'}) }}"></script>
         <script src="{{ path_for('static', {'filename': 'chart.js'}) }}"></script>
         <script src="{{ path_for('static', {'filename': 'global.js'}) }}"></script>
