@@ -1,16 +1,16 @@
 $(document).ready () ->
     window.userContext (done) ->    
-        $.getJSON backend + '/api/mods/' + gameshort + '?callback=?', (data) ->
+        $.getJSON backend + '/api/mods/' + gameshort, (data) ->
             if window.user == null
                 $('#mod-count-nologin').text(data.count)
             else
                 $('#mod-count-login').text(data.count)
-        $.getJSON backend + '/api/users?callback=?', (data) ->
+        $.getJSON backend + '/api/users', (data) ->
             if window.user == null
                 $('#user-count-nologin').text(data.count)
             else
                 $('#user-count-login').text(data.count - 1)
-        $.getJSON backend + '/api/browse/' + gameshort + '?callback=?', (data) ->
+        $.getJSON backend + '/api/browse/' + gameshort, (data) ->
             $.each data.data.featured, (index, element) ->                    
                 if index > 2 && window.user != null
                     return
@@ -50,11 +50,11 @@ $(document).ready () ->
 mod_box = (mod) ->
     '<div class="item col-md-4">
     <div class="thumbnail">
-        <div class="ksp-update">KSP ' + mod.default_version.game_version + '</div>
+        <div class="ksp-update">KSP ' + mod.default_version.gameversion.friendly_version + '</div>
         ' + (if window.user != null && mod.id in window.user.following then '<div class="following-mod">Following</div>' else '') + '
         <a href="{{ url_for("mods.mod", id=mod.id, mod_name=mod.name) }}">
             <div class="header-img" style="
-            ' + (if mod.backgroundMedia == undefined then 'background-image: url(/static/background.png);' else 'background-image: url(' + backend + '/api/mods/' + gameshort + '/' + mod.id + '/thumbnail);') + '
+            ' + (if !mod.meta.hasOwnProperty('background') then 'background-image: url(/static/background.png);' else 'background-image: url(' + backend + mod.meta['background'].replace(/.jpg/g, '_thumb.jpg').replace(/.png/g, '_thumb.png') + ');') + '
             "></div>
         </a>
         <div class="caption">

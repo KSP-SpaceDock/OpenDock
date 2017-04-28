@@ -38,7 +38,7 @@ window.loginUser = (username, password, remember, returnto) ->
         success: (data) ->
             $.loadingBlockHide()
             if data.error
-                if '3055' in data.codes
+                if 3055 in data.codes
                     window.location.href = '/account-pending'
                 text = 'Something went wrong with your login request:<br><br>'
                 $.each(data.reasons, (index,element) ->
@@ -53,7 +53,7 @@ window.loginUser = (username, password, remember, returnto) ->
         ,error: (xhr,a,b) ->
             $.loadingBlockHide()
             data = $.parseJSON(xhr.responseText);
-            if '3055' in data.codes
+            if 3055 in data.codes
                 window.location.href = '/account-pending'
             text = 'Something went wrong with your login request:<br><br>'
             $.each(data.reasons, (index,element) ->

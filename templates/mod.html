@@ -3,33 +3,17 @@
 <title>{{ mod.name }} on {{ site_name }}</title>
 {% endblock %}
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='mod.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('static', {'filename': 'mod.css'}) }}" />
 {% endblock %}
 {% block scripts %}
-<script src="/static/mods.js"></script>
+<script src="{{ path_for('static', {'filename': 'mod.js'}) }}"></script>
 {% endblock %}
 {% block body %}
 <script>
-window.mod_id = {{ mod.id }};
-window.logged_in = {% if user %}true{% else %}false{% endif %};
-{% if editable %}
-window.editable = true;
-{% else %}
-window.editable = false;
-{% endif %}
-window.download_stats = JSON.parse('{{ download_stats | tojson }}');
-window.follower_stats = JSON.parse('{{ follower_stats | tojson }}');
-window.referrals = JSON.parse('{{ referrals | tojson }}');
-window.versions = JSON.parse('{{ json_versions | tojson }}');
-window.thirty_days_ago = new Date({{ thirty_days_ago | tojson }});
+var mod_id = {{ modid }};
 </script>
 
-{% if mod.background %}
-<div class="header" style="background-image: url({{ mod.background }});
-    background-position: 0 {% if mod.bgOffsetY %}{{ mod.bgOffsetY }}px{% else %}0{% endif %};"></div>
-{% else %}
-<div class="header" style="background-image: url(/static/background.png);"></div>
-{% endif %}
+<div class="header" style="background-image: url(/static/background.png);" id="backgroundHeader"></div>
 
 {% if new %}
 <div class="well info well-sm">
@@ -43,7 +27,7 @@ window.thirty_days_ago = new Date({{ thirty_days_ago | tojson }});
 <div class="well danger well-sm">
     <div class="container">
         <h1>You haven't finished filling out your mod listing!</h1>
-        <p>Before you publish it, you should at least <a href="{{ url_for("mods.edit_mod", id=mod.id, mod_name=mod.name) }}">edit your description</a>.</p>
+        <p>Before you publish it, you should at least <a href="">edit your description</a>.</p>
     </div>
 </div>
 {% endif %}
@@ -65,21 +49,16 @@ window.thirty_days_ago = new Date({{ thirty_days_ago | tojson }});
 <div class="container lead">
     <div class="row">
         <div class="col-md-8">
-            <h1 title="{{ mod.name }}">
-                {{ mod.name }}
-                {% if mod.ckan %}
-                <span class="badge" title="This mod is listed in CKAN.">CKAN</span>
-                {% endif %}
-            </h1>
+            <h1 id="modname"></h1>
         </div>
-        <div class="{% if user %}col-md-2{% else %}col-md-4{% endif %}">
-            <a  class="btn btn-block btn-lg btn-primary piwik_download" id="download-link-primary"
-                href="{{ url_for("mods.download", mod_id=mod.id, mod_name=mod.name, version=latest.friendly_version) }}">
-                Download</a>
+        <div class="col-md-4" id="downloadWrapper">
+            <a  class="btn btn-block btn-lg btn-primary piwik_download" id="download-link-primary">
+                Download
+            </a>
         </div>
         {% if user %}
         <div class="col-md-2">
-            {% if following_mod(mod) %}
+            {% if false %}
             <a href="#" class="unfollow-button btn btn-block btn-lg btn-warning" data-mod="{{ mod.id }}" data-id="{{ mod.id }}">Unfollow</a>
             {% else %}
             <a href="#" class="follow-button btn btn-block btn-lg btn-warning" data-mod="{{ mod.id }}" data-id="{{ mod.id }}">Follow</a>
@@ -101,11 +80,10 @@ window.thirty_days_ago = new Date({{ thirty_days_ago | tojson }});
                                 <span class="glyphicon glyphicon-copyright-mark"></span>
                             </div>
                             <div class="timeline-label">
-                                <h2 title="{{ mod.license }}">
+                                <h2 title="" id="modLicense">
                                     <span class="text-muted">
                                         License:
                                     </span>
-                                    {{ mod.license }}
                                 </h2>
                             </div>
                         </div>
@@ -117,7 +95,7 @@ window.thirty_days_ago = new Date({{ thirty_days_ago | tojson }});
                                 <span class="glyphicon glyphicon-check"></span>
                             </div>
                             <div class="timeline-label">
-                                <h2>
+                                <h2 id="modVersion">
                                     <span class="text-muted">
                                         KSP Version:
                                     </span>
@@ -270,15 +248,15 @@ window.thirty_days_ago = new Date({{ thirty_days_ago | tojson }});
             <div class="col-md-4">
                 <h2 style="margin-top: 0">Author Tools</h2>
                 <p>These are the tools you can use to manage your mod listing. You can also
-                <a href="{{ url_for("mods.mod", id=mod.id, mod_name=mod.name, noedit=True) }}">view your mod</a> as if you were not logged
+                <a href="">view your mod</a> as if you were not logged
                 in.</p>
             </div>
             <div class="col-md-8">
                 {% if not mod.published %}
-                <a href="{{ url_for("mods.publish", mod_id=mod.id, mod_name=mod.name) }}" class="btn btn-success btn-block btn-lg">Publish this Mod</a>
+                <a href="" class="btn btn-success btn-block btn-lg">Publish this Mod</a>
                 {% endif %}
-                <a href="{{ url_for("mods.edit_mod", id=mod.id, mod_name=mod.name) }}" class="btn btn-info btn-block btn-lg">Edit this Mod</a>
-                <a href="{{ url_for("mods.update", id=mod.id, mod_name=mod.name) }}" class="btn btn-primary btn-block btn-lg">Update this Mod</a>
+                <a href="" class="btn btn-info btn-block btn-lg">Edit this Mod</a>
+                <a href="" class="btn btn-primary btn-block btn-lg">Update this Mod</a>
                 {% if owner %}
                 <a href="#" data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger btn-block btn-lg">Delete this Mod</a>
                 {% endif %}
@@ -303,7 +281,7 @@ window.thirty_days_ago = new Date({{ thirty_days_ago | tojson }});
             <p>
                 This mod seems to be outdated. Is the latest version compatible with Kerbal Space Program {{ game_versions[0].friendly_version }}?
                 <button style="margin-left: 10px;" class="btn btn-primary autoupdate" data-toggle="modal" data-target="#confirm-update">Yes, update automatically</button>
-                <a href="{{ url_for("mods.update", id=mod.id, mod_name=mod.name) }}" class="btn btn-default">No, update manually</a>
+                <a href=" ">No, update manually</a>
             </p>
         </div>
         {% endif %}
@@ -322,11 +300,10 @@ window.thirty_days_ago = new Date({{ thirty_days_ago | tojson }});
 <div class="container">
     <div class="tab-content">
         <div class="tab-pane active" id="info">
-            {{ mod.description | markdown }}
+            {{ mod.description }}
         </div>
         <div class="tab-pane" id="changelog">
             <div class="timeline-centered">
-                <a href="{{ url_for("mods.mod_rss", mod_name=mod.name, id=mod.id) }}" class="pull-right"><img src="/static/rss.png" height=38 /></a>
             {% for v in mod.versions %}
                 <div class="timeline-entry">
                     <div class="timeline-entry-inner">
@@ -339,17 +316,17 @@ window.thirty_days_ago = new Date({{ thirty_days_ago | tojson }});
                             {% if not v.changelog %}
                             <p><em>No changelog provided</em></p>
                             {% else %}
-                            {{ v.changelog | markdown }}
+                            {{ v.changelog }}
                             {% endif %}
                             <p data-version="{{ v.id }}">
-                                <a class="btn btn-primary piwik_download" href="{{ url_for("mods.download", mod_id=mod.id, mod_name=mod.name, version=v.friendly_version) }}">
+                                <a class="btn btn-primary piwik_download" href="">
                                     <span class="glyphicon glyphicon-save"></span> Download
                                 </a>
                                 {% if editable %}
                                 <button class="btn btn-danger edit-version" data-version="{{ v.id }}">
                                     <span class="glyphicon glyphicon-pencil"></span> Edit
                                 </button>
-                                {% if len(mod.versions) != 1 and v.id != latest.id %}
+                                {% if false != 1 and v.id != latest.id %}
                                 <button class="btn btn-danger delete-version" data-version="{{ v.id }}">
                                     <span class="glyphicon glyphicon-trash"></span> Delete
                                 </button>
@@ -386,9 +363,9 @@ window.thirty_days_ago = new Date({{ thirty_days_ago | tojson }});
                     {% endfor %}
                     </ol>
                     <h3>Export Raw Stats</h3>
-                    <p><a href="{{ url_for("mods.export_downloads", mod_id=mod.id, mod_name=mod.name) }}" class="btn btn-default btn-block">Export Downloads</a></p>
-                    <p><a href="{{ url_for("mods.export_followers", mod_id=mod.id, mod_name=mod.name) }}" class="btn btn-default btn-block">Export Followers</a></p>
-                    <p><a href="{{ url_for("mods.export_referrals", mod_id=mod.id, mod_name=mod.name) }}" class="btn btn-default btn-block">Export Referrals</a></p>
+                    <p><a href="" class="btn btn-default btn-block">Export Downloads</a></p>
+                    <p><a href="" class="btn btn-default btn-block">Export Followers</a></p>
+                    <p><a href="" class="btn btn-default btn-block">Export Referrals</a></p>
                     <p>Raw stats are from the beginning of time until now.
                     Each follower and download entry represents one hour of data.
                     Uneventful hours are omitted.</p>

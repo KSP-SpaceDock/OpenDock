@@ -134,7 +134,7 @@ if donation_alert
     donation_alert.addEventListener('click', (e) ->
         createCookie('dismissed_donation', 'true')
     , false)
-    
+        
 window.userContext = (callback) ->
     $.loadingBlockShow({
         imgPath: '/static/default.svg',
@@ -150,12 +150,12 @@ window.userContext = (callback) ->
         }
     });
     if window.user == undefined
-        $.getJSON backend + '/api/users/current?callback=?', (data) ->
+        $.getJSON backend + '/api/users/current', (data) ->
             if data.error
                 window.user = null
             else
                 window.user = data.data
-            callback($.loadingBlockHide)        
+            callback($.loadingBlockHide)  
     else
         callback($.loadingBlockHide)
         
