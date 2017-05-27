@@ -10,7 +10,7 @@ $(document).ready () ->
         
 $('#loginSubmit2').click (e) ->
     $.loadingBlockShow({
-        imgPath: '/static/default.svg',
+        imgPath: './static/default.svg',
         text: '',
         style: {
             position: 'fixed',

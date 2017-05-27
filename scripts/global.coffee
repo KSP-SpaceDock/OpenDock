@@ -137,7 +137,7 @@ if donation_alert
         
 window.userContext = (callback) ->
     $.loadingBlockShow({
-        imgPath: '/static/default.svg',
+        imgPath: './static/default.svg',
         text: '',
         style: {
             position: 'fixed',
