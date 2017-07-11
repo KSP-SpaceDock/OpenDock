@@ -29,13 +29,13 @@
     margin-left: 30px;
     margin-bottom: 10px;
     clear: both;
-
-    &:last-child {
-        margin-bottom: 0;
-    }
 }
 
-.timeline-centered .timeline-entry:before,.timeline-centered .timeline-entry:after {
+.timeline-centered .timeline-entry:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-centered .timeline-entry:before, .timeline-centered .timeline-entry:after {
     content: " ";
     display: table;
 }
@@ -44,7 +44,7 @@
     clear: both;
 }
 
-.timeline-centered .timeline-entry:before,.timeline-centered .timeline-entry:after {
+.timeline-centered .timeline-entry:before, .timeline-centered .timeline-entry:after {
     content: " ";
     display: table;
 }
@@ -94,7 +94,7 @@
     margin-left: -20px;
 }
 
-.timeline-centered .timeline-entry .timeline-entry-inner:before,.timeline-centered .timeline-entry .timeline-entry-inner:after {
+.timeline-centered .timeline-entry .timeline-entry-inner:before, .timeline-centered .timeline-entry .timeline-entry-inner:after {
     content: " ";
     display: table;
 }
@@ -103,7 +103,7 @@
     clear: both;
 }
 
-.timeline-centered .timeline-entry .timeline-entry-inner:before,.timeline-centered .timeline-entry .timeline-entry-inner:after {
+.timeline-centered .timeline-entry .timeline-entry-inner:before, .timeline-centered .timeline-entry .timeline-entry-inner:after {
     content: " ";
     display: table;
 }
@@ -134,7 +134,7 @@
 }
 
 .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon {
-    background-color: rgba(29,60,142,1); /* #1D3C8E */
+    background-color: #1d3c8e;
     color: #fff;
     display: block;
     width: 40px;
@@ -144,11 +144,11 @@
     text-align: center;
     box-shadow: 0 0 0 5px #333;
     float: left;
+}
 
-    .glyphicon, .fa {
-        font-size: 22px;
-        line-height: 40px;
-    }
+.timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon .glyphicon, .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon .fa {
+    font-size: 22px;
+    line-height: 40px;
 }
 
 .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-primary {
@@ -194,7 +194,7 @@
     margin-left: -9px;
 }
 
-.timeline-centered .timeline-entry .timeline-entry-inner .timeline-label h2,.timeline-centered .timeline-entry .timeline-entry-inner .timeline-label p {
+.timeline-centered .timeline-entry .timeline-entry-inner .timeline-label h2, .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label p {
     color: #fff;
     font-family: "Noto Sans",sans-serif;
     font-size: 12px;
@@ -214,13 +214,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
 
-    a {
-        color: #fff;
-        text-decoration: underline;
+.timeline-centered .timeline-entry .timeline-entry-inner .timeline-label h2 a {
+    color: #fff;
+    text-decoration: underline;
+}
 
-        &:hover {
-            text-decoration: none;
-        }
-    }
+.timeline-centered .timeline-entry .timeline-entry-inner .timeline-label h2 a:hover {
+    text-decoration: none;
 }

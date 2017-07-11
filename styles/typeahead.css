@@ -1,6 +1,7 @@
 .twitter-typeahead {
     display: block !important;
 }
+
 .tt-dropdown-menu {
     position: absolute;
     top: 100%;
@@ -21,6 +22,7 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
     background-clip: padding-box;
 }
+
 .tt-suggestion > p {
     display: block;
     padding: 3px 20px;
@@ -30,6 +32,7 @@
     color: #333333;
     white-space: nowrap;
 }
+
 .tt-suggestion > p:hover,
 .tt-suggestion > p:focus,
 .tt-suggestion.tt-cursor p {

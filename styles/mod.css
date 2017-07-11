@@ -1,0 +1,190 @@
+/* @import 'stylesheet'; */
+/* @import 'timeline'; */
+/* @import 'listing'; */
+
+.header {
+    background-position: center center;
+    background-size: cover;
+    height: 400px;
+}
+
+.lead {
+    padding: 10px 0;
+    margin-bottom: 0;
+}
+
+.lead h1 {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.lead .btn {
+    border-radius: 0;
+}
+
+.info-list {
+    background: #333;
+    color: #fff;
+    padding-top: 10px;
+}
+
+.mod-tabs {
+    position: relative;
+    display: flex;
+}
+
+.mod-tabs a {
+    border-radius: 0;
+    flex-grow: 1;
+    font-size: 14pt;
+    border: none;
+}
+
+.tab-container {
+    position: relative;
+}
+
+.tab-container .mod-tabs {
+    z-index: 1;
+}
+
+.tab-container.no-sides:before {
+    display: none;
+}
+
+.tab-container.no-sides:after {
+    display: none;
+}
+
+.tab-container:before {
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: #428BCA;
+    z-index: 0;
+    content: '';
+}
+
+.tab-container:after {
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: #5BC0DE;
+    z-index: 0;
+    content: '';
+}
+
+.tab-content {
+    padding-top: 50px;
+}
+
+#changelog p {
+    color: #000;
+}
+
+#changelog .timeline-centered:before {
+    background-color: #ddd;
+}
+
+#changelog .timeline-icon {
+    margin-top: 8px;
+}
+
+#changelog .timeline-label h2 {
+    color: #000;
+    font-size: 18pt;
+}
+
+#changelog .timeline-label h2 small {
+    font-size: 12pt;
+}
+
+.chart-key {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.chart-key li {
+    display: inline;
+    margin-right: 5px;
+}
+
+.chart-key li .key-color {
+      display: inline-block;
+      height: 8px;
+      line-height: 12px;
+      width: 20px;
+      margin-right: 5px;
+}
+
+.header.upload-well {
+    padding-top: 150px;
+    text-align: center;
+    position: relative;
+}
+
+.header.upload-well h2 {
+    padding: 0;
+}
+
+.header.upload-well input {
+    display: none;
+}
+
+.header.upload-well .directions {
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
+    text-align: center;
+    text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
+    color: #fff;
+    z-index: 1;
+}
+
+.header.upload-well a, .header.upload-well p.status {
+    font-size: 24pt;
+    text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
+    position: relative;
+    color: #fff;
+    z-index: 1;
+}
+
+.header.upload-well .upload-progress {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+    background-color: rgba(50, 50, 50, 0.5);
+    opacity: 1;
+    transition: opacity 0.5s linear;
+}
+
+.header.upload-well .upload-progress.fade-out {
+    opacity: 0;
+}
+
+.tab-content img {
+    max-width: 100%;
+}
+
+.md-well p {
+    margin: 10px 0 10px;
+}
+
+.pack-item {
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.pack-item .btn {
+    border-radius: 0;
+}

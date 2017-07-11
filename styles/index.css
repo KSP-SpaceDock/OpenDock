@@ -1,0 +1,124 @@
+/* @import "stylesheet"; */
+/* @import "listing"; */
+
+.header {
+    height: 350px;
+    background: url("/static/background.png") center center fixed;
+    background-size: cover;
+    color: #fff;
+    text-align: center;
+    font-size: 16pt;
+    text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
+}
+
+.logged-in .header {
+    height: 250px;
+}
+
+.header .vert-text {
+    display: block;
+    text-align: center;
+    margin-top: 75px;
+    width: 100%;
+    color: #fff;
+    position: absolute;
+}
+
+.header h3 {
+    margin-top: 0;
+    padding-top: 0;
+    font-size: 23pt;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.header .btn-circle {
+    width: 70px;
+    height: 70px;
+    margin-top: 15px;
+    padding: 7px 16px;
+    border: 2px solid #fff;
+    border-radius: 35px;
+    font-size: 30px;
+    color: #fff;
+    line-height: 62px;
+    text-shadow: none;
+    transition: border 0.2s linear, color 0.2s linear;
+}
+
+.header .btn-circle:hover {
+    border-color: #bbb;
+    color: #bbb;
+}
+
+#about {
+    color: #fff;
+    position: relative;
+    background: url("/static/background.png") center center fixed;
+    background-size: cover;
+    text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
+    padding: 30px 0;
+    margin-top: 30px;
+}
+
+#about p {
+    font-size: 21px;
+    max-width: 500px;
+    margin: 0 auto;
+    padding-bottom: 10px;
+}
+
+#players {
+    background: #55B5DA;
+    color: #fff;
+    padding-bottom: 10px;
+}
+
+#modders {
+    background: #409ABD;
+    color: #fff;
+    padding-bottom: 10px;
+}
+
+#modders a {
+    color: #333;
+}
+
+#register {
+    background: #3789A8;
+    color: #fff;
+    padding-bottom: 10px;
+}
+
+.btn-register {
+    color: #fff;
+    background-color: #77a240;
+    border-color: #77a240;
+    border-radius: 0;
+    transition: background .3s ease-in-out;
+}
+
+.btn-register:hover, .btn-register:focus {
+    background-color: #84ab53;
+    color: #fff;
+}
+
+.service-icon {
+    border: 3px solid #fff;
+    border-radius: 50%;
+    display: inline-block;
+    font-size: 56px;
+    width: 140px;
+    height: 140px;
+    line-height: 136px;
+    vertical-align: middle;
+    text-align: center;
+    transition-duration: .3s;
+    transition-property: transform;
+    transform: translateZ(0);
+    box-shadow: 0 0 1px transparent;
+}
+
+h2 small {
+  color: #333;
+}
