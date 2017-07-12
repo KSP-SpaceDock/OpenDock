@@ -189,6 +189,11 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
         <script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
         <script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
+        {% if debug %}
+        <script src="//vuejs.org/js/vue.js"></script>
+        {% else %}
+        <script src="//vuejs.org/js/vue.min.js"></script>
+        {% endif %}
         <script src="{{ path_for('static', {'filename': 'jquery.loading.block.js'}) }}"></script>
         <script src="{{ path_for('static', {'filename': 'zebra_dialog.js'}) }}"></script>
         <script src="{{ path_for('static', {'filename': 'bootstrap.min.js' }) }}"></script>
