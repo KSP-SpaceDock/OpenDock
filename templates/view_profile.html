@@ -1,6 +1,11 @@
 {% extends "layout.html" %}
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='mod.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'mod.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'stylesheet.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'typeahead.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'navigation.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'timeline.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'listing.css'}) }}" />
 {% endblock %}
 {% block title %}
 <title>{{ profile.username }} on {{ site_name }}</title>

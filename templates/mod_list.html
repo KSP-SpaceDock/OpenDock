@@ -3,7 +3,12 @@
 <title>{{ mod_list.name }} on {{ site_name }}</title>
 {% endblock %}
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='mod.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'mod.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'stylesheet.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'typeahead.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'navigation.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'timeline.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'listing.css'}) }}" />
 {% endblock %}
 {% block scripts %}
 <script src="/static/mods.js"></script>
@@ -13,7 +18,7 @@
 <div class="header" style="background-image: url({{ mod_list.background }});
     background-position: 0 {% if mod_list.bgOffsetY %}{{ mod_list.bgOffsetY }}px{% else %}0{% endif %};"></div>
 {% else %}
-<div class="header" style="background-image: url(/static/background.png);"></div>
+<div class="header" style="background-image: url({{ path_for('images', {'filename': 'background.png'}) }});"></div>
 {% endif %}
 
 <div class="container lead">
@@ -51,7 +56,7 @@
         {% if mod.background %}
         url('{{ mod.background }}');
         {% else %}
-        url('/static/background.png');
+        url('{{ path_for('images', {'filename': 'background.png'}) }}');
         {% endif %}
         background-position: 0 {{ mod.bgOffsetY }}px;">
         <div class="well well-sm">

@@ -3,7 +3,12 @@
 <title>{{ mod.name }} on {{ site_name }}</title>
 {% endblock %}
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="{{ path_for('static', {'filename': 'mod.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'mod.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'stylesheet.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'typeahead.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'navigation.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'timeline.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'listing.css'}) }}" />
 {% endblock %}
 {% block scripts %}
 <script src="{{ path_for('static', {'filename': 'mod.js'}) }}"></script>
@@ -13,7 +18,7 @@
 var mod_id = {{ modid }};
 </script>
 
-<div class="header" style="background-image: url(/static/background.png);" id="backgroundHeader"></div>
+<div class="header" style="background-image: url({{ path_for('images', {'filename': 'background.png'}) }});" id="backgroundHeader"></div>
 
 {% if new %}
 <div class="well info well-sm">

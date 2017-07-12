@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="{{ path_for('static', {'filename' : 'index.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename' : 'index.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'stylesheet.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'typeahead.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'navigation.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'listing.css'}) }}" />
 {% endblock %}
 {% block scripts %}
 <script src="{{ path_for('static', {'filename' : 'index.js'}) }}"></script>

@@ -3,7 +3,12 @@
 <title>Edit {{ mod.name }} on {{ site_name }}</title>
 {% endblock %}
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='mod.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'mod.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'stylesheet.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'typeahead.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'navigation.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'timeline.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'listing.css'}) }}" />
 {% endblock %}
 {% block scripts %}
 <script>
@@ -17,7 +22,7 @@ window.mod_id = {{ mod.id }};
         {% if mod.background %}
         background-image: url({{ mod.background }});
         {% else %}
-        background-image: url(/static/background.png);
+        background-image: url({{ path_for('images', {'filename': 'background.png'}) }});
         {% endif %}
         background-position: 0 {% if mod.bgOffsetY %}{{ mod.bgOffsetY }}px{% else %}0{% endif %};
         background-color: #ddd;"

@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="{{ path_for('static', {'filename': 'stylesheet.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'stylesheet.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'typeahead.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'navigation.css'}) }}" />
 <style>
 .well { 
     margin: 0;
@@ -26,7 +28,7 @@
         {% for mod in new  %}
         <div class="item col-md-2" style="
             {% if not mod.background %}
-            background-image: url(/static/background.png);
+            background-image: url({{ path_for('images', {'filename': 'background.png'}) }});
             {% else %}
             background-image: url({{ mod.background }});
             {% endif %}
@@ -52,7 +54,7 @@
         {% set mod = feature.mod %}
         <div class="item col-md-2" style="
             {% if not mod.background %}
-            background-image: url(/static/background.png);
+            background-image: url({{ path_for('images', {'filename': 'background.png'}) }});
             {% else %}
             background-image: url({{ mod.background }});
             {% endif %}
@@ -77,7 +79,7 @@
         {% for mod in top  %}
         <div class="item col-md-2" style="
             {% if not mod.background %}
-            background-image: url(/static/background.png);
+            background-image: url({{ path_for('images', {'filename': 'background.png'}) }});
             {% else %}
             background-image: url({{ mod.background }});
             {% endif %}

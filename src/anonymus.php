@@ -16,11 +16,6 @@ $app->get('/about', function($request, $response) {
     return $this->view->render($response, 'about.html');
 })->setName('about');
 
-$app->get('/static/{filename}', function($request, $response, $args) {
-    $file_path = join('/', array('..', 'static', $args['filename']));
-    return $this->view->render($response, $file_path);
-})->setName('static');
-
 $app->get('/login', function($request, $response) {
     return $this->view->render($response, 'login.html');
 })->setName('accounts.login');

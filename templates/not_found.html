@@ -1,9 +1,11 @@
 {% extends "layout.html" %}
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="{{ path_for('static', {'filename': 'stylesheet.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'stylesheet.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'typeahead.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'navigation.css'}) }}" />
 {% endblock %}
 {% block body %}
-<div class="error-banner" style="background-image: url('/static/not_found.jpg')">
+<div class="error-banner" style="background-image: url('{{ path_for('images', {'filename': 'not_found.jpg'}) }}')">
     <div class="container">
         <h3>404 Not Found</h3>
         <p>Looks like this was deleted, or maybe was never here. Who knows.</p>

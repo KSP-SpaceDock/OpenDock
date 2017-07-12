@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="{{ path_for('static', {'filename' : 'index.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'index.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'stylesheet.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'typeahead.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'navigation.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'listing.css'}) }}" />
 {% endblock %}
 {% block scripts %}
 <script type="text/javascript">
@@ -28,7 +32,7 @@ var search = {{ search }};
 <div class="well">
     <div class="container">
         {% if rss %}
-        <a href="{{ rss }}" class="pull-right"><img src="/static/rss.png" height=38 /></a>
+        <a href="{{ rss }}" class="pull-right"><img src="{{ path_for('images', {'filename': 'rss.png'}) }}" height=38 /></a>
         {% endif %}
         {% if search == "true" %}
         <a href="#" class="pull-right" data-toggle="modal" data-target="#advanced-modal">Advanced Search</a>
