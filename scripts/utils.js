@@ -44,6 +44,7 @@ Array.prototype.hasObject = (
 );
 
 function loginUser(username, password, remember, returnto) {
+    showLoading();
     $.ajax(backend + "/api/login", {
         data: '{"username":"' + username + '","password":"' + password + '","remember":' + remember + '}',
         type: "POST",
@@ -64,7 +65,9 @@ function loginUser(username, password, remember, returnto) {
                     'type': 'error',
                     'title': 'Login failed!'
                 });
+                $.loadingBlockHide();
             } else {
+                console.log(data);
                 window.location.href = returnto;
             }
         },error: function(xhr, a, b) {
@@ -81,13 +84,14 @@ function loginUser(username, password, remember, returnto) {
                 'type':  'error',
                 'title': 'Login failed!'
             });
+            $.loadingBlockHide();
         }
     });
 }
 
 function showLoading() {
     $.loadingBlockShow({
-        imgPath: '/images/default.svg',
+        imgPath: '{{ path_for('images', {'filename': 'default.svg'}) }}',
         text: '',
         style: {
             position: 'fixed',
@@ -99,6 +103,10 @@ function showLoading() {
             zIndex: 10000
         }
     });
+}
+
+function loginUserHotbar() {
+    loginUser($('input#username').val(), $('input#password').val(), $('input#remember-me').is(":checked"), window.location.href)
 }
 
 // $.getJSON clone that doesn't fail on 403

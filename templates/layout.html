@@ -59,7 +59,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/">
+                    <a class="navbar-brand" href="{{ path_for('index') }}">
                       <div itemscope itemtype="http://schema.org/Organization">
                         <img src="{{ path_for('images', {'filename': 'OpenDock-Icon-Text-Transparent.png'}) }}"
                         width="183" height="43" alt="OpenDock" itemprop="logo" />
@@ -92,8 +92,7 @@
                                             Remember Me
                                         </label>
                                     </div>
-                                    <input type="hidden" name="return_to" id="return_to" v-bind:value="window.location.href">
-                                    <input type="button" value="Log In" class="btn btn-primary" id="loginSubmit">
+                                    <input type="button" value="Log In" class="btn btn-primary" id="loginSubmit" v-on:click="loginUserHotbar()">
                                 </form>
                                 <li class="divider"></li>
                                 <li>
@@ -201,7 +200,10 @@
         <script src="{{ path_for('scripts', {'filename': 'bootstrap.min.js' }) }}"></script>
         <script src="{{ path_for('scripts', {'filename': 'underscore.min.js'}) }}"></script>
         <script src="{{ path_for('scripts', {'filename': 'chart.js'}) }}"></script>
-        <script src="{{ path_for('scripts', {'filename': 'utils.js'}) }}"></script>
+        <script src="{{ path_for('scripts', {'filename': 'utils.js'}) }}"></script>                
+        <script>
+            showLoading();
+        </script>
         {% block scripts %}{% endblock %}
     </body>
 </html>

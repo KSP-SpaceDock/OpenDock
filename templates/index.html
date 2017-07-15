@@ -9,7 +9,7 @@
 {% block scripts %}
 <script src="{{ path_for('scripts', {'filename' : 'index.js'}) }}"></script>
 <script>
-    var vm = fillIndex();
+    fillIndex();
 </script>
 {% endblock %}
 {% block body %}
@@ -53,7 +53,7 @@
 </div>
 <div class="container">
     <div class="row" id="featured-row">
-        <mod-box v-for="(_mod, index) in browse.featured" v-bind:mod="_mod" v-if="currentUser == null || index < 3" v-bind:currentUser="currentUser"></mod-box>
+        <mod-box v-for="(_mod, index) in browse.featured" v-bind:mod="_mod.mod" v-if="currentUser == null || index < 3" v-bind:currentUser="currentUser"></mod-box>
     </div>
 </div>
 

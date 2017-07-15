@@ -1,10 +1,9 @@
 function fillIndex() {
-    var vm = null;
     getJSON(backend + '/api/users/current', function(currentUser) {
     getJSON(backend + '/api/mods/' + gameshort, function(mods) {
     getJSON(backend + '/api/users', function(users) {
     getJSON(backend + '/api/browse/' + gameshort, function(browse) {
-        vm = new Vue({
+        new Vue({
             el: '#site',
             data: {
                 'currentUser': currentUser.error ? null : currentUser.data,
@@ -20,12 +19,11 @@ function fillIndex() {
                 'window': window
             },
             methods: {
-                'loginUser': loginUser,
+                'loginUserHotbar': loginUserHotbar,
                 'showLoading': showLoading
             },
             delimiters: ['${', '}']
         });
-        globalVM = vm;
+        $.loadingBlockHide();
     })})})});
 }
-var globalVM = null;

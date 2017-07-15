@@ -2,7 +2,7 @@
 
 $app->get('/', function($request, $response) {
     return $this->view->render($response, 'templates/index.html');
-});
+})->setName('index');
 
 $app->get('/privacy', function($request, $response) {
     return $this->view->render($response, 'templates/privacy.html');

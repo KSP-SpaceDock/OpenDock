@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "templates/layout.html" %}
 {% block styles %}
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'index.css'}) }}" />
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'stylesheet.css'}) }}" />
@@ -12,7 +12,10 @@ var page = {{ page }};
 var url = "{{ url }}";
 var search = {{ search }};
 </script>
-<script src="{{ path_for('static', {'filename' : 'browse-list.js'}) }}"></script>
+<script src="{{ path_for('scripts', {'filename' : 'browse-list.js'}) }}"></script>
+<script type="text/javascript">
+    fillBrowseList();
+</script>
 {% endblock %}
 {% block title %}
 {% if search == "true" %}
@@ -43,31 +46,29 @@ var search = {{ search }};
     </div>
 </div>
 <div class="container">
-    <p id="nosearchresult">Nothing to see here. If you're looking for a specific mod, why not ask the modder to upload it here?</p>
-    <div class="row" id="modcontainer"></div>
+    <p id="nosearchresult" v-if="browse.count == 0">Nothing to see here. If you're looking for a specific mod, why not ask the modder to upload it here?</p>
+    <div class="row" id="modcontainer">
+        <mod-box v-for="_mod in browse.data" v-bind:mod="url == '/browse/featured' ? _mod.mod : _mod" v-bind:currentUser="currentUser"></mod-box>
+    </div>
     <div style="margin-top: 30px" class="row">
         <div class="col-md-2">
-            {% if page != 1 %}
             {% if search %}
             {# TODO #}
             {% else %}
-            <a href="#" id="previous-button"
+            <a v-bind:href="url + '?page=' + (page - 1)" v-bind:disabled="page == 1" id="previous-button"
                 class="btn btn-lg btn-primary btn-block">
                 <span class="glyphicon glyphicon-arrow-left"></span> Previous
             </a>
             {% endif %}
-            {% endif %}
         </div>
         <div class="col-md-2 col-md-offset-8">
-            {% if page < total_pages %}
             {% if search %}
             {# TODO #}
             {% else %}
-            <a href="#" id="next-button"
+            <a v-bind:href="url + '?page=' + (page + 1)" v-bind:disabled="page >= (mods.count / 30)" id="next-button"
                 class="btn btn-lg btn-primary btn-block">
                 Next <span class="glyphicon glyphicon-arrow-right"></span>
             </a>
-            {% endif %}
             {% endif %}
         </div>
     </div>
