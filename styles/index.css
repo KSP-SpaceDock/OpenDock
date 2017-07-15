@@ -3,7 +3,7 @@
 
 .header {
     height: 350px;
-    background: url("/static/background.png") center center fixed;
+    background: url("{{ path_for('images', {'filename': 'background.png'}) }}") center center fixed;
     background-size: cover;
     color: #fff;
     text-align: center;
@@ -54,7 +54,7 @@
 #about {
     color: #fff;
     position: relative;
-    background: url("/static/background.png") center center fixed;
+    background: url("{{ path_for('images', {'filename': 'background.png'}) }}") center center fixed;
     background-size: cover;
     text-shadow: 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000, 0 0 3px #000;
     padding: 30px 0;

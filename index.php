@@ -3,7 +3,6 @@
 // Load composer dependencies
 error_reporting(E_ALL | E_STRICT);
 require 'vendor/autoload.php';
-require 'src/coffee.php';
 
 // Settings
 $settings = require 'config.php';
@@ -17,7 +16,7 @@ $container = $app->getContainer();
 
 // Register component on container
 $container['view'] = function ($container) {
-    $view = new \Slim\Views\Twig(__DIR__ . '/templates', [
+    $view = new \Slim\Views\Twig(__DIR__ , [
         'cache' => $container->get('settings')['debug'] ? false : __DIR__ . '/cache',
         'displayErrorDetails' => $container->get('settings')['debug']
     ]);
@@ -36,30 +35,35 @@ $container['view'] = function ($container) {
     $view->getEnvironment()->addGlobal('donation_link', $container->get('settings')['donation-link']);
     $view->getEnvironment()->addGlobal('backend_url', $container->get('settings')['backend-url']);
     $view->getEnvironment()->addGlobal('gameshort', $container->get('settings')['gameshort']);
+    $view->getEnvironment()->addGlobal('debug', $container->get('settings')['debug']);
+
 
     return $view;
 };
 
 // Routes here.
-require 'src/routes/anonymus.php';
-require 'src/routes/browse.php';
-require 'src/routes/mods.php';
+require 'src/anonymus.php';
+require 'src/browse.php';
+require 'src/mods.php';
 
 // Wrapper routes
 $app->get('/static/{filename}', function($request, $response, $args) {
-    $file_path = join('/', array('..', 'static', $args['filename']));
-    return $this->view->render($response, $file_path);
+    return $this->view->render($response, "static/" . $args['filename']);
 })->setName('static');
 
-$app->get('/styles/{filename}', function($request, $response, $args) {
-    $file_path = join('/', array('..', 'styles', $args['filename']));
-    return $this->view->render($response, $file_path);
+$app->get('/assets/styles/{filename}', function($request, $response, $args) {
+    $response = $this->view->render($response, "styles/" . $args['filename']);
+    return $response->withHeader("Content-Type", "text/css");
 })->setName('styles');
 
 $app->get('/images/{filename}', function($request, $response, $args) {
-    $file_path = join('/', array('..', 'images', $args['filename']));
-    return $this->view->render($response, $file_path);
+    return $this->view->render($response, "images/" . $args['filename']);
 })->setName('images');
+
+$app->get('/assets/scripts/{filename}', function($request, $response, $args) {
+    $response = $this->view->render($response, "scripts/" . $args['filename']);
+    return $response->withHeader("Content-Type", "text/javascript");
+})->setName('scripts');
 
 // Start the app
 $app->run();

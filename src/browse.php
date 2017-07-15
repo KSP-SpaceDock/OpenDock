@@ -7,7 +7,7 @@ $app->get('/browse/new[/{page}]', function($request, $response, $args) {
     } else {
         $page = '1';
     }
-    return $this->view->render($response, 'browse-list.html', [
+    return $this->view->render($response, 'templates/browse-list.html', [
         'page' => $page,
         'url' => '/browse/new',
         'name' => 'Newest Mods', 
@@ -23,7 +23,7 @@ $app->get('/browse/updated[/{page}]', function($request, $response, $args) {
     } else {
         $page = '1';
     }
-    return $this->view->render($response, 'browse-list.html', [
+    return $this->view->render($response, 'templates/browse-list.html', [
         'page' => $page,
         'url' => '/browse/updated',
         'name' => 'Recently Updated Mods', 
@@ -39,7 +39,7 @@ $app->get('/browse/top[/{page}]', function($request, $response, $args) {
     } else {
         $page = '1';
     }
-    return $this->view->render($response, 'browse-list.html', [
+    return $this->view->render($response, 'templates/browse-list.html', [
         'page' => $page,
         'url' => '/browse/top',
         'name' => 'Popular Mods', 
@@ -55,7 +55,7 @@ $app->get('/browse/featured[/{page}]', function($request, $response, $args) {
     } else {
         $page = '1';
     }
-    return $this->view->render($response, 'browse-list.html', [
+    return $this->view->render($response, 'templates/browse-list.html', [
         'page' => $page,
         'url' => '/browse/featured',
         'name' => 'Featured Mods', 

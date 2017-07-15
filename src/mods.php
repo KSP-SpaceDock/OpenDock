@@ -7,7 +7,7 @@ $app->get('/mod/{id}[/{name}]', function($request, $response, $args) {
     } else {
         $page = '1';
     }
-    return $this->view->render($response, 'mod.html', [
+    return $this->view->render($response, 'templates/mod.html', [
         'modid' => $args['id']
     ]);
 })->setName('mod.view');

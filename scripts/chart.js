@@ -1,3 +1,4 @@
+{% verbatim %}
 /*!
  * Chart.js
  * http://chartjs.org/
@@ -3302,3 +3303,4 @@
 
 
 }).call(this);
+{% endverbatim %}

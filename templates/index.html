@@ -1,31 +1,34 @@
-{% extends "layout.html" %}
+{% extends "templates/layout.html" %}
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename' : 'index.css'}) }}" />
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'index.css'}) }}" />
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'stylesheet.css'}) }}" />
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'typeahead.css'}) }}" />
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'navigation.css'}) }}" />
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'listing.css'}) }}" />
 {% endblock %}
 {% block scripts %}
-<script src="{{ path_for('static', {'filename' : 'index.js'}) }}"></script>
+<script src="{{ path_for('scripts', {'filename' : 'index.js'}) }}"></script>
+<script>
+    var vm = fillIndex();
+</script>
 {% endblock %}
 {% block body %}
 <div class="header">
-    <div class="vert-text" id="noLogin-container">
+    <div class="vert-text" v-if="currentUser == null">
         <h3>Welcome to {{ site_name }}!</h3>
-        <p>Hosting <span id="mod-count-nologin"></span> mods for <span id="user-count-nologin"></span> users!</p>
+        <p>Hosting ${mods.count} mods for ${users.count} users!</p>
         <a data-scroll class="btn btn-circle" href="#about"><span class="glyphicon glyphicon-chevron-down"></span></a>
     </div>
-    <div class="vert-text" id="login-container">
-        <h3>Welcome back, <span id="username-display"></span>!</h3>
-        <p>We have <span id="mod-count-login"></span> mods for you and <span id="user-count-login"></span> other users!</p>
+    <div class="vert-text" v-else>
+        <h3>Welcome back, ${currentUser.username}!</h3>
+        <p>We have ${mods.count} mods for you and ${users.count - 1} other users!</p>
     </div>
 </div>
 
-<div id="yours-row-wrapper">
+<div v-if="browse.yours.length > 2">
     <div class="well" style="margin-bottom: 0;">
         <div class="container">
-            <a href="#" class="btn btn-primary pull-right" id="user-profile-link" style="margin-top: 5px;">
+            <a href="#" class="btn btn-primary pull-right" v-bind:href="currentUser.username" style="margin-top: 5px;">
                 Your Profile
                 <span class="glyphicon glyphicon-chevron-right"></span>
             </a>
@@ -33,11 +36,13 @@
         </div>
     </div>
     <div class="container">
-        <div class="row" id="yours-row"></div>
+        <div class="row">
+            <mod-box v-for="_mod in browse.yours" v-bind:mod="_mod" v-bind:currentUser="currentUser"></mod-box>
+        </div>
     </div>
 </div>
 
-<div class="well" style="margin-bottom: 0;" id="featured-div-edit-me">
+<div class="well" v-bind:style="browse.yours.length > 2 ? 'margin-bottom: 0; margin-top: 20px;' : 'margin-bottom: 0;'" id="featured-div-edit-me">
     <div class="container">
         <a href="{{ path_for('browse.featured') }}" class="btn btn-primary pull-right" style="margin-top: 5px;">
             Browse Featured Mods
@@ -47,7 +52,9 @@
     </div>
 </div>
 <div class="container">
-    <div class="row" id="featured-row"></div>
+    <div class="row" id="featured-row">
+        <mod-box v-for="(_mod, index) in browse.featured" v-bind:mod="_mod" v-if="currentUser == null || index < 3" v-bind:currentUser="currentUser"></mod-box>
+    </div>
 </div>
 
 <div class="well" style="margin-bottom: 0; margin-top: 20px;">
@@ -60,10 +67,12 @@
     </div>
 </div>
 <div class="container">
-    <div class="row" id="new-row"></div>
+    <div class="row">
+        <mod-box v-for="_mod in browse.new" v-bind:mod="_mod" v-bind:currentUser="currentUser"></mod-box>
+    </div>
 </div>
 
-<div id="row-noLogin">
+<div v-if="currentUser == null">
 
     <div class="well" style="margin-bottom: 0; margin-top: 20px;">
         <div class="container">
@@ -75,7 +84,9 @@
         </div>
     </div>
     <div class="container">
-        <div class="row" id="recent-row"></div>
+        <div class="row">
+            <mod-box v-for="_mod in browse.recent" v-bind:mod="_mod" v-bind:currentUser="currentUser"></mod-box>
+        </div>
     </div>
     
     <div class="well" style="margin-bottom: 0; margin-top: 20px;">
@@ -88,12 +99,14 @@
         </div>
     </div>
     <div class="container">
-        <div class="row" id="top-row"></div>
+        <div class="row">
+            <mod-box v-for="_mod in browse.top" v-bind:mod="_mod" v-bind:currentUser="currentUser"></mod-box>
+        </div>
     </div>
     
 </div>
 
-<div id="row-login">
+<div v-if="currentUser != null">
     <div class="well" style="margin-bottom: 20px; margin-top: 20px;">
         <div class="container">
             <h1>More Mods</h1>
@@ -117,7 +130,7 @@
     </div>
 </div>
 
-<div id="about-wrapper">
+<div v-else>
     <div id="about">
         <div class="container">
             <div class="centered">

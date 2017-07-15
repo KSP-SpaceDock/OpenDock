@@ -48,8 +48,9 @@
         </script>
     </head>
     <body class="{% if user %}logged-in{% endif %}">
+    <span id="site">
         {% block nav %}
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation" {% if user and user.admin %}style="background: #FF5555;"{% endif %}>
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
@@ -75,7 +76,7 @@
                         <li><a href="{{ irc_channel }}" target="_blank">Chat</a></li>
                         <!--<li><a href="/blog">Blog</a></li>-->
                     </ul>
-                    <ul class="nav navbar-nav navbar-right" id="user-noLogin">
+                    <ul class="nav navbar-nav navbar-right" v-if="currentUser == null">
                         {% if registration %}
                         <li><a href="{{ path_for('accounts.register') }}">Register</a></li>
                         {% endif %}
@@ -91,7 +92,7 @@
                                             Remember Me
                                         </label>
                                     </div>
-                                    <input type="hidden" name="return_to" id="return_to">
+                                    <input type="hidden" name="return_to" id="return_to" v-bind:value="window.location.href">
                                     <input type="button" value="Log In" class="btn btn-primary" id="loginSubmit">
                                 </form>
                                 <li class="divider"></li>
@@ -103,10 +104,10 @@
                             </ul>
                         </li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right" id="user-login">
+                    <ul class="nav navbar-nav navbar-right" v-else>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="usernameDisplay"></a>
-                            <ul class="dropdown-menu" {% if user and user.admin %}style="background: #FF5555;"{% endif %}>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="usernameDisplay">Welcome ${currentUser.username}<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
                                 <li>
                                     <a href="/create/mod">
                                         <span class="glyphicon glyphicon-open"></span> Create a New Mod
@@ -186,6 +187,7 @@
                 </div>
             </div>
         </footer>
+    </span>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
         <script src="//cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
         <script src="//cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
@@ -194,13 +196,12 @@
         {% else %}
         <script src="//vuejs.org/js/vue.min.js"></script>
         {% endif %}
-        <script src="{{ path_for('static', {'filename': 'jquery.loading.block.js'}) }}"></script>
-        <script src="{{ path_for('static', {'filename': 'zebra_dialog.js'}) }}"></script>
-        <script src="{{ path_for('static', {'filename': 'bootstrap.min.js' }) }}"></script>
-        <script src="{{ path_for('static', {'filename': 'underscore.min.js'}) }}"></script>
-        <script src="{{ path_for('static', {'filename': 'chart.js'}) }}"></script>
-        <script src="{{ path_for('static', {'filename': 'global.js'}) }}"></script>
-        <script src="{{ path_for('static', {'filename': 'layout.js'}) }}"></script>
+        <script src="{{ path_for('scripts', {'filename': 'jquery.loading.block.js'}) }}"></script>
+        <script src="{{ path_for('scripts', {'filename': 'zebra_dialog.js'}) }}"></script>
+        <script src="{{ path_for('scripts', {'filename': 'bootstrap.min.js' }) }}"></script>
+        <script src="{{ path_for('scripts', {'filename': 'underscore.min.js'}) }}"></script>
+        <script src="{{ path_for('scripts', {'filename': 'chart.js'}) }}"></script>
+        <script src="{{ path_for('scripts', {'filename': 'utils.js'}) }}"></script>
         {% block scripts %}{% endblock %}
     </body>
 </html>
