@@ -27,8 +27,7 @@ function fillBrowseList() {
                 'search': search
             },
             methods: {
-                'loginUserHotbar': loginUserHotbar,
-                'showLoading': showLoading
+                'loginUserHotbar': loginUserHotbar
             },
             delimiters: ['${', '}']
         });

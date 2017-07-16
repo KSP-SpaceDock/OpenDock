@@ -1,11 +1,14 @@
-{% extends "layout.html" %}
+{% extends "templates/layout.html" %}
 {% block styles %}
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'stylesheet.css'}) }}" />
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'typeahead.css'}) }}" />
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'navigation.css'}) }}" />
 {% endblock %}
 {% block scripts %}
-<script src="{{ path_for('static', {'filename' : 'login.js'}) }}"></script>
+<script src="{{ path_for('scripts', {'filename' : 'login.js'}) }}"></script>
+<script type="text/javascript">
+    fillLogin();
+</script>
 {% endblock %}
 {% block body %}
 <div class="well">
@@ -15,37 +18,37 @@
 </div>
 <div class="container">
     <div class="row">
-        <p id="resetNotice">Your password has been reset. You can now log in.</p>
-        <form class="form-horizontal col-md-6" role="form" action="/login" method="POST">
+        <p id="resetNotice" v-if="findGetParameter('reset') == '1'">Your password has been reset. You can now log in.</p>
+        <form class="form-horizontal col-md-6" role="form">
             <div class="form-group">
                 <label for="username" class="col-sm-2 control-label">Username</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="username2" placeholder="Username" name="username">
+                    <input type="text" class="form-control" id="username2" placeholder="Username" name="username" v-model="username">
                 </div>
             </div>
             <div class="form-group">
                 <label for="password" class="col-sm-2 control-label">Password</label>
                 <div class="col-sm-10">
-                    <input type="password" class="form-control" id="password2" placeholder="Password" name="password">
+                    <input type="password" class="form-control" id="password2" placeholder="Password" name="password" v-model="password">
                 </div>
             </div>
             <div class="form-group">
                 <div class="checkbox">
                     <label class="col-sm-10 col-sm-offset-2">
-                        <input type="checkbox" name="remember-me" id="remember-me2">
+                        <input type="checkbox" name="remember-me" id="remember-me2" v-model="rememberMe">
                         Remember Me
                     </label>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-10 col-sm-offset-2">
-                    <input type="button" value="Log In" class="btn btn-primary" id="loginSubmit2">
+                    <input type="button" value="Log In" class="btn btn-primary" id="loginSubmit2" v-on:click="loginUser(username, password, rememberMe, findGetParameter('return_to'))">
                 </div>
             </div>
         </form>
         <div class="col-md-6">
-            <p>Have you <a href="/forgot-password">forgotten your password</a>?</p>
-            <p>Or maybe you want to <a href="/register">create a new account</a>?</p>            
+            <p>Have you <a href="{{ path_for('accounts.forgot_password') }}">forgotten your password</a>?</p>
+            <p>Or maybe you want to <a href="{{ path_for('accounts.register') }}">create a new account</a>?</p>
         </div>
     </div>
 </div>

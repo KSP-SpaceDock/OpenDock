@@ -1,8 +1,14 @@
-{% extends "layout.html" %}
+{% extends "templates/layout.html" %}
 {% block styles %}
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'stylesheet.css'}) }}" />
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'typeahead.css'}) }}" />
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'navigation.css'}) }}" />
+{% endblock %}
+{% block scripts %}
+<script src="{{ path_for('scripts', {'filename' : 'layout.js'}) }}"></script>
+<script type="text/javascript">
+    fillLayout();
+</script>
 {% endblock %}
 {% block body %}
 <div class="container">

@@ -47,50 +47,19 @@ Array.prototype.hasObject = (
   }
 );
 
-function loginUser(username, password, remember, returnto) {
-    showLoading();
-    $.ajax(backend + "/api/login", {
-        data: '{"username":"' + username + '","password":"' + password + '","remember":' + remember + '}',
-        type: "POST",
-        xhrFields: { withCredentials:true },
-        dataType: "json",
-        contentType: "application/json",
-        success: function(data) {
-            $.loadingBlockHide();
-            if (data.error) {
-                if (3055 in data.codes) {
-                    window.location.href = "/account-pending";
-                }
-                var text = "Something went wrong with your login request:<br><br>";
-                $.each(data.reasons, function(index,element) {
-                    text = text + element + "<br>";
-                });
-                $.Zebra_Dialog(text, {
-                    'type': 'error',
-                    'title': 'Login failed!'
-                });
-                $.loadingBlockHide();
-            } else {
-                console.log(data);
-                window.location.href = returnto;
-            }
-        },error: function(xhr, a, b) {
-            $.loadingBlockHide();
-            var data = $.parseJSON(xhr.responseText);
-            if (3055 in data.codes) {
-                window.location.href = "/account-pending";
-            }
-            var text = "Something went wrong with your login request:<br><br>";
-            $.each(data.reasons, function(index,element) {
-                text = text + element + "<br>";
-            });
-            $.Zebra_Dialog(text, {
-                'type':  'error',
-                'title': 'Login failed!'
-            });
-            $.loadingBlockHide();
+function findGetParameter(parameterName) {
+    var result = null;
+    var tmp = [];
+    var items = location.search.substr(1).split("&");
+    var index = 0;
+    while (index < items.length) {
+        tmp = items[index].split("=");
+        if (tmp[0] == parameterName) {
+            result = decodeURIComponent(tmp[1]);
         }
-    });
+        index++;
+    }
+    return result;
 }
 
 function showLoading() {

@@ -1,8 +1,14 @@
-{% extends "layout.html" %}
+{% extends "templates/layout.html" %}
 {% block styles %}
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'stylesheet.css'}) }}" />
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'typeahead.css'}) }}" />
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'navigation.css'}) }}" />
+{% endblock %}
+{% block scripts %}
+<script src="{{ path_for('scripts', {'filename' : 'forgot.js'}) }}"></script>
+<script type="text/javascript">
+    fillForgot();
+</script>
 {% endblock %}
 {% block body %}
 <div class="well">
@@ -11,34 +17,25 @@
     </div>
 </div>
 <div class="container">
-    {% if success %}
-    <p>We've sent you an email with further instructions. It should arrive soon. <a href="mailto:{{ support_mail }}">Email us</a>
+    <p v-if="resetSuccessfull">We've sent you an email with further instructions. It should arrive soon. <a href="mailto:{{ support_mail }}">Email us</a>
     if you run into trouble.</p>
-    {% else %}
-    <p>Forgot your password? It's cool, happens to the best of us. We can help you reset it.</p>
-    <div class="row">
-        <form class="form-horizontal col-md-6" role="form" action="/forgot-password" method="POST">
-            {% if bad_email %}
-            <p>Double check your email address, we don't recognize you.</p>
-            {% endif %}
-            <div class="form-group">
-                <label for="email" class="col-sm-2 control-label">Email</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="email" placeholder="Email" name="email" value="{{ email }}">
+    <template v-if="!resetSuccessfull">
+        <p>Forgot your password? It's cool, happens to the best of us. We can help you reset it.</p>
+        <div class="row">
+            <form class="form-horizontal col-md-6" role="form" action="/forgot-password" method="POST">
+                <div class="form-group">
+                    <label for="email" class="col-sm-2 control-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="email" placeholder="Email" name="email" v-model="email">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-10 col-sm-offset-2">
-                    <input type="submit" value="Submit" class="btn btn-primary">
+                <div class="form-group">
+                    <div class="col-sm-10 col-sm-offset-2">
+                        <input type="button" value="Submit" class="btn btn-primary" v-on:click="resetPassword(email)">
+                    </div>
                 </div>
-            </div>
-        </form>
-        <div class="col-md-6">
-            {% if errors %}
-            <p class="text-danger">{{ errors }}</p>
-            {% endif %}
+            </form>
         </div>
-    </div>
-    {% endif %}
+    </template>
 </div>
 {% endblock %}

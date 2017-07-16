@@ -19,8 +19,7 @@ function fillIndex() {
                 'window': window 
             }, 
             methods: { 
-                'loginUserHotbar': loginUserHotbar, 
-                'showLoading': showLoading 
+                'loginUserHotbar': loginUserHotbar
             }, 
             delimiters: ['${', '}'] 
         }); 

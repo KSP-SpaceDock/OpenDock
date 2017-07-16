@@ -107,11 +107,11 @@
     _height: 64px;
 }
 
-.ZebraDialog .ZebraDialog_Confirmation  { background-image: url('confirmation.png') }
-.ZebraDialog .ZebraDialog_Error         { background-image: url('error.png') }
-.ZebraDialog .ZebraDialog_Information   { background-image: url('information.png') }
-.ZebraDialog .ZebraDialog_Question      { background-image: url('question.png') }
-.ZebraDialog .ZebraDialog_Warning       { background-image: url('warning.png') }
+.ZebraDialog .ZebraDialog_Confirmation  { background-image: url('{{ path_for('images', {'filename': 'confirmation.png'}) }}') }
+.ZebraDialog .ZebraDialog_Error         { background-image: url('{{ path_for('images', {'filename': 'error.png'}) }}') }
+.ZebraDialog .ZebraDialog_Information   { background-image: url('{{ path_for('images', {'filename': 'information.png'}) }}') }
+.ZebraDialog .ZebraDialog_Question      { background-image: url('{{ path_for('images', {'filename': 'question.png'}) }}') }
+.ZebraDialog .ZebraDialog_Warning       { background-image: url('{{ path_for('images', {'filename': 'warning.png'}) }}') }
 
 .ZebraDialog .ZebraDialog_Buttons a {
     white-space: nowrap;
