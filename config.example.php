@@ -9,7 +9,8 @@ return [
         'donation-link' => '',
         
         'backend-url' => '',
-        'gameshort' => ''
+        'gameshort' => '',
+        'update-interval' => 30000
     ]
 ];
 ?>

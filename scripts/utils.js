@@ -1,5 +1,9 @@
-// Set vue
+// Set vue settings
 Vue.config.debug = {{ debug }};
+
+// Vue instance
+var app = null;
+var update_interval = {{ update_interval }};
 
 // <mod-box> - Displays a modbox
 Vue.component('mod-box', {
