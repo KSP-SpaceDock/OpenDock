@@ -13,7 +13,7 @@ Vue.component('mod-box', {
     <div class="thumbnail">\
         <div class="ksp-update">KSP ${mod.default_version.gameversion.friendly_version}</div>\
         <div class=\"following-mod\" v-if=\"currentUser != null && currentUser.following.hasObject(mod.id)\">Following</div>\
-        <a href="">\
+        <a v-bind:href="\'{{ path_for("mod.view", {"id": "<id>", "name": "<name>"}) }}\'.replace(/<id>/, mod.id).replace(/<name>/, mod.name)">\
             <div class="header-img" v-if="mod.meta.hasOwnProperty(\'background\')" v-bind:style="\'background-image: url(//{{ backend_url }}\' + mod.meta[\'background\'].replace(/.jpg/g, \'_thumb.jpg\').replace(/.png/g, \'_thumb.png\') + \');\'"></div>\
             <div class="header-img" v-else style="background-image: url({{ path_for('images', {'filename': 'background.png'}) }});"></div>\
         </a>\
