@@ -10,7 +10,7 @@ return [
         
         'backend-url' => '',
         'gameshort' => '',
-        'update-interval' => 30000
+        'update-interval' => 2147483647
     ]
 ];
 ?>
