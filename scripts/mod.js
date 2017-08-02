@@ -26,6 +26,7 @@ function fillMod() {
                 'mod_users': mod_users,
                 'editable': editable,
                 'deletable': deletable,
+                'isFollower': currentUser.error ? false : isFollower(currentUser.data, mod.data),
                 'outdated': false,
                 'window': window,
                 'Enumerable': Enumerable,
@@ -33,7 +34,6 @@ function fillMod() {
             },
             methods: {
                 'loginUserHotbar': loginUserHotbar,
-                'isFollower': isFollower,
                 'followMod': followMod,
                 'unfollowMod': unfollowMod,
                 'updateMod': updateMod,

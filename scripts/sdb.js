@@ -93,12 +93,13 @@ function resetPassword(email) {
 }
 
 function isFollower(user, mod) {
+    var found = false;
     user.following.forEach(function(entry) {
         if (entry == mod.id) {
-            return true;
+            found = true;
         }
     });
-    return false;
+    return found;
 }
 
 function followMod(user, mod, callback) {
