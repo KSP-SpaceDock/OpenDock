@@ -1,8 +1,11 @@
 function fillMod() {
     getJSON(backend + '/api/users/current', function(currentUser) {
+    getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id, function(mod) {
+    if (mod.error) {
+        window.location.href = "{{ path_for('not-found') }}";
+    }
     getJSON(backend + '/api/games/' + gameshort, function(game) {
     getJSON(backend + '/api/games/' + gameshort + '/versions', function(gameversions) {
-    getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id, function(mod) {
     getJSON(backend + '/api/users/' + mod.data.user, function(modUser) {
     hasPermission('mods-edit', true, {'gameshort': gameshort, 'modid': mod_id}, function(editable) {
     hasPermission('mods-remove', true, {'gameshort': gameshort, 'modid': mod_id}, function(deletable) {
@@ -53,9 +56,9 @@ function fillMod() {
 
 function updateMod() {
     getJSON(backend + '/api/users/current', function(currentUser) {
+    getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id, function(mod) {
     getJSON(backend + '/api/games/' + gameshort, function(game) {
     getJSON(backend + '/api/games/' + gameshort + '/versions', function(gameversions) {
-    getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id, function(mod) {
     getJSON(backend + '/api/users/' + mod.data.user, function(modUser) {
     hasPermission('mods-edit', true, {'gameshort': gameshort, 'modid': mod_id}, function(editable) {
     hasPermission('mods-remove', true, {'gameshort': gameshort, 'modid': mod_id}, function(deletable) {

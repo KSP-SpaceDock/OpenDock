@@ -32,4 +32,8 @@ $app->post('/register', function() {
     echo('');
 })->setName('accounts.register');
 
+$app->get('/not-found', function($request, $response) {
+    return $this->view->render($response, 'templates/not_found.html');
+})->setName('not-found');
+
 ?>
