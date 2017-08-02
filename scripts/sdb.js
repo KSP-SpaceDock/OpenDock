@@ -77,7 +77,6 @@ function resetPassword(email) {
         },error: function(xhr, a, b) {
             var data = $.parseJSON(xhr.responseText);
             var text = "";
-            console.log(data);
             if (data.codes.hasObject(2520)) {
                 text = "You didn't provide an email address<br>";
             }
@@ -91,4 +90,48 @@ function resetPassword(email) {
             $.loadingBlockHide();
         }
     });
+}
+
+function isFollower(user, mod) {
+    user.following.forEach(function(entry) {
+        if (entry == mod.id) {
+            return true;
+        }
+    });
+    return false;
+}
+
+function followMod(user, mod, callback) {
+    if (user == null) {
+        window.location.href = "path_for('register')";
+        return;
+    }
+    getJSON(backend + '/api/mods/' + gameshort + '/' + mod.id + '/follow', callback)
+}
+
+function unfollowMod(mod, callback) {
+    getJSON(backend + '/api/mods/' + gameshort + '/' + mod.id + '/unfollow', callback);
+}
+
+function hasPermission(permission, pub, params, callback) {
+    $.ajax(backend + "/api/access/check", {
+        data: JSON.stringify({"permission": permission, "public": pub, "params": params}),
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data) {
+            callback(!data.error);
+        },error: function(xhr, a, b) {
+            var data = $.parseJSON(xhr.responseText);
+            callback(!data.error);
+        }
+    });
+}
+
+function acceptAuthorshipInvite(user, mod, callback) {
+    postJSON(backend + '/api/mods/' + mod.gameshort + '/' + mod.id + '/grant/accept', callback);
+}
+
+function rejectAuthorshipInvite(user, mod, callback) {
+    postJSON(backend + '/api/mods/' + mod.gameshort + '/' + mod.id + '/grant/reject', callback);
 }

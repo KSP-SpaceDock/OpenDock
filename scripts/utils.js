@@ -86,6 +86,9 @@ function loginUserHotbar() {
 function getJSON(url, callback) {
     return $.ajax(url, {
         data: '',
+        xhrFields: {
+            withCredentials: true
+        },
         type: "GET",
         dataType: "json",
         contentType: "application/json",
@@ -95,4 +98,38 @@ function getJSON(url, callback) {
             callback($.parseJSON(xhr.responseText));
         }
     });    
+}
+
+function postJSON(url, callback) {
+    $.ajax(url, {
+        data: '',
+        xhrFields: {
+            withCredentials: true
+        },
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data) {
+            callback(data);
+        },error: function(xhr, a, b) {
+            callback($.parseJSON(xhr.responseText));
+        }
+    });
+}
+
+function postJSON(url, data, callback) {
+    $.ajax(url, {
+        data: JSON.stringify(data),
+        xhrFields: {
+            withCredentials: true
+        },
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data) {
+            callback(data);
+        },error: function(xhr, a, b) {
+            callback($.parseJSON(xhr.responseText));
+        }
+    });
 }

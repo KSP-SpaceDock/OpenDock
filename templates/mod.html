@@ -1,7 +1,4 @@
-{% extends "layout.html" %}
-{% block title %}
-<title>{{ mod.name }} on {{ site_name }}</title>
-{% endblock %}
+{% extends "templates/layout.html" %}
 {% block styles %}
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'mod.css'}) }}" />
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'stylesheet.css'}) }}" />
@@ -11,14 +8,15 @@
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'listing.css'}) }}" />
 {% endblock %}
 {% block scripts %}
-<script src="{{ path_for('static', {'filename': 'mod.js'}) }}"></script>
+<script src="{{ path_for('scripts', {'filename': 'mod.js'}) }}"></script>
+<script type="text/javascript">
+    var mod_id = {{ modid }};
+    fillMod();
+</script>
 {% endblock %}
 {% block body %}
-<script>
-var mod_id = {{ modid }};
-</script>
-
-<div class="header" style="background-image: url({{ path_for('images', {'filename': 'background.png'}) }});" id="backgroundHeader"></div>
+<div class="header" v-bind:style="'background-image: url(' + mod.meta.background + ');'" id="backgroundHeader" v-if="mod.meta.background"></div>
+<div class="header" style="background-image: url({{ path_for('images', {'filename': 'background.png'}) }});" id="backgroundHeader" v-else></div>
 
 {% if new %}
 <div class="well info well-sm">
@@ -36,40 +34,36 @@ var mod_id = {{ modid }};
     </div>
 </div>
 {% endif %}
-{% if pending_invite %}
-<div class="well warning well-sm">
+<div class="well warning well-sm" v-if="mod_users[currentUser == null ? mod.user : currentUser.id].accepted === false">
     <div class="container">
         <h1>You have been invited to co-author this mod</h1>
         <div class="row">
             <div class="col-md-2">
-                <button class="btn btn-primary btn-block" id="accept-authorship-invite">Accept</button>
+                <button class="btn btn-primary btn-block" id="accept-authorship-invite" v-on:click="acceptAuthorshipInvite(currentUser, mod, function(data) { updateMod(); })">Accept</button>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-default btn-block" id="reject-authorship-invite">Reject</button>
+                <button class="btn btn-default btn-block" id="reject-authorship-invite" v-on:click="rejectAuthorshipInvite(currentUser, mod, function(data) { updateMod(); })">Reject</button>
             </div>
         </div>
     </div>
 </div>
-{% endif %}
 <div class="container lead">
     <div class="row">
         <div class="col-md-8">
-            <h1 id="modname"></h1>
+            <h1 v-bind:title="mod.name">
+                ${mod.name}
+                <span class="badge" title="This mod is listed in CKAN." v-if="mod.meta.ckan">CKAN</span>
+            </h1>
         </div>
         <div class="col-md-4" id="downloadWrapper">
-            <a  class="btn btn-block btn-lg btn-primary piwik_download" id="download-link-primary">
+            <a class="btn btn-block btn-lg btn-primary piwik_download" id="download-link-primary" v-bind:href="'//{{ backend_url }}/api/mods/{{ gameshort }}/{{ modid }}/download/' + mod.default_version.friendly_version">
                 Download
             </a>
         </div>
-        {% if user %}
-        <div class="col-md-2">
-            {% if false %}
-            <a href="#" class="unfollow-button btn btn-block btn-lg btn-warning" data-mod="{{ mod.id }}" data-id="{{ mod.id }}">Unfollow</a>
-            {% else %}
-            <a href="#" class="follow-button btn btn-block btn-lg btn-warning" data-mod="{{ mod.id }}" data-id="{{ mod.id }}">Follow</a>
-            {% endif %}
+        <div v-bind:class="currentUser == null ? 'col-md-4' : 'col-md-2'" v-if="currentUser != null">
+            <a href="#" class="unfollow-button btn btn-block btn-lg btn-warning" v-if="isFollower(currentUser, mod)" v-on:click="unfollowMod(mod, function(data) { updateMod(); })">Unfollow</a>
+            <a href="#" class="follow-button btn btn-block btn-lg btn-warning" v-else v-on:click="followMod(currentUser, mod, function(data) { updateMod(); })">Follow</a>
         </div>
-        {% endif %}
     </div>
 </div>
 
@@ -85,10 +79,11 @@ var mod_id = {{ modid }};
                                 <span class="glyphicon glyphicon-copyright-mark"></span>
                             </div>
                             <div class="timeline-label">
-                                <h2 title="" id="modLicense">
+                                <h2 v-bind:title="mod.license" id="modLicense">
                                     <span class="text-muted">
                                         License:
                                     </span>
+                                    ${mod.license}
                                 </h2>
                             </div>
                         </div>
@@ -104,14 +99,13 @@ var mod_id = {{ modid }};
                                     <span class="text-muted">
                                         KSP Version:
                                     </span>
-                                    {{ latest.ksp_version }}
+                                    ${mod.default_version.gameversion.friendly_version}
                                 </h2>
                             </div>
                         </div>
                     </div>
-
-                    {% if mod.source_link %}
-                    <div class="timeline-entry">
+                    
+                    <div class="timeline-entry" v-if="mod.meta.source_link">
                         <div class="timeline-entry-inner">
                             <div class="timeline-icon">
                                 <span class="glyphicon glyphicon-tasks"></span>
@@ -121,12 +115,11 @@ var mod_id = {{ modid }};
                                     <span class="text-muted">
                                         Source code:
                                     </span>
-                                    <a href="{{ mod.source_link }}">{{ mod.source_link }}</a>
+                                    <a v-bind:href="mod.meta.source_link">${mod.meta.source_link}</a>
                                 </h2>
                             </div>
                         </div>
                     </div>
-                    {% endif %}
                     
                     <div class="timeline-entry">
                         <div class="timeline-entry-inner">
@@ -138,7 +131,7 @@ var mod_id = {{ modid }};
                                     <span class="text-muted">
                                         Downloads:
                                     </span>
-                                    {{ "{:,}".format(mod.download_count) }}
+                                    ${mod.download_count}
                                 </h2>
                             </div>
                         </div>
@@ -157,26 +150,20 @@ var mod_id = {{ modid }};
                             </div>
                             <div class="timeline-label">
                                 <h2>
-                                    <span class="text-muted">
-                                        {% if total_authors == 1 %}
+                                    <span class="text-muted" v-if="mod.shared_authors.length == 0">
                                         Author:
-                                        {% else %}
-                                        Authors:
-                                        {% endif %}
                                     </span>
-                                    <a href="/profile/{{ mod.user.username }}">{{ mod.user.username }}</a>{%if total_authors != 1%},{%endif %}
-                                    {% for author in mod.shared_authors %}
-                                    {% if author.accepted %}
-                                    <a href="/profile/{{ author.user.username }}">{{ author.user.username }}</a>{%if not loop.last%},{%endif%}
-                                    {% endif %}
-                                    {% endfor %}
+                                    <span class="text-muted" v-else>
+                                        Authors:
+                                    </span>
+                                    <a v-bind:href="'/profile/' + mod_users[mod.user].username">${mod_users[mod.user].username}</a>
+                                    <template v-for="(author, i) in mod.shared_authors" v-if="author.accepted">,<a v-bind:href="'/profile/' + mod_users[i].username" >${mod_users[i].username}</a></template>
                                 </h2>
                             </div>
                         </div>
                     </div>
 
-                    {% if mod.external_link %}
-                    <div class="timeline-entry">
+                    <div class="timeline-entry" v-if="mod.meta.external_link">
                         <div class="timeline-entry-inner">
                             <div class="timeline-icon">
                                 <span class="glyphicon glyphicon-globe"></span>
@@ -186,19 +173,13 @@ var mod_id = {{ modid }};
                                     <span class="text-muted">
                                         Mod Website:
                                     </span>
-                                    {% if forum_thread %}
-                                    <a href="{{ mod.external_link }}">Forum Thread</a>
-                                    {% else %}
-                                    <a href="{{ mod.external_link }}">{{ mod.external_link }}</a>
-                                    {% endif %}
+                                    <a v-bind:href="mod.meta.external_link">${mod.meta.external_link}</a>
                                 </h2>
                             </div>
                         </div>
                     </div>
-                    {% endif %}
 
-                    {% if mod.donation_link %}
-                    <div class="timeline-entry">
+                    <div class="timeline-entry" v-if="mod.meta.donation_link">
                         <div class="timeline-entry-inner">
                             <div class="timeline-icon">
                                 <span class="glyphicon glyphicon-gift"></span>
@@ -208,12 +189,11 @@ var mod_id = {{ modid }};
                                     <span class="text-muted">
                                         Support this mod:
                                     </span>
-                                    <a href="{{ mod.donation_link }}">Donate</a>
+                                    <a v-bind:href="mod.meta.donation_link">Donate</a>
                                 </h2>
                             </div>
                         </div>
                     </div>
-                    {% endif %}
                     
                     <div class="timeline-entry">
                         <div class="timeline-entry-inner">
@@ -225,7 +205,7 @@ var mod_id = {{ modid }};
                                     <span class="text-muted">
                                         Followers:
                                     </span>
-                                    {{ "{:,}".format(mod.follower_count) }}
+                                    ${mod.follower_count}
                                 </h2>
                             </div>
                         </div>
@@ -237,17 +217,14 @@ var mod_id = {{ modid }};
     </div>
 </div>
 
-{% if outdated %}
-<div class="well well-sm danger">
+<div class="well well-sm danger" v-if="outdated">
     <div class="container">
         <h1>Outdated Mod</h1>
         <p>This mod is not known to work with the latest version of Kerbal Space Program. Proceed with caution.</p>
     </div>
 </div>
-{% endif %}
 
-{% if editable %}
-<div class="well" style="margin-bottom: 0;">
+<div class="well" style="margin-bottom: 0;" v-if="editable">
     <div class="container">
         <div class="row">
             <div class="col-md-4">
@@ -257,14 +234,10 @@ var mod_id = {{ modid }};
                 in.</p>
             </div>
             <div class="col-md-8">
-                {% if not mod.published %}
-                <a href="" class="btn btn-success btn-block btn-lg">Publish this Mod</a>
-                {% endif %}
+                <a href="" class="btn btn-success btn-block btn-lg" v-if="!mod.published" v-on:click="publishMod(mod, function(data) { updateMod(); })">Publish this Mod</a>
                 <a href="" class="btn btn-info btn-block btn-lg">Edit this Mod</a>
                 <a href="" class="btn btn-primary btn-block btn-lg">Update this Mod</a>
-                {% if owner %}
-                <a href="#" data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger btn-block btn-lg">Delete this Mod</a>
-                {% endif %}
+                <a href="#" data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger btn-block btn-lg" v-if="currentUser != null && mod.user == currentUser.id">Delete this Mod</a>
                 {% if admin %}
                 {% if not featured %}
                 <a href="#" class="btn btn-default btn-block btn-lg feature-button" data-mod="{{ mod.id }}">
@@ -280,19 +253,18 @@ var mod_id = {{ modid }};
                 {% endif %}
             </div>
         </div>
-        {% if editable and latest.ksp_version != game_versions[0].friendly_version %}
+        <template v-if="editable && new Date(mod.default_version.gameversion.created).getTime() < new Date(Enumerable.from(game_versions).first('v=>!v.beta').created).getTime()">
         <hr />
         <div class="alert alert-info" style="margin-bottom: 0;">
             <p>
-                This mod seems to be outdated. Is the latest version compatible with Kerbal Space Program {{ game_versions[0].friendly_version }}?
+                This mod seems to be outdated. Is the latest version compatible with Kerbal Space Program ${Enumerable.from(game_versions).first('v=>!v.beta').friendly_version}?
                 <button style="margin-left: 10px;" class="btn btn-primary autoupdate" data-toggle="modal" data-target="#confirm-update">Yes, update automatically</button>
                 <a href=" ">No, update manually</a>
             </p>
         </div>
-        {% endif %}
+        </template>
     </div>
 </div>
-{% endif %}
 
 <div class="tab-container">
     <div class="mod-tabs container">
@@ -304,31 +276,26 @@ var mod_id = {{ modid }};
 
 <div class="container">
     <div class="tab-content">
-        <div class="tab-pane active" id="info">
-            {{ mod.description }}
-        </div>
+        <div class="tab-pane active" id="info" v-html="marked(mod.description)"> </div>
         <div class="tab-pane" id="changelog">
             <div class="timeline-centered">
-            {% for v in mod.versions %}
+            <template v-for="v in mod.versions">
                 <div class="timeline-entry">
                     <div class="timeline-entry-inner">
                         <div class="timeline-icon">
                             <span class="glyphicon glyphicon-asterisk"></span>
                         </div>
                         <div class="timeline-label">
-                            <h2>Version {{ v.friendly_version }} <small>for Kerbal Space Program {{ v.ksp_version }}</small></h2>
-                            <p><small class="text text-muted">Released on {{ v.created.strftime("%Y-%m-%d") }}</small></p>
-                            {% if not v.changelog %}
-                            <p><em>No changelog provided</em></p>
-                            {% else %}
-                            {{ v.changelog }}
-                            {% endif %}
-                            <p data-version="{{ v.id }}">
-                                <a class="btn btn-primary piwik_download" href="">
+                            <h2>Version ${v.friendly_version} <small>for Kerbal Space Program ${v.gameversion.friendly_version}</small></h2>
+                            <p><small class="text text-muted">Released on ${v.created.split('T')[0]}</small></p>
+                            <span v-if="v.changelog">${v.changelog}</span>
+                            <span v-else><p><em>No changelog provided</em></p></span>
+                            <p v-bind:data-version="v.id">
+                                <a class="btn btn-primary piwik_download" v-bind:href="'//{{ backend_url }}/api/mods/{{ gameshort }}/{{ modid }}/download/' + v.friendly_version">
                                     <span class="glyphicon glyphicon-save"></span> Download
                                 </a>
-                                {% if editable %}
-                                <button class="btn btn-danger edit-version" data-version="{{ v.id }}">
+                                <template v-if="editable">
+                                <button class="btn btn-danger edit-version" v-bind:data-version="v.id">
                                     <span class="glyphicon glyphicon-pencil"></span> Edit
                                 </button>
                                 {% if false != 1 and v.id != latest.id %}
@@ -336,22 +303,22 @@ var mod_id = {{ modid }};
                                     <span class="glyphicon glyphicon-trash"></span> Delete
                                 </button>
                                 {% endif %}
-                                <span class="hidden raw-changelog">{{ v.changelog }}</span>
+                                <span class="hidden raw-changelog">${v.changelog}</span>
                                 {% if v.id != latest.id %}
                                 <button class="set-default-version btn btn-danger">
                                     <span class="glyphicon glyphicon-ok"></span> Set as default
                                 </button>
                                 {% endif %}
-                                {% endif %}
+                                </template>
                             </p>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
+            </template>
             </div>
         </div>
         <div class="tab-pane" id="stats">
-            <h2>Stats for {{ mod.name }}</h2>
+            <h2>Stats for ${mod.name}</h2>
             <div class="row">
                 <div class="col-md-8">
                     <h3>Downloads over time</h3>
@@ -379,7 +346,7 @@ var mod_id = {{ modid }};
         </div>
     </div>
 </div>
-{% if editable %}
+<template v-if="editable">
 <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="confirm-delete" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -430,9 +397,9 @@ var mod_id = {{ modid }};
                     <h4 class="modal-title" id="myModalLabel">Update Automatically</h4>
                 </div>
                 <div class="modal-body">
-                    <p>You are about to modify version {{ latest.friendly_version }} of {{ mod.name }} to
-                    support Kerbal Space Program {{ game_versions[0].friendly_version }}. An email will be sent to
-                    {{ mod.follower_count }} followers to tell them the good news. Sounds good?</p>
+                    <p>You are about to modify version ${mod.default_version.friendly_version} of ${mod.name} to
+                    support Kerbal Space Program ${Enumerable.from(game_versions).first('v=>!v.beta').friendly_version}. An email will be sent to
+                    ${mod.follower_count} followers to tell them the good news. Sounds good?</p>
                 </div>
                 <div class="modal-footer">
                     <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
@@ -451,7 +418,7 @@ var mod_id = {{ modid }};
                     <h4 class="modal-title" id="myModalLabel">Delete Version</h4>
                 </div>
                 <div class="modal-body">
-                    <p>This will forever delete this version of {{ mod.name }}. There is no undoing this action.
+                    <p>This will forever delete this version of ${mod.name}. There is no undoing this action.
                     Are you sure you wish to continue?</p>
                 </div>
                 <div class="modal-footer">
@@ -462,18 +429,18 @@ var mod_id = {{ modid }};
         </div>
     </div>
 </div>
-{% endif %}
+</template>
 <div class="modal fade" id="register-for-updates" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <form class="form-horizontal" role="form" action="/register" method="POST">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Thanks for downloading {{ mod.name }}!</h4>
+                    <h4 class="modal-title" id="myModalLabel">Thanks for downloading ${mod.name}!</h4>
                 </div>
                 <div class="modal-body">
                     <p>Want us to email you when it updates?</p>
-                    <input type="hidden" name="follow-mod" value="{{ mod.id }}" />
+                    <input type="hidden" name="follow-mod" v-bind:value="mod.id" />
                     <div class="form-group">
                         <label for="email" class="col-sm-2 control-label">Email</label>
                         <div class="col-sm-10">
