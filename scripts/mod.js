@@ -7,6 +7,8 @@ function fillMod() {
     getJSON(backend + '/api/games/' + gameshort, function(game) {
     getJSON(backend + '/api/games/' + gameshort + '/versions', function(gameversions) {
     getJSON(backend + '/api/users/' + mod.data.user, function(modUser) {
+    getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id + '/stats/downloads', function(download_stats) {
+    getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id + '/stats/follower', function(follower_stats) {
     hasPermission('mods-edit', true, {'gameshort': gameshort, 'modid': mod_id}, function(editable) {
     hasPermission('mods-remove', true, {'gameshort': gameshort, 'modid': mod_id}, function(deletable) {
         var mod_users = {}
@@ -48,10 +50,11 @@ function fillMod() {
             },
             delimiters: ['${', '}']
         });
+        activateStats(gameversions.data, download_stats.data, follower_stats.data);
         window.setInterval(updateMod, update_interval);
         document.title = mod.data.name + ' on {{ site_name }}';
         $.loadingBlockHide();
-    })})})})})})});
+    })})})})})})})})});
 }
 
 function updateMod() {
