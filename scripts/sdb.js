@@ -114,24 +114,27 @@ function unfollowMod(mod, callback) {
 }
 
 function hasPermission(permission, pub, params, callback) {
-    $.ajax(backend + "/api/access/check", {
-        data: JSON.stringify({"permission": permission, "public": pub, "params": params}),
-        type: "POST",
-        dataType: "json",
-        contentType: "application/json",
-        success: function(data) {
-            callback(!data.error);
-        },error: function(xhr, a, b) {
-            var data = $.parseJSON(xhr.responseText);
-            callback(!data.error);
-        }
+    postJSON(backend + "/api/access/check", extend({"permission": permission, "public": pub, "params": Object.keys(params)}, params), function(data) {
+        callback(!data.error);
     });
 }
 
 function acceptAuthorshipInvite(user, mod, callback) {
-    postJSON(backend + '/api/mods/' + mod.gameshort + '/' + mod.id + '/grant/accept', callback);
+    postJSON(backend + '/api/mods/' + mod.game_short + '/' + mod.id + '/grant/accept', callback);
 }
 
 function rejectAuthorshipInvite(user, mod, callback) {
-    postJSON(backend + '/api/mods/' + mod.gameshort + '/' + mod.id + '/grant/reject', callback);
+    postJSON(backend + '/api/mods/' + mod.game_short + '/' + mod.id + '/grant/reject', callback);
+}
+
+function editVersion(mod, version, edit) {
+    // TODO(Thomas): Add the route in SDB
+}
+
+function deleteVersion(mod, version, callback) {
+    deleteJSON(backend + '/api/mods/' + mod.game_short + '/' + mod.id + '/versions', {'version-id': version.id}, callback);
+}
+
+function deleteMod(mod, callback) {
+    deleteJSON(backend + '/api/mods', {'modid': mod.id, 'gameshort': mod.game_short}, callback);
 }

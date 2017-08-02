@@ -4,7 +4,8 @@ function fillMod() {
     getJSON(backend + '/api/games/' + gameshort + '/versions', function(gameversions) {
     getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id, function(mod) {
     getJSON(backend + '/api/users/' + mod.data.user, function(modUser) {
-    hasPermission('mod-edit', true, [gameshort, mod_id], function(editable) {
+    hasPermission('mods-edit', true, {'gameshort': gameshort, 'modid': mod_id}, function(editable) {
+    hasPermission('mods-remove', true, {'gameshort': gameshort, 'modid': mod_id}, function(deletable) {
         var mod_users = {}
         mod_users[mod.data.user] = modUser.data;
         mod.data.shared_authors.forEach(function(entry) {
@@ -19,9 +20,11 @@ function fillMod() {
                 'game_versions': gameversions.data,
                 'mod_users': mod_users,
                 'editable': editable,
+                'deletable': deletable,
                 'outdated': false,
                 'window': window,
-                'Enumerable': Enumerable
+                'Enumerable': Enumerable,
+                'version_to_delete': 0
             },
             methods: {
                 'loginUserHotbar': loginUserHotbar,
@@ -32,14 +35,20 @@ function fillMod() {
                 'hasPermission': hasPermission,
                 'acceptAuthorshipInvite': acceptAuthorshipInvite,
                 'rejectAuthorshipInvite': rejectAuthorshipInvite,
-                'marked': marked
+                'marked': marked,
+                'onDownloadLinkClick': onDownloadLinkClick,
+                'createCookie': createCookie,
+                'editVersionPopup': editVersionPopup,
+                'deleteVersionPopup': deleteVersionPopup,
+                'deleteVersion': deleteVersion,
+                'deleteMod': deleteMod
             },
             delimiters: ['${', '}']
         });
         window.setInterval(updateMod, update_interval);
         document.title = mod.data.name + ' on {{ site_name }}';
         $.loadingBlockHide();
-    })})})})})});
+    })})})})})})});
 }
 
 function updateMod() {
@@ -48,10 +57,11 @@ function updateMod() {
     getJSON(backend + '/api/games/' + gameshort + '/versions', function(gameversions) {
     getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id, function(mod) {
     getJSON(backend + '/api/users/' + mod.data.user, function(modUser) {
-    hasPermission('mod-edit', true, [gameshort, mod_id], function(editable) {
+    hasPermission('mods-edit', true, {'gameshort': gameshort, 'modid': mod_id}, function(editable) {
+    hasPermission('mods-remove', true, {'gameshort': gameshort, 'modid': mod_id}, function(deletable) {
         var mod_users = {}
-        mod_users[mod.user] = modUser.data;
-        mod.shared_authors.forEach(function(entry) {
+        mod_users[mod.data.user] = modUser.data;
+        mod.data.shared_authors.forEach(function(entry) {
             mod_users[entry.id] = entry;
         });
         app.$data.currentUser = currentUser.error ? null : currentUser.data;
@@ -60,8 +70,29 @@ function updateMod() {
         app.$data.game_versions = gameversions.data;
         app.$data.mod_users = mod_users;
         app.$data.editable = editable;
+        app.$data.deletable = deletable;
         app.$data.outdated = false;
         app.$data.window = window;
         app.$data.Enumerable = Enumerable;
-    })})})})})});
+    })})})})})})});
+}
+
+function onDownloadLinkClick(user) {
+    if (readCookie('do-not-offer-registration') == null && user == null) {
+        setTimeout(function() {
+            $("#register-for-updates").modal()
+        }, 2000);
+    }
+}
+
+function editVersionPopup(version) {
+    var m = document.getElementById('version-edit-modal');
+    m.querySelector('.version-id').value = version.id;
+    m.querySelector('.changelog-text').innerHTML = version.changelog;
+    $(m).modal();
+}
+
+function deleteVersionPopup(version) {
+    $('#version_to_delete').val(version.id);
+    $('#confirm-delete-version').modal();
 }

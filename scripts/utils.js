@@ -133,3 +133,85 @@ function postJSON(url, data, callback) {
         }
     });
 }
+
+function putJSON(url, data, callback) {
+    $.ajax(url, {
+        data: JSON.stringify(data),
+        xhrFields: {
+            withCredentials: true
+        },
+        type: "PUT",
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data) {
+            callback(data);
+        },error: function(xhr, a, b) {
+            callback($.parseJSON(xhr.responseText));
+        }
+    });
+}
+
+function deleteJSON(url, callback) {
+    $.ajax(url, {
+        data: '',
+        xhrFields: {
+            withCredentials: true
+        },
+        type: "DELETE",
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data) {
+            callback(data);
+        },error: function(xhr, a, b) {
+            callback($.parseJSON(xhr.responseText));
+        }
+    });
+}
+
+function deleteJSON(url, data, callback) {
+    $.ajax(url, {
+        data: JSON.stringify(data),
+        xhrFields: {
+            withCredentials: true
+        },
+        type: "DELETE",
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data) {
+            callback(data);
+        },error: function(xhr, a, b) {
+            callback($.parseJSON(xhr.responseText));
+        }
+    });
+}
+
+function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var c in ca) {
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1, c.length);
+        }
+        if (c.indexOf(nameEQ) == 0) {
+            return c.substring(nameEQ.length, c.length);
+        }
+    }
+    return null;
+}
+
+function createCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = ";expires=" + date.toGMTString();
+    } else {
+        expires = "; expires=session"
+    }
+    document.cookie = name + "=" + value + expires + "; path=/";
+}
+
+function extend(obj, src) {
+    Object.keys(src).forEach(function(key) { obj[key] = src[key]; });
+    return obj;
+}

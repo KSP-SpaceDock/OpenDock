@@ -34,15 +34,15 @@
     </div>
 </div>
 {% endif %}
-<div class="well warning well-sm" v-if="mod_users[currentUser == null ? mod.user : currentUser.id].accepted === false">
+<div class="well warning well-sm" v-if="currentUser != null && mod_users[currentUser.id] && mod_users[currentUser.id].accepted === false">
     <div class="container">
         <h1>You have been invited to co-author this mod</h1>
         <div class="row">
             <div class="col-md-2">
-                <button class="btn btn-primary btn-block" id="accept-authorship-invite" v-on:click="acceptAuthorshipInvite(currentUser, mod, function(data) { updateMod(); })">Accept</button>
+                <button class="btn btn-primary btn-block" id="accept-authorship-invite" v-on:click="acceptAuthorshipInvite(currentUser, mod, function(data) { window.location = window.location })">Accept</button>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-default btn-block" id="reject-authorship-invite" v-on:click="rejectAuthorshipInvite(currentUser, mod, function(data) { updateMod(); })">Reject</button>
+                <button class="btn btn-default btn-block" id="reject-authorship-invite" v-on:click="rejectAuthorshipInvite(currentUser, mod, function(data) { window.location = window.location })">Reject</button>
             </div>
         </div>
     </div>
@@ -55,12 +55,12 @@
                 <span class="badge" title="This mod is listed in CKAN." v-if="mod.meta.ckan">CKAN</span>
             </h1>
         </div>
-        <div class="col-md-4" id="downloadWrapper">
-            <a class="btn btn-block btn-lg btn-primary piwik_download" id="download-link-primary" v-bind:href="'//{{ backend_url }}/api/mods/{{ gameshort }}/{{ modid }}/download/' + mod.default_version.friendly_version">
+        <div v-bind:class="currentUser == null ? 'col-md-4' : 'col-md-2'" id="downloadWrapper">
+            <a class="btn btn-block btn-lg btn-primary piwik_download" id="download-link-primary" v-on:click="onDownloadLinkClick(currentUser)" v-bind:href="'//{{ backend_url }}/api/mods/{{ gameshort }}/{{ modid }}/download/' + mod.default_version.friendly_version">
                 Download
             </a>
         </div>
-        <div v-bind:class="currentUser == null ? 'col-md-4' : 'col-md-2'" v-if="currentUser != null">
+        <div class="col-md-2" v-if="currentUser != null">
             <a href="#" class="unfollow-button btn btn-block btn-lg btn-warning" v-if="isFollower(currentUser, mod)" v-on:click="unfollowMod(mod, function(data) { updateMod(); })">Unfollow</a>
             <a href="#" class="follow-button btn btn-block btn-lg btn-warning" v-else v-on:click="followMod(currentUser, mod, function(data) { updateMod(); })">Follow</a>
         </div>
@@ -237,7 +237,7 @@
                 <a href="" class="btn btn-success btn-block btn-lg" v-if="!mod.published" v-on:click="publishMod(mod, function(data) { updateMod(); })">Publish this Mod</a>
                 <a href="" class="btn btn-info btn-block btn-lg">Edit this Mod</a>
                 <a href="" class="btn btn-primary btn-block btn-lg">Update this Mod</a>
-                <a href="#" data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger btn-block btn-lg" v-if="currentUser != null && mod.user == currentUser.id">Delete this Mod</a>
+                <a href="#" data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger btn-block btn-lg" v-if="deletable">Delete this Mod</a>
                 {% if admin %}
                 {% if not featured %}
                 <a href="#" class="btn btn-default btn-block btn-lg feature-button" data-mod="{{ mod.id }}">
@@ -295,20 +295,16 @@
                                     <span class="glyphicon glyphicon-save"></span> Download
                                 </a>
                                 <template v-if="editable">
-                                <button class="btn btn-danger edit-version" v-bind:data-version="v.id">
+                                <button class="btn btn-danger edit-version" v-on:click="editVersionPopup(v)">
                                     <span class="glyphicon glyphicon-pencil"></span> Edit
                                 </button>
-                                {% if false != 1 and v.id != latest.id %}
-                                <button class="btn btn-danger delete-version" data-version="{{ v.id }}">
+                                <button class="btn btn-danger delete-version" v-on:click="deleteVersionPopup(v)" v-if="v.id != mod.default_version_id">
                                     <span class="glyphicon glyphicon-trash"></span> Delete
                                 </button>
-                                {% endif %}
                                 <span class="hidden raw-changelog">${v.changelog}</span>
-                                {% if v.id != latest.id %}
-                                <button class="set-default-version btn btn-danger">
+                                <button class="set-default-version btn btn-danger" v-if="v.id != mod.default_version_id">
                                     <span class="glyphicon glyphicon-ok"></span> Set as default
                                 </button>
-                                {% endif %}
                                 </template>
                             </p>
                         </div>
@@ -359,9 +355,9 @@
                 Are you really, really, really sure you want to delete this mod? You can't undo this.</p>
             </div>
             <div class="modal-footer">
-                <form action="/mod/{{ mod.id }}/delete" method="POST">
+                <form action="" method="POST">
                     <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
-                    <input type="submit" class="btn btn-danger" value="Delete Mod">
+                    <input type="button" class="btn btn-danger" value="Delete Mod" v-on:click="deleteMod(mod, function(data) { window.location.href = '{{ path_for('index') }}'; })">
                 </form>
             </div>
         </div>
@@ -412,7 +408,7 @@
 <div class="modal fade" id="confirm-delete-version" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="this-is-filled-in-by-javascript" method="POST">
+            <form method="POST">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title" id="myModalLabel">Delete Version</h4>
@@ -423,7 +419,8 @@
                 </div>
                 <div class="modal-footer">
                     <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
-                    <input type="submit" class="btn btn-danger" value="Confirm">
+                    <input type="hidden" id="version_to_delete" name="version" v-model="version_to_delete">
+                    <input type="button" class="btn btn-danger" value="Confirm" v-on:click="deleteVersion(mod, Enumerable.from(mod.versions).first('v=>v.id==version_to_delete'), function(data){})">
                 </div>
             </form>
         </div>
@@ -474,7 +471,7 @@
                             <a href="#" class="btn btn-default btn-block btn-lg" data-dismiss="modal">Not now</a>
                         </div>
                         <div class="col-sm-5">
-                            <a href="#" id="do-not-offer-registration" class="btn btn-default btn-block btn-lg" data-dismiss="modal">Not ever</a>
+                            <a href="#" id="do-not-offer-registration" class="btn btn-default btn-block btn-lg" data-dismiss="modal" v-on:click="createCookie('do-not-offer-registration', 1, 365 * 10)">Not ever</a>
                         </div>
                     </div>
                 </div>
