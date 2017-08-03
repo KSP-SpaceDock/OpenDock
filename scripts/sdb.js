@@ -44,7 +44,6 @@ function loginUser(username, password, remember, returnto) {
         dataType: "json",
         contentType: "application/json",
         success: function(data) {
-            $.loadingBlockHide();
             if (data.error) {
                 if (data.codes.hasObject(3055)) {
                     window.location.href = "{{ path_for('accounts.account_pending') }}";
@@ -63,7 +62,6 @@ function loginUser(username, password, remember, returnto) {
                 window.location.href = returnto;
             }
         },error: function(xhr, a, b) {
-            $.loadingBlockHide();
             var data = $.parseJSON(xhr.responseText);
             if (data.codes.hasObject(3055)) {
                 window.location.href = "{{ path_for('accounts.account_pending') }}";
@@ -164,8 +162,16 @@ function rejectAuthorshipInvite(user, mod, callback) {
     postJSON(backend + '/api/mods/' + mod.game_short + '/' + mod.id + '/grant/reject', callback);
 }
 
-function editVersion(mod, version, edit) {
-    // TODO(Thomas): Add the route in SDB
+function editVersion(mod, versionid, edit, callback) {
+    putJSON(backend + '/api/mods/' + mod.game_short + '/' + mod.id + '/versions/' + versionid, edit, function(data) { 
+        if (data.error) {
+            $.Zebra_Dialog('Your request failed. You may have submitted a changelog that is too long. (10000 chars)', {
+                'type': 'error',
+                'title': 'Version update failed!'
+            });
+        }
+        callback(data);
+    });
 }
 
 function deleteVersion(mod, version, callback) {

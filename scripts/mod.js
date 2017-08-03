@@ -32,15 +32,17 @@ function fillMod() {
                 'game': game.data,
                 'game_versions': gameversions.data,
                 'mod_users': mod_users,
-                'editable': editable,
-                'deletable': deletable,
-                'featureable': featureable,
+                'editable': findGetParameter('noedit') ? false : editable,
+                'deletable': findGetParameter('noedit') ? false : deletable,
+                'featureable': findGetParameter('noedit') ? false : featureable,
                 'isFeatured': isFeatured,
                 'isFollower': currentUser.error ? false : isFollower(currentUser.data, mod.data),
                 'outdated': false,
                 'window': window,
                 'Enumerable': Enumerable,
-                'version_to_delete': 0
+                'version_to_delete': 0,
+                'version_to_edit': 0,
+                'version_edit_changelog': ''
             },
             methods: {
                 'loginUserHotbar': loginUserHotbar,
@@ -56,6 +58,7 @@ function fillMod() {
                 'editVersionPopup': editVersionPopup,
                 'deleteVersionPopup': deleteVersionPopup,
                 'deleteVersion': deleteVersion,
+                'editVersion': editVersion,
                 'deleteMod': deleteMod,
                 'featureMod': featureMod,
                 'unfeatureMod': unfeatureMod
@@ -95,9 +98,9 @@ function updateMod() {
         app.$data.game = game.data;
         app.$data.game_versions = gameversions.data;
         app.$data.mod_users = mod_users;
-        app.$data.editable = editable;
-        app.$data.deletable = deletable;
-        app.$data.featureable = featureable;
+        app.$data.editable = findGetParameter('noedit') ? false : editable;
+        app.$data.deletable = findGetParameter('noedit') ? false : deletable;
+        app.$data.featureable = findGetParameter('noedit') ? false : featureable;
         app.$data.isFeatured = isFeatured;
         app.$data.isFollower = currentUser.error ? false : isFollower(currentUser.data, mod.data);
         app.$data.outdated = false;
@@ -115,13 +118,20 @@ function onDownloadLinkClick(user) {
 }
 
 function editVersionPopup(version) {
-    var m = document.getElementById('version-edit-modal');
-    m.querySelector('.version-id').value = version.id;
-    m.querySelector('.changelog-text').innerHTML = version.changelog;
-    $(m).modal();
+    if (version == null) {
+        $("#editVersionDismiss").click();
+        return;
+    }
+    app.$data.version_to_edit = version.id;
+    app.$data.version_edit_changelog = version.changelog;
+    $('#version-edit-modal').modal();
 }
 
 function deleteVersionPopup(version) {
-    $('#version_to_delete').val(version.id);
+    if (version == null) {
+        $("#deleteVersionDismiss").click();
+        return;
+    }
+    app.$data.version_to_delete = version.id;
     $('#confirm-delete-version').modal();
 }

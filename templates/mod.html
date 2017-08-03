@@ -231,7 +231,7 @@
             <div class="col-md-4">
                 <h2 style="margin-top: 0">Author Tools</h2>
                 <p>These are the tools you can use to manage your mod listing. You can also
-                <a href="">view your mod</a> as if you were not logged
+                <a v-bind:href="'{{ path_for('mod.view', {'id': '<id>', 'name': '<name>'}) }}?noedit'.replace(/<id>/, mod.id).replace(/<name>/, mod.name)">view your mod</a> as if you were not logged
                 in.</p>
             </div>
             <div class="col-md-8">
@@ -286,7 +286,7 @@
                         <div class="timeline-label">
                             <h2>Version ${v.friendly_version} <small>for Kerbal Space Program ${v.gameversion.friendly_version}</small></h2>
                             <p><small class="text text-muted">Released on ${v.created.split('T')[0]}</small></p>
-                            <span v-if="v.changelog">${v.changelog}</span>
+                            <span v-if="v.changelog" v-html="marked(v.changelog)"></span>
                             <span v-else><p><em>No changelog provided</em></p></span>
                             <p v-bind:data-version="v.id">
                                 <a class="btn btn-primary piwik_download" v-bind:href="'//{{ backend_url }}/api/mods/{{ gameshort }}/{{ modid }}/download/' + v.friendly_version">
@@ -349,19 +349,18 @@
 <div class="modal fade" id="version-edit-modal" tabindex="-1" role="dialog" aria-labelledby="confirm-delete" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="/mod/{{ mod.id }}/edit_version" method="POST" enctype="multipart/form-data">
+            <form>
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title" id="myModalLabel">Edit Version <span class="version-number"></span></h4>
                 </div>
                 <div class="modal-body">
                     <p>You may edit your changelog here:</p>
-                    <textarea class="changelog-text form-control input-block-level" rows=8 name="changelog"></textarea>
-                    <input type="hidden" class="version-id" name="version-id">
+                    <textarea class="changelog-text form-control input-block-level" rows=8 name="changelog" v-model="version_edit_changelog"></textarea>
                 </div>
                 <div class="modal-footer">
-                    <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
-                    <input type="submit" class="btn btn-primary" value="Save Edit">
+                    <a href="#" class="btn btn-default" id="editVersionDismiss" data-dismiss="modal">Cancel</a>
+                    <input type="button" class="btn btn-primary" value="Save Edit" v-on:click="editVersion(mod, version_to_edit, {'changelog': version_edit_changelog}, function(data) { editVersionPopup(null); if (!data.error) { updateMod(); } })">
                 </div>
             </form>
         </div>
@@ -401,9 +400,8 @@
                     Are you sure you wish to continue?</p>
                 </div>
                 <div class="modal-footer">
-                    <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
-                    <input type="hidden" id="version_to_delete" name="version" v-model="version_to_delete">
-                    <input type="button" class="btn btn-danger" value="Confirm" v-on:click="deleteVersion(mod, Enumerable.from(mod.versions).first('v=>v.id==version_to_delete'), function(data){})">
+                    <a href="#" class="btn btn-default" id="deleteVersionDismiss" data-dismiss="modal">Cancel</a>
+                    <input type="button" class="btn btn-danger" value="Confirm" v-on:click="deleteVersion(mod, Enumerable.from(mod.versions).first('v=>v.id==' + version_to_delete), function(data){ deleteVersionPopup(null); if (!data.error) { updateMod(); } })">
                 </div>
             </form>
         </div>
