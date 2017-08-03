@@ -62,8 +62,8 @@
             </a>
         </div>
         <div class="col-md-2" v-if="currentUser != null">
-            <a href="#" class="unfollow-button btn btn-block btn-lg btn-warning" v-if="isFollower" v-on:click="unfollowMod(mod, function(data) { isFollower = !isFollower; })">Unfollow</a>
-            <a href="#" class="follow-button btn btn-block btn-lg btn-warning" v-else v-on:click="followMod(currentUser, mod, function(data) { isFollower = !isFollower; })">Follow</a>
+            <a href="#" class="unfollow-button btn btn-block btn-lg btn-warning" v-if="isFollower" v-on:click="unfollowMod(mod, function(data) { isFollower = !isFollower; mod.follower_count--; })">Unfollow</a>
+            <a href="#" class="follow-button btn btn-block btn-lg btn-warning" v-else v-on:click="followMod(currentUser, mod, function(data) { isFollower = !isFollower; mod.follower_count++; })">Follow</a>
         </div>
     </div>
 </div>
@@ -239,19 +239,16 @@
                 <a href="" class="btn btn-info btn-block btn-lg">Edit this Mod</a>
                 <a href="" class="btn btn-primary btn-block btn-lg">Update this Mod</a>
                 <a href="#" data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger btn-block btn-lg" v-if="deletable">Delete this Mod</a>
-                {% if admin %}
-                {% if not featured %}
-                <a href="#" class="btn btn-default btn-block btn-lg feature-button" data-mod="{{ mod.id }}">
+                <template v-if="featureable && mod.published">
+                <a href="#" class="btn btn-default btn-block btn-lg feature-button" v-if="!isFeatured" v-on:click="featureMod(mod, function(data) { isFeatured = !isFeatured; })">
                     <span class="glyphicon glyphicon-fire"></span>
                     Feature this mod
                 </a>
-                {% else %}
-                <a href="#" class="btn btn-default btn-block btn-lg unfeature-button" data-mod="{{ mod.id }}">
+                <a href="#" class="btn btn-default btn-block btn-lg unfeature-button" v-else  v-on:click="unfeatureMod(mod, function(data) { isFeatured = !isFeatured; })">
                     <span class="glyphicon glyphicon-fire"></span>
                     Remove feature
                 </a>
-                {% endif %}
-                {% endif %}
+                </template>
             </div>
         </div>
         <template v-if="editable && new Date(mod.default_version.gameversion.created).getTime() < new Date(Enumerable.from(game_versions).first('v=>!v.beta').created).getTime()">

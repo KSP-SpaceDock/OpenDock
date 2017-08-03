@@ -9,12 +9,20 @@ function fillMod() {
     getJSON(backend + '/api/users/' + mod.data.user, function(modUser) {
     getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id + '/stats/downloads', function(download_stats) {
     getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id + '/stats/follower', function(follower_stats) {
+    getJSON(backend + '/api/featured/' + gameshort, function(featured) {
     hasPermission('mods-edit', true, {'gameshort': gameshort, 'modid': mod_id}, function(editable) {
     hasPermission('mods-remove', true, {'gameshort': gameshort, 'modid': mod_id}, function(deletable) {
+    hasPermission('mods-feature', true, {'gameshort': gameshort}, function(featureable) {
         var mod_users = {}
         mod_users[mod.data.user] = modUser.data;
         mod.data.shared_authors.forEach(function(entry) {
             mod_users[entry.id] = entry;
+        });
+        var isFeatured = false;
+        featured.data.forEach(function(entry) {
+            if (entry.mod_id == mod.data.id) {
+                isFeatured = true;
+            }
         });
         app = new Vue({
             el: '#site',
@@ -26,6 +34,8 @@ function fillMod() {
                 'mod_users': mod_users,
                 'editable': editable,
                 'deletable': deletable,
+                'featureable': featureable,
+                'isFeatured': isFeatured,
                 'isFollower': currentUser.error ? false : isFollower(currentUser.data, mod.data),
                 'outdated': false,
                 'window': window,
@@ -46,7 +56,9 @@ function fillMod() {
                 'editVersionPopup': editVersionPopup,
                 'deleteVersionPopup': deleteVersionPopup,
                 'deleteVersion': deleteVersion,
-                'deleteMod': deleteMod
+                'deleteMod': deleteMod,
+                'featureMod': featureMod,
+                'unfeatureMod': unfeatureMod
             },
             delimiters: ['${', '}']
         });
@@ -54,7 +66,7 @@ function fillMod() {
         window.setInterval(updateMod, update_interval);
         document.title = mod.data.name + ' on {{ site_name }}';
         $.loadingBlockHide();
-    })})})})})})})})});
+    })})})})})})})})})})});
 }
 
 function updateMod() {
@@ -62,13 +74,21 @@ function updateMod() {
     getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id, function(mod) {
     getJSON(backend + '/api/games/' + gameshort, function(game) {
     getJSON(backend + '/api/games/' + gameshort + '/versions', function(gameversions) {
-    getJSON(backend + '/api/users/' + mod.data.user, function(modUser) {
+    getJSON(backend + '/api/users/' + mod.data.user, function(modUser) {    
+    getJSON(backend + '/api/featured/' + gameshort, function(featured) {
     hasPermission('mods-edit', true, {'gameshort': gameshort, 'modid': mod_id}, function(editable) {
     hasPermission('mods-remove', true, {'gameshort': gameshort, 'modid': mod_id}, function(deletable) {
+    hasPermission('mods-feature', true, {'gameshort': gameshort}, function(featureable) {
         var mod_users = {}
         mod_users[mod.data.user] = modUser.data;
         mod.data.shared_authors.forEach(function(entry) {
             mod_users[entry.id] = entry;
+        });        
+        var isFeatured = false;
+        featured.data.forEach(function(entry) {
+            if (entry.mod_id == mod.data.id) {
+                isFeatured = true;
+            }
         });
         app.$data.currentUser = currentUser.error ? null : currentUser.data;
         app.$data.mod = mod.data;
@@ -77,10 +97,13 @@ function updateMod() {
         app.$data.mod_users = mod_users;
         app.$data.editable = editable;
         app.$data.deletable = deletable;
+        app.$data.featureable = featureable;
+        app.$data.isFeatured = isFeatured;
+        app.$data.isFollower = currentUser.error ? false : isFollower(currentUser.data, mod.data);
         app.$data.outdated = false;
         app.$data.window = window;
         app.$data.Enumerable = Enumerable;
-    })})})})})})});
+    })})})})})})})})});
 }
 
 function onDownloadLinkClick(user) {

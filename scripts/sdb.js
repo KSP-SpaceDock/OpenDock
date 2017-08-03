@@ -66,7 +66,8 @@ function loginUser(username, password, remember, returnto) {
             $.loadingBlockHide();
             var data = $.parseJSON(xhr.responseText);
             if (data.codes.hasObject(3055)) {
-                window.location.href = "/account-pending";
+                window.location.href = "{{ path_for('accounts.account_pending') }}";
+                return;
             }
             var text = "";
             $.each(data.reasons, function(index,element) {
@@ -173,4 +174,12 @@ function deleteVersion(mod, version, callback) {
 
 function deleteMod(mod, callback) {
     deleteJSON(backend + '/api/mods', {'modid': mod.id, 'gameshort': mod.game_short}, callback);
+}
+
+function featureMod(mod, callback) {
+    postJSON(backend + '/api/featured/' + mod.game_short, {'modid': mod.id}, callback);
+}
+
+function unfeatureMod(mod, callback) {
+    deleteJSON(backend + '/api/featured', {'modid': mod.id, 'gameshort': mod.game_short}, callback);
 }
