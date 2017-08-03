@@ -1,3 +1,37 @@
+function registerUser(email, username, password, repeatPassword, callback) {
+    showLoading();
+    postJSON(backend + '/api/users', {'email': email, 'username': username, 'password': password, 'repeatPassword': repeatPassword}, function(data) {
+        var emailError = null;
+        var usernameError = null;
+        var passwordError = null;
+        var repeatPasswordError = null;
+        if (!data.error) {
+            window.location.href = "{{ path_for('accounts.account_pending') }}";
+            return;
+        }
+        if (data.codes.hasObject(4000)) {
+            emailError = data.reasons[data.codes.indexOf(4000)];
+        }
+        if (data.codes.hasObject(4010)) {
+            usernameError = data.reasons[data.codes.indexOf(4010)];
+        }
+        if (data.codes.hasObject(2515)) {
+            passwordError = data.reasons[data.codes.indexOf(2515)];
+        }
+        if (data.codes.hasObject(3005)) {
+            repeatPasswordError = data.reasons[data.codes.indexOf(3005)];
+        }
+        if (data.codes.hasObject(2101)) {
+            passwordError = data.reasons[data.codes.indexOf(2101)];
+        }
+        if (data.codes.hasObject(2102)) {
+            passwordError = data.reasons[data.codes.indexOf(2102)];
+        }
+        callback(emailError, usernameError, passwordError, repeatPasswordError);
+        $.loadingBlockHide();
+    });
+}
+
 function loginUser(username, password, remember, returnto) {
     if (returnto == null) {
         returnto = "/";
@@ -13,7 +47,8 @@ function loginUser(username, password, remember, returnto) {
             $.loadingBlockHide();
             if (data.error) {
                 if (data.codes.hasObject(3055)) {
-                    window.location.href = "/account-pending";
+                    window.location.href = "{{ path_for('accounts.account_pending') }}";
+                    return;
                 }
                 var text = "";
                 $.each(data.reasons, function(index,element) {

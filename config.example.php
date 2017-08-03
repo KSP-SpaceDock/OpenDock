@@ -2,6 +2,7 @@
 return [
     'settings' => [
         'debug'=> true,
+        'registration' => true,
         'site-name' => 'OpenDock',
         'support-mail' => 'opendock@example.com',
         'source-code' => 'https://github.com/KSP-SpaceDock/OpenDock',

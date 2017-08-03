@@ -37,6 +37,7 @@ $container['view'] = function ($container) {
     $view->getEnvironment()->addGlobal('gameshort', $container->get('settings')['gameshort']);
     $view->getEnvironment()->addGlobal('debug', $container->get('settings')['debug']);
     $view->getEnvironment()->addGlobal('update_interval', $container->get('settings')['update-interval']);
+    $view->getEnvironment()->addGlobal('registration', $container->get('settings')['registration']);
 
 
     return $view;

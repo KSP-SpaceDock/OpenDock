@@ -28,8 +28,8 @@ $app->get('/forgot-password', function($request, $response) {
     return $this->view->render($response, 'templates/forgot.html');
 })->setName('accounts.forgot_password');
 
-$app->post('/register', function() {
-    echo('');
+$app->get('/register', function($request, $response) {
+    return $this->view->render($response, 'templates/register.html');
 })->setName('accounts.register');
 
 $app->get('/not-found', function($request, $response) {
