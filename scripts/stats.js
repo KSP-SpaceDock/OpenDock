@@ -3,9 +3,12 @@ function activateStats(versions, download_stats, follower_stats) {
     worker.addEventListener('message', function(e) {
         switch (e.data.action) {
         case "downloads_ready":
+            var data_entries = (e.data.data.entries.length > 0 ? e.data.data.entries : [{
+                data:[]
+            }]);
             new Chart(document.getElementById('downloads-over-time').getContext("2d")).Line({
                 labels: e.data.data.labels,
-                datasets: e.data.data.entries
+                datasets: data_entries
             }, {
                 animation: false
             });
@@ -28,9 +31,12 @@ function activateStats(versions, download_stats, follower_stats) {
             return results;
             break;
         case "followers_ready":
+            var data_entries = (e.data.data.entries.length > 0 ? e.data.data.entries : [{
+                data:[]
+            }]);
             return new Chart(document.getElementById('followers-over-time').getContext("2d")).Line({
                 labels: e.data.data.labels,
-                datasets: e.data.data.entries
+                datasets: data_entries
             }, {
                 animation: false
             });
