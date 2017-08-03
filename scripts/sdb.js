@@ -80,6 +80,13 @@ function loginUser(username, password, remember, returnto) {
     });
 }
 
+function logoutUser(user, callback) {
+    if (user == null) {
+        return;
+    }
+    postJSON(backend + '/api/logout', callback);
+}
+
 function resetPassword(email) {
     if (email == "" || email == null) {
         return

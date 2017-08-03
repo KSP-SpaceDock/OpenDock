@@ -20,6 +20,7 @@ function fillRegister() {
             },
             methods: {
                 'loginUserHotbar': loginUserHotbar,
+                'logoutUser': logoutUser,
                 'registerUser': registerUser
             },
             delimiters: ['${', '}']

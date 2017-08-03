@@ -46,6 +46,7 @@ function fillMod() {
             },
             methods: {
                 'loginUserHotbar': loginUserHotbar,
+                'logoutUser': logoutUser,
                 'followMod': followMod,
                 'unfollowMod': unfollowMod,
                 'updateMod': updateMod,

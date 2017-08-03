@@ -10,6 +10,7 @@ function fillForgot() {
             },
             methods: {
                 'loginUserHotbar': loginUserHotbar,
+                'logoutUser': logoutUser,
                 'resetPassword': resetPassword
             },
             delimiters: ['${', '}']

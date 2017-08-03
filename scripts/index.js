@@ -19,7 +19,8 @@ function fillIndex() {
                 'window': window 
             }, 
             methods: { 
-                'loginUserHotbar': loginUserHotbar
+                'loginUserHotbar': loginUserHotbar,
+                'logoutUser': logoutUser
             }, 
             delimiters: ['${', '}'] 
         }); 

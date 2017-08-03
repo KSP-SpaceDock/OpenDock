@@ -13,7 +13,9 @@ function fillLogin() {
                 'window': window
             },
             methods: {
+                'loginUserHotbar': loginUserHotbar,
                 'loginUser': loginUser,
+                'logoutUser': logoutUser,
                 'findGetParameter': findGetParameter
             },
             delimiters: ['${', '}']

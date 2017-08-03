@@ -7,7 +7,8 @@ function fillLayout() {
                 'window': window
             },
             methods: {
-                'loginUserHotbar': loginUserHotbar
+                'loginUserHotbar': loginUserHotbar,
+                'logoutUser': logoutUser
             },
             delimiters: ['${', '}']
         });

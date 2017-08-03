@@ -136,7 +136,7 @@
                                 </li>
                                 {% endif %}
                                 <li>
-                                    <a href="#">
+                                    <a href="#" v-on:click="logoutUser(currentUser, function(data) { window.location.reload(); })">
                                         <span class="glyphicon glyphicon-remove"></span> Log Out
                                     </a>
                                 </li>
