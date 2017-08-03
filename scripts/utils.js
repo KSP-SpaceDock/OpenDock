@@ -64,7 +64,7 @@ function findGetParameter(parameterName) {
 
 function showLoading() {
     $.loadingBlockShow({
-        imgPath: '{{ path_for('images', {'filename': 'default.svg'}) }}',
+        imgPath: "{{ path_for('images', {'filename': 'default.svg'}) }}",
         text: '',
         style: {
             position: 'fixed',
