@@ -118,6 +118,9 @@ function postJSON(url, callback) {
 }
 
 function postJSON(url, data, callback) {
+    if (callback == null) {
+        callback = data;
+    }
     $.ajax(url, {
         data: JSON.stringify(data),
         xhrFields: {
@@ -126,8 +129,8 @@ function postJSON(url, data, callback) {
         type: "POST",
         dataType: "json",
         contentType: "application/json",
-        success: function(data) {
-            callback(data);
+        success: function(retData) {
+            callback(retData);
         },error: function(xhr, a, b) {
             callback($.parseJSON(xhr.responseText));
         }
@@ -169,6 +172,9 @@ function deleteJSON(url, callback) {
 }
 
 function deleteJSON(url, data, callback) {
+    if (callback == null) {
+        callback = data;
+    }
     $.ajax(url, {
         data: JSON.stringify(data),
         xhrFields: {
@@ -177,8 +183,8 @@ function deleteJSON(url, data, callback) {
         type: "DELETE",
         dataType: "json",
         contentType: "application/json",
-        success: function(data) {
-            callback(data);
+        success: function(retData) {
+            callback(retData);
         },error: function(xhr, a, b) {
             callback($.parseJSON(xhr.responseText));
         }

@@ -300,7 +300,7 @@
                                     <span class="glyphicon glyphicon-trash"></span> Delete
                                 </button>
                                 <span class="hidden raw-changelog">${v.changelog}</span>
-                                <button class="set-default-version btn btn-danger" v-if="v.id != mod.default_version_id">
+                                <button class="set-default-version btn btn-danger" v-on:click="setDefaultVersion(mod, v, function(data) { updateMod(); })" v-if="v.id != mod.default_version_id">
                                     <span class="glyphicon glyphicon-ok"></span> Set as default
                                 </button>
                                 </template>

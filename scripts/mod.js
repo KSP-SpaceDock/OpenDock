@@ -61,7 +61,8 @@ function fillMod() {
                 'editVersion': editVersion,
                 'deleteMod': deleteMod,
                 'featureMod': featureMod,
-                'unfeatureMod': unfeatureMod
+                'unfeatureMod': unfeatureMod,
+                'setDefaultVersion': setDefaultVersion,
             },
             delimiters: ['${', '}']
         });

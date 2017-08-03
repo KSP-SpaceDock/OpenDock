@@ -189,3 +189,8 @@ function featureMod(mod, callback) {
 function unfeatureMod(mod, callback) {
     deleteJSON(backend + '/api/featured', {'modid': mod.id, 'gameshort': mod.game_short}, callback);
 }
+
+function setDefaultVersion(mod, version, callback) {
+    console.log(callback);
+    postJSON(backend + '/api/mods/' + mod.game_short + '/' + mod.id + '/versions/' + version.id + '/set-default', callback);
+}
