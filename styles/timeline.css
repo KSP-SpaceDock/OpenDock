@@ -140,10 +140,16 @@
     width: 40px;
     height: 40px;
     background-clip: padding-box;
-    border-radius: 20px;
     text-align: center;
-    box-shadow: 0 0 0 5px #333;
     float: left;
+}
+
+.timeline-icon-shadow {
+    box-shadow: 0 0 0 5px #333;
+}
+
+.timeline-icon-shadow-light {
+    box-shadow: 0 0 0 5px #fff;
 }
 
 .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon .glyphicon, .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon .fa {

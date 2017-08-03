@@ -76,8 +76,8 @@
                     
                     <div class="timeline-entry">
                         <div class="timeline-entry-inner">
-                            <div class="timeline-icon">
-                                <span class="glyphicon glyphicon-copyright-mark"></span>
+                            <div class="timeline-icon timeline-icon-shadow">
+                                <span class="fa fa-copyright"></span>
                             </div>
                             <div class="timeline-label">
                                 <h2 v-bind:title="mod.license" id="modLicense">
@@ -92,8 +92,8 @@
 
                     <div class="timeline-entry">
                         <div class="timeline-entry-inner">
-                            <div class="timeline-icon">
-                                <span class="glyphicon glyphicon-check"></span>
+                            <div class="timeline-icon timeline-icon-shadow">
+                                <span class="fa fa-check"></span>
                             </div>
                             <div class="timeline-label">
                                 <h2 id="modVersion">
@@ -108,8 +108,8 @@
                     
                     <div class="timeline-entry" v-if="mod.meta.source_link">
                         <div class="timeline-entry-inner">
-                            <div class="timeline-icon">
-                                <span class="glyphicon glyphicon-tasks"></span>
+                            <div class="timeline-icon timeline-icon-shadow">
+                                <span class="fa fa-tasks"></span>
                             </div>
                             <div class="timeline-label">
                                 <h2>
@@ -124,8 +124,8 @@
                     
                     <div class="timeline-entry">
                         <div class="timeline-entry-inner">
-                            <div class="timeline-icon">
-                                <span class="glyphicon glyphicon-download-alt"></span>
+                            <div class="timeline-icon timeline-icon-shadow">
+                                <span class="fa fa-download"></span>
                             </div>
                             <div class="timeline-label">
                                 <h2>
@@ -146,8 +146,8 @@
                     
                     <div class="timeline-entry">
                         <div class="timeline-entry-inner">
-                            <div class="timeline-icon">
-                                <span class="glyphicon glyphicon-user"></span>
+                            <div class="timeline-icon timeline-icon-shadow">
+                                <span class="fa fa-user"></span>
                             </div>
                             <div class="timeline-label">
                                 <h2>
@@ -166,8 +166,8 @@
 
                     <div class="timeline-entry" v-if="mod.meta.external_link">
                         <div class="timeline-entry-inner">
-                            <div class="timeline-icon">
-                                <span class="glyphicon glyphicon-globe"></span>
+                            <div class="timeline-icon timeline-icon-shadow">
+                                <span class="fa fa-globe"></span>
                             </div>
                             <div class="timeline-label">
                                 <h2>
@@ -182,8 +182,8 @@
 
                     <div class="timeline-entry" v-if="mod.meta.donation_link">
                         <div class="timeline-entry-inner">
-                            <div class="timeline-icon">
-                                <span class="glyphicon glyphicon-gift"></span>
+                            <div class="timeline-icon timeline-icon-shadow">
+                                <span class="fa fa-gift"></span>
                             </div>
                             <div class="timeline-label">
                                 <h2>
@@ -198,8 +198,8 @@
                     
                     <div class="timeline-entry">
                         <div class="timeline-entry-inner">
-                            <div class="timeline-icon">
-                                <span class="glyphicon glyphicon-heart"></span>
+                            <div class="timeline-icon timeline-icon-shadow">
+                                <span class="fa fa-heart"></span>
                             </div>
                             <div class="timeline-label">
                                 <h2>
@@ -241,11 +241,11 @@
                 <a href="#" data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger btn-block btn-lg" v-if="deletable">Delete this Mod</a>
                 <template v-if="featureable && mod.published">
                 <a href="#" class="btn btn-default btn-block btn-lg feature-button" v-if="!isFeatured" v-on:click="featureMod(mod, function(data) { isFeatured = !isFeatured; })">
-                    <span class="glyphicon glyphicon-fire"></span>
+                    <span class="fa fa-fire"></span>
                     Feature this mod
                 </a>
                 <a href="#" class="btn btn-default btn-block btn-lg unfeature-button" v-else  v-on:click="unfeatureMod(mod, function(data) { isFeatured = !isFeatured; })">
-                    <span class="glyphicon glyphicon-fire"></span>
+                    <span class="fa fa-fire"></span>
                     Remove feature
                 </a>
                 </template>
@@ -280,28 +280,28 @@
             <template v-for="v in mod.versions">
                 <div class="timeline-entry">
                     <div class="timeline-entry-inner">
-                        <div class="timeline-icon">
-                            <span class="glyphicon glyphicon-asterisk"></span>
+                        <div class="timeline-icon timeline-icon-shadow-light">
+                            <span v-bind:class="'fa fa-' + (v.beta ? 'wrench' : 'asterisk')"></span>
                         </div>
                         <div class="timeline-label">
-                            <h2>Version ${v.friendly_version} <small>for Kerbal Space Program ${v.gameversion.friendly_version}</small></h2>
+                            <h2>Version ${v.friendly_version} <small>for Kerbal Space Program ${v.gameversion.friendly_version}</small><small v-if="v.beta"> (Beta Version)</small></h2>
                             <p><small class="text text-muted">Released on ${v.created.split('T')[0]}</small></p>
                             <span v-if="v.changelog" v-html="marked(v.changelog)"></span>
                             <span v-else><p><em>No changelog provided</em></p></span>
                             <p v-bind:data-version="v.id">
                                 <a class="btn btn-primary piwik_download" v-bind:href="'//{{ backend_url }}/api/mods/{{ gameshort }}/{{ modid }}/download/' + v.friendly_version">
-                                    <span class="glyphicon glyphicon-save"></span> Download
+                                    <span class="fa fa-download"></span> Download
                                 </a>
                                 <template v-if="editable">
                                 <button class="btn btn-danger edit-version" v-on:click="editVersionPopup(v)">
-                                    <span class="glyphicon glyphicon-pencil"></span> Edit
+                                    <span class="fa fa-pencil"></span> Edit
                                 </button>
                                 <button class="btn btn-danger delete-version" v-on:click="deleteVersionPopup(v)" v-if="v.id != mod.default_version_id">
-                                    <span class="glyphicon glyphicon-trash"></span> Delete
+                                    <span class="fa fa-trash"></span> Delete
                                 </button>
                                 <span class="hidden raw-changelog">${v.changelog}</span>
-                                <button class="set-default-version btn btn-danger" v-on:click="setDefaultVersion(mod, v, function(data) { updateMod(); })" v-if="v.id != mod.default_version_id">
-                                    <span class="glyphicon glyphicon-ok"></span> Set as default
+                                <button class="set-default-version btn btn-danger" v-on:click="setDefaultVersion(mod, v, function(data) { updateMod(); })" v-if="v.id != mod.default_version_id && !v.beta">
+                                    <span class="fa fa-check"></span> Set as default
                                 </button>
                                 </template>
                             </p>
