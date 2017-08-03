@@ -9,10 +9,10 @@ $app->get('/mod/{id}[/{name}]', function($request, $response, $args) {
 $app->get('/random', function($request, $response, $args) {
     $backend_url = $this->get('settings')['backend-url'];
     $gameshort = $this->get('settings')['gameshort'];
-    $json = file_get_contents('http://'  . $backend_url . '/api/mods/' . $gameshort . '/random');
-    $random_mod = json_decode($json);
+    $json = file_get_contents("http://{$backend_url}/api/mods/{$gameshort}/random");
+    $random_mod = json_decode($json, true);
 
-    return $response->withRedirec('/mod/ '.$random_mod->data[0]->id);
+    return $response->withRedirect("mod/{$random_mod['data']['id']}/{$random_mod['data']['name']}", 302);
 })->setName('mod.random');
 
 ?>
