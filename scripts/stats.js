@@ -29,7 +29,6 @@ function activateStats(versions, download_stats, follower_stats) {
                 results.push(keyUI.appendChild(li));
             }
             return results;
-            break;
         case "followers_ready":
             var data_entries = (e.data.data.entries.length > 0 ? e.data.data.entries : [{
                 data:[]

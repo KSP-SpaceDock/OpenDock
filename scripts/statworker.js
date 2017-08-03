@@ -1,7 +1,5 @@
 var colors;
 var months;
-var processDownloads;
-var processFollowers;
 var thirty_days_ago = null;
 var versions = null;
 

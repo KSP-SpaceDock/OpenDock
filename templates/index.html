@@ -17,7 +17,7 @@
     <div class="vert-text" v-if="currentUser == null">
         <h3>Welcome to {{ site_name }}!</h3>
         <p>Hosting ${mods.count} mods for ${users.count} users!</p>
-        <a data-scroll class="btn btn-circle" href="#about"><span class="glyphicon glyphicon-chevron-down"></span></a>
+        <a data-scroll class="btn btn-circle" href="#about"><span class="fa fa-chevron-down"></span></a>
     </div>
     <div class="vert-text" v-else>
         <h3>Welcome back, ${currentUser.username}!</h3>
@@ -30,7 +30,7 @@
         <div class="container">
             <a href="#" class="btn btn-primary pull-right" v-bind:href="currentUser.username" style="margin-top: 5px;">
                 Your Profile
-                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="fa fa-chevron-right"></span>
             </a>
             <h1>Your Mods <small>Recently updated mods you follow</small></h1>
         </div>
@@ -46,7 +46,7 @@
     <div class="container">
         <a href="{{ path_for('browse.featured') }}" class="btn btn-primary pull-right" style="margin-top: 5px;">
             Browse Featured Mods
-            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="fa fa-chevron-right"></span>
         </a>
         <h1>Featured Mods <small>Hand-picked by {{ site_name }} admins</small></h1>
     </div>
@@ -61,7 +61,7 @@
     <div class="container">
         <a href="{{ path_for('browse.new') }}" class="btn btn-primary pull-right" style="margin-top: 5px;">
             Browse New Mods
-            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="fa fa-chevron-right"></span>
         </a>
         <h1>Newest Mods</h1>
     </div>
@@ -78,7 +78,7 @@
         <div class="container">
             <a href="{{ path_for('browse.updated') }}" class="btn btn-primary pull-right" style="margin-top: 5px;">
                 Browse Freshest Mods
-                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="fa fa-chevron-right"></span>
             </a>
             <h1>Recently Updated Mods</h1>
         </div>
@@ -93,7 +93,7 @@
         <div class="container">
             <a href="{{ path_for('browse.top') }}" class="btn btn-primary pull-right" style="margin-top: 5px;">
                 Browse Popular Mods
-                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="fa fa-chevron-right"></span>
             </a>
             <h1>Most Popular</h1>
         </div>
@@ -117,13 +117,13 @@
             <div class="col-md-6">
                 <a class="btn btn-lg btn-block btn-default" href="{{ path_for('browse.updated') }}">
                     Browse Recently Updated Mods
-                    <span class="glyphicon glyphicon-chevron-right"></span>
+                    <span class="fa fa-chevron-right"></span>
                 </a>
             </div>
             <div class="col-md-6">
                 <a class="btn btn-lg btn-block btn-default" href="{{ path_for('browse.top') }}">
                     Browse Popular Mods
-                    <span class="glyphicon glyphicon-chevron-right"></span>
+                    <span class="fa fa-chevron-right"></span>
                 </a>
             </div>
         </div>
@@ -153,24 +153,24 @@
             </div>
             <div class="row">
                 <div class="col-md-3 centered">
-                    <div class="service-icon"><span class="glyphicon glyphicon-send" style="position: relative; left: -6px;"></span></div>
+                    <div class="service-icon"><span class="fa fa-paper-plane" style="position: relative; left: -6px;"></span></div>
                     <h3>Get email updates</h3>
                     <p>Easily keep track of your favorite mods. Don't bother
                     checking the forums every 5 minutes, just sit back and we'll
                     email you when the time comes.</p>
                 </div>
                 <div class="col-md-3 centered">
-                    <div class="service-icon"><span class="glyphicon glyphicon-search"></span></div>
+                    <div class="service-icon"><span class="fa fa-search"></span></div>
                     <h3>Easy to use search</h3>
                     <p>Searching for mods on {{ site_name }} is painless and easy. You'll find the mod you're looking for on the first try, or your money back.</p>
                 </div>
                 <div class="col-md-3 centered">
-                    <div class="service-icon"><span class="glyphicon glyphicon-calendar"></span></div>
+                    <div class="service-icon"><span class="fa fa-calendar"></span></div>
                     <h3>Full version history</h3>
                     <p>Got a nostalgic itch to scratch? {{ site_name }} keeps around old versions of mods and includes the last version of KSP they worked with.</p>
                 </div>
                 <div class="col-md-3 centered">
-                    <div class="service-icon"><span class="glyphicon glyphicon-asterisk"></span></div>
+                    <div class="service-icon"><span class="fa fa-asterisk"></span></div>
                     <h3>Find new and cool mods</h3>
                     <p>We don't need to tell you about the popular mods you already know about. Instead, we feature new and interesting mods to give you something new.</p>
                 </div>
@@ -187,22 +187,22 @@
             </div>
             <div class="row">
                     <div class="col-md-3 centered">
-                    <div class="service-icon"><span class="glyphicon glyphicon-stats" style="position: relative; left: -3px;"></span></div>
+                    <div class="service-icon"><span class="fa fa-bar-chart" style="position: relative; left: -3px;"></span></div>
                     <h3>Get detailed stats</h3>
                     <p>We'll give you a history of downloads and we'll give it to you with nice pretty graphs. You can also export the raw data if you want to visualize it yourself.</p>
                 </div>
                 <div class="col-md-3 centered">
-                    <div class="service-icon"><span class="glyphicon glyphicon-open"></span></div>
+                    <div class="service-icon"><span class="fa fa-upload"></span></div>
                     <h3>Update in moments</h3>
                     <p>No nonsense updates. Give us a version number, a zip file, and optionally a changelog, and your followers get an email with the latest version.</p>
                 </div>
                 <div class="col-md-3 centered">
-                    <div class="service-icon"><span class="glyphicon glyphicon-eye-open"></span></div>
+                    <div class="service-icon"><span class="fa fa-eye"></span></div>
                     <h3>Exposure where it's due</h3>
                     <p>Got a popular mod? It'll be the first in the search results. Got a cool brand-new mod? We'll make sure you get the exposure you need.</p>
                 </div>
                 <div class="col-md-3 centered">
-                    <div class="service-icon"><span class="glyphicon glyphicon-globe"></span></div>
+                    <div class="service-icon"><span class="fa fa-globe"></span></div>
                     <h3>Open source</h3>
                     <p>Wouldn't it be great if you could help make your modding site even better? You can! {{ site_name }} is open source, come <a href="{{ source_code }}">check out the code</a>.</p>
                 </div>

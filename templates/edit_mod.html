@@ -31,7 +31,7 @@ window.mod_id = {{ mod.id }};
         <a href="#" class="upload-link">Click to upload header</a>
         <input type="file">
         <div class="upload-progress"></div>
-        <div class="directions"><span class="glyphicon glyphicon-resize-vertical"></span>Click and drag to move <span class="glyphicon glyphicon-resize-vertical"></span></div>
+        <div class="directions"><span class="fa fa-arrows-v"></span>Click and drag to move <span class="fa fa-arrows-v"></span></div>
     </div>
     <input type="hidden" name="background" id="background" value="{%if mod.background %}{{ mod.background }}{% endif %}">
     <input type="hidden" name="bg-offset-y" id="bg-offset-y" value="{% if mod.bgOffsetY %}{{ mod.bgOffsetY }}{% endif %}">
@@ -67,7 +67,7 @@ window.mod_id = {{ mod.id }};
                         <div class="timeline-entry">
                             <div class="timeline-entry-inner">
                                 <div class="timeline-icon">
-                                    <span class="glyphicon glyphicon-copyright-mark"></span>
+                                    <span class="fa fa-copyright"></span>
                                 </div>
                                 <div class="timeline-label">
                                     <h2 style="margin-bottom: -20px;">
@@ -82,7 +82,7 @@ window.mod_id = {{ mod.id }};
                         <div class="timeline-entry">
                             <div class="timeline-entry-inner" style="background: #333;">
                                 <div class="timeline-icon">
-                                    <span class="glyphicon glyphicon-gift"></span>
+                                    <span class="fa fa-gift"></span>
                                 </div>
                                 <div class="timeline-label">
                                     <h2 style="margin-top: -20px;">
@@ -101,7 +101,7 @@ window.mod_id = {{ mod.id }};
                         <div class="timeline-entry">
                             <div class="timeline-entry-inner">
                                 <div class="timeline-icon">
-                                    <span class="glyphicon glyphicon-globe"></span>
+                                    <span class="fa fa-globe"></span>
                                 </div>
                                 <div class="timeline-label">
                                     <h2 style="margin-bottom: -20px;">
@@ -116,7 +116,7 @@ window.mod_id = {{ mod.id }};
                         <div class="timeline-entry">
                             <div class="timeline-entry-inner" style="background: #333;">
                                 <div class="timeline-icon">
-                                    <span class="glyphicon glyphicon-tasks"></span>
+                                    <span class="fa fa-tasks"></span>
                                 </div>
                                 <div class="timeline-label">
                                     <h2 style="margin-top: -20px; padding-bottom: 10px;">
@@ -145,7 +145,7 @@ window.mod_id = {{ mod.id }};
                     {% if not author.accepted %}
                     (pending)
                     {% else %}
-                    <a href="#" data-user="{{ author.user.username }}" class="remove-author"><span class="glyphicon glyphicon-remove"></span></a>
+                    <a href="#" data-user="{{ author.user.username }}" class="remove-author"><span class="fa fa-times"></span></a>
                     {% endif %}
                 </div>
                 {% endfor %}
@@ -169,7 +169,7 @@ window.mod_id = {{ mod.id }};
             {% if not mod.ckan %}
             <label>
                 <input id="ckan" name="ckan" style="margin-top: 8px;" type="checkbox"> Add mod to <a href="https://github.com/KSP-CKAN/CKAN">CKAN</a>
-                <span data-original-title="This makes it so that users can automate the installation of your mod. Your mod won't be added to CKAN until you publish it." class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="left" title=""></span>
+                <span data-original-title="This makes it so that users can automate the installation of your mod. Your mod won't be added to CKAN until you publish it." class="fa fa-question-circle" data-toggle="tooltip" data-placement="left" title=""></span>
             </label>
             {% endif %}
         </p>

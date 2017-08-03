@@ -95,7 +95,7 @@
                     <li class="divider"></li>
                     <li>
                         <a href="{{ path_for('accounts.forgot_password') }}">
-                                        <span class="glyphicon glyphicon-question-sign"></span> Forgot Password
+                                        <span class="fa fa-question-circle"></span> Forgot Password
                                     </a>
                     </li>
                 </ul>
@@ -107,34 +107,34 @@
                 <ul class="dropdown-menu">
                     <li>
                         <a href="/create/mod">
-                                        <span class="glyphicon glyphicon-open"></span> Create a New Mod
+                                        <span class="fa fa-upload"></span> Create a New Mod
                                     </a>
                     </li>
                     <li>
                         <a href="/create/pack">
-                                        <span class="glyphicon glyphicon-list"></span> Create a New Pack
+                                        <span class="fa fa-list"></span> Create a New Pack
                                     </a>
                     </li>
                     <li>
                         <a href="#" id="view-user-profile">
-                                        <span class="glyphicon glyphicon-user"></span> View Your Profile
+                                        <span class="fa fa-user"></span> View Your Profile
                                     </a>
                     </li>
                     <li>
                         <a href="#" id="edit-user-profile">
-                                        <span class="glyphicon glyphicon-pencil"></span> Edit Your Profile
+                                        <span class="fa fa-pencil"></span> Edit Your Profile
                                     </a>
                     </li>
                     {% if admin %}
                     <li>
                         <a href="{{ path_for(" admin.backend ") }}">
-                                        <span class="glyphicon glyphicon-fire"></span> Admin Stuff
+                                        <span class="fa fa-fire"></span> Admin Stuff
                                     </a>
                                 </li>
                                 {% endif %}
                                 <li>
                                     <a href="#" v-on:click="logoutUser(currentUser, function(data) { window.location.reload(); })">
-                                        <span class="glyphicon glyphicon-remove"></span> Log Out
+                                        <span class="fa fa-times"></span> Log Out
                                     </a>
                     </li>
                 </ul>

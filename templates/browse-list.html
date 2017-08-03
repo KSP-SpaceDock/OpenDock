@@ -57,7 +57,7 @@ var search = {{ search }};
             {% else %}
             <a v-bind:href="url + '?page=' + (page - 1)" v-bind:disabled="page == 1" id="previous-button"
                 class="btn btn-lg btn-primary btn-block">
-                <span class="glyphicon glyphicon-arrow-left"></span> Previous
+                <span class="fa fa-arrow-left"></span> Previous
             </a>
             {% endif %}
         </div>
@@ -67,7 +67,7 @@ var search = {{ search }};
             {% else %}
             <a v-bind:href="url + '?page=' + (page + 1)" v-bind:disabled="page >= (mods.count / 30)" id="next-button"
                 class="btn btn-lg btn-primary btn-block">
-                Next <span class="glyphicon glyphicon-arrow-right"></span>
+                Next <span class="fa fa-arrow-right"></span>
             </a>
             {% endif %}
         </div>
