@@ -36,9 +36,9 @@
     width: 70px;
     height: 70px;
     margin-top: 15px;
-    padding: 7px 16px;
+    padding: 2px 16px;
     border: 2px solid #fff;
-    border-radius: 35px;
+    border-radius: 10%;
     font-size: 30px;
     color: #fff;
     line-height: 62px;
@@ -105,7 +105,7 @@
 
 .service-icon {
     border: 3px solid #fff;
-    /*border-radius: 50%;*/
+    border-radius: 10%;
     display: inline-block;
     font-size: 56px;
     width: 140px;

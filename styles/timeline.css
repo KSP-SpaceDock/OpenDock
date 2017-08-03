@@ -140,6 +140,7 @@
     width: 40px;
     height: 40px;
     background-clip: padding-box;
+    border-radius: 10%;
     text-align: center;
     float: left;
 }
