@@ -37,7 +37,7 @@ function fillMod() {
                 'featureable': findGetParameter('noedit') ? false : featureable,
                 'isFeatured': isFeatured,
                 'isFollower': currentUser.error ? false : isFollower(currentUser.data, mod.data),
-                'outdated': false,
+                'outdated': new Date(mod.data.default_version.gameversion.created).getTime() < new Date(Enumerable.from(gameversions.data).first('v=>!v.beta').created).getTime(),
                 'window': window,
                 'Enumerable': Enumerable,
                 'version_to_delete': 0,
@@ -104,7 +104,7 @@ function updateMod() {
         app.$data.featureable = findGetParameter('noedit') ? false : featureable;
         app.$data.isFeatured = isFeatured;
         app.$data.isFollower = currentUser.error ? false : isFollower(currentUser.data, mod.data);
-        app.$data.outdated = false;
+        app.$data.outdated = new Date(mod.data.default_version.gameversion.created).getTime() < new Date(Enumerable.from(gameversions.data).first('v=>!v.beta').created).getTime();
         app.$data.window = window;
         app.$data.Enumerable = Enumerable;
     })})})})})})})})});
