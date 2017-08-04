@@ -6,9 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/editor/0.1.0/editor.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link rel="search" type="application/opensearchdescription+xml" title="{{ site_name }}" href="{{ path_for('static', {'filename': 'opensearch.xml'}) }}"
-    />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="search" type="application/opensearchdescription+xml" title="{{ site_name }}" href="{{ path_for('static', {'filename': 'opensearch.xml'}) }}" />
     <meta property="og:image" content="{{ path_for('images', {'filename': 'SpaceDock-Icon-Text-Transparent@2x.png'}) }}" />
     <link rel="apple-touch-icon" sizes="57x57" href="{{ path_for('images', {'filename': 'apple-touch-icon-57x57.png'}) }}">
     <link rel="apple-touch-icon" sizes="60x60" href="{{ path_for('images', {'filename': 'apple-touch-icon-60x60.png'}) }}">
@@ -133,7 +132,7 @@
                                 </li>
                                 {% endif %}
                                 <li>
-                                    <a href="#" v-on:click="logoutUser(currentUser, function(data) { window.location.reload(); })">
+                                    <a href="#" v-on:click.prevent="logoutUser(currentUser, function(data) { window.location.reload(); })">
                                         <span class="fa fa-times"></span> Log Out
                                     </a>
                     </li>

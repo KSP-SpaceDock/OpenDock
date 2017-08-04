@@ -47,6 +47,7 @@ $container['view'] = function ($container) {
 require 'src/anonymus.php';
 require 'src/browse.php';
 require 'src/mods.php';
+require 'src/profiles.php';
 
 // Wrapper routes
 $app->get('/static/{filename}', function($request, $response, $args) {
