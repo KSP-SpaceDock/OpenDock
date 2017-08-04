@@ -62,8 +62,8 @@
             </a>
         </div>
         <div class="col-md-2" v-if="currentUser != null">
-            <a href="#" class="unfollow-button btn btn-block btn-lg btn-warning" v-if="isFollower" v-on:click="unfollowMod(mod, function(data) { isFollower = !isFollower; mod.follower_count--; })">Unfollow</a>
-            <a href="#" class="follow-button btn btn-block btn-lg btn-warning" v-else v-on:click="followMod(currentUser, mod, function(data) { isFollower = !isFollower; mod.follower_count++; })">Follow</a>
+            <a href="#" class="unfollow-button btn btn-block btn-lg btn-warning" v-if="isFollower" v-on:click.prevent="unfollowMod(mod, function(data) { isFollower = !isFollower; mod.follower_count--; })">Unfollow</a>
+            <a href="#" class="follow-button btn btn-block btn-lg btn-warning" v-else v-on:click.prevent="followMod(currentUser, mod, function(data) { isFollower = !isFollower; mod.follower_count++; })">Follow</a>
         </div>
     </div>
 </div>
@@ -235,16 +235,16 @@
                 in.</p>
             </div>
             <div class="col-md-8">
-                <a href="" class="btn btn-success btn-block btn-lg" v-if="!mod.published" v-on:click="publishMod(mod, function(data) { updateMod(); })">Publish this Mod</a>
+                <a href="#" class="btn btn-success btn-block btn-lg" v-if="!mod.published" v-on:click.prevent="publishMod(mod, function(data) { updateMod(); })">Publish this Mod</a>
                 <a href="" class="btn btn-info btn-block btn-lg">Edit this Mod</a>
                 <a href="" class="btn btn-primary btn-block btn-lg">Update this Mod</a>
                 <a href="#" data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger btn-block btn-lg" v-if="deletable">Delete this Mod</a>
                 <template v-if="featureable && mod.published">
-                <a href="#" class="btn btn-default btn-block btn-lg feature-button" v-if="!isFeatured" v-on:click="featureMod(mod, function(data) { isFeatured = !isFeatured; })">
+                <a href="#" class="btn btn-default btn-block btn-lg feature-button" v-if="!isFeatured" v-on:click.prevent="featureMod(mod, function(data) { isFeatured = !isFeatured; })">
                     <span class="fa fa-fire"></span>
                     Feature this mod
                 </a>
-                <a href="#" class="btn btn-default btn-block btn-lg unfeature-button" v-else  v-on:click="unfeatureMod(mod, function(data) { isFeatured = !isFeatured; })">
+                <a href="#" class="btn btn-default btn-block btn-lg unfeature-button" v-else  v-on:click.prevent="unfeatureMod(mod, function(data) { isFeatured = !isFeatured; })">
                     <span class="fa fa-fire"></span>
                     Remove feature
                 </a>
