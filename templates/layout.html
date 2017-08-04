@@ -81,7 +81,7 @@
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Log In <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <form role="form" action="/login" method="POST">
+                    <form role="form">
                         <input type="text" id="username" placeholder="Username" name="username">
                         <input type="password" id="password" placeholder="Password" name="password">
                         <div class="checkbox">
@@ -106,7 +106,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="usernameDisplay">Welcome ${currentUser.username}<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="/create/mod">
+                        <a href="{{ path_for('mod.create') }}">
                                         <span class="fa fa-upload"></span> Create a New Mod
                                     </a>
                     </li>

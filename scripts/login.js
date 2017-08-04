@@ -1,7 +1,7 @@
 function fillLogin() {
     getJSON(backend + '/api/users/current', function(currentUser) {        
         if (currentUser.data != null) {
-            window.location.href = "/";
+            window.location.href = "{{ path_for('index') }}";
         }
         app = new Vue({
             el: '#site',

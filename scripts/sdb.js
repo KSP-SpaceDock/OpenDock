@@ -34,7 +34,7 @@ function registerUser(email, username, password, repeatPassword, callback) {
 
 function loginUser(username, password, remember, returnto) {
     if (returnto == null) {
-        returnto = "/";
+        returnto = "{{ path_for('index') }}";
     }
     showLoading();
     $.ajax(backend + "/api/login", {
