@@ -205,3 +205,27 @@ function setDefaultVersion(mod, version, callback) {
 function publishMod(mod, callback) {
     postJSON(backend + '/api/mods/' + mod.game_short + '/' + mod.id + '/publish', callback);
 }
+
+function createMod(name, gameshort, shortDescription, license, version, gameVersion, _zipFile, callback) {
+    postJSON(backend + '/api/mods', {'name': name, 'gameshort': gameshort, 'license': license}, function(data) {
+        if (data.error) {
+            callback(0, data);
+            return;
+        }
+        putJSON(backend + '/api/mods/' + gameshort + '/' + data.data.id, {'short_description': shortDescription}, function(_data) {
+            if (_data.error) {
+                callback(1, _data);
+                return;
+            }
+            postJSON(backend + '/api/mods/' + gameshort + '/' + data.data.id + '/versions', {
+                'version': version,
+                'game-version': gameVersion,
+                'notify-followers': false, 
+                'is-beta': false,
+                'zipball': _zipFile
+            }, function(__data) {
+                    callback(2, __data);
+            });
+        });
+    })
+}

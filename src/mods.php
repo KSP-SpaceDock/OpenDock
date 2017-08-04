@@ -15,4 +15,8 @@ $app->get('/random', function($request, $response, $args) {
     return $response->withRedirect("mod/{$random_mod['data']['id']}/{$random_mod['data']['name']}", 302);
 })->setName('mod.random');
 
+$app->get('/create/mod', function($request, $response, $args) {
+    return $this->view->render($response, 'templates/create.html');
+})->setName('mod.create');
+
 ?>

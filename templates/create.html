@@ -1,22 +1,25 @@
-{% extends "layout.html" %}
+{% extends "templates/layout.html" %}
 {% block styles %}
+<link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'create.css'}) }}" />
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'stylesheet.css'}) }}" />
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'typeahead.css'}) }}" />
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'navigation.css'}) }}" />
 {% endblock %}
 {% block scripts %}
-<script src="/static/create.js"></script>
+<script src="{{ path_for('scripts', {'filename': 'create.js'}) }}"></script>
+<script type="text/javascript">
+    fillCreate();
+</script>
 {% endblock %}
 {% block body %}
-{% if not user.public %}
-<div class="well">
+<div class="well" v-if="!currentUser.public">
     <div class="container">
         <h2>Your profile has to be public to create mods.</h2>
-        <p>You can change it to public on your <a href="/profile/{{ user.username }}">profile page</a>.</p>
+        <p>You can change it to public on your <a v-bind:href="'/profile/' + currentUser.username">profile page</a>.</p>
     </div>
 </div>
-{% else %}
 
+<template v-if="currentUser.public">
 <div class="header">
     <div class="vert-text">
         <h3>Create a new mod</h3>
@@ -31,7 +34,7 @@
     <div class="container centered">
         <div class="form-group">
             <h2 class="control-label">What's your mod called?</h2>
-            <input id="mod-name" class="form-control input-lg" type="text" placeholder="{{ user.username }}'s Super Cool Mod" maxLength=100 />
+            <input id="mod-name" class="form-control input-lg" type="text" v-bind:placeholder="currentUser.username + '\'s Super Cool Mod'" maxLength=100 />
         </div>
         <div class="form-group">
             <h2>Short description:</h2>
@@ -39,7 +42,7 @@
         </div>
         <div class="form-group">
             <h2>License <small><a href="#" data-toggle="modal" data-target="#license-info">What's this?</a></small></h2>
-            <select id="mod-license" class="form-control input-lg">
+            <select id="mod-license" class="form-control input-lg" v-on:change="onLicenseChange()">
                 <option value="MIT" selected>MIT</option>
                 <option value="BSD">BSD</option>
                 <option value="GPLv2">GPLv2</option>
@@ -53,8 +56,8 @@
         <div class="form-group">
             <h2>Zip File</h2>
             <div class="upload-mod">
-                <input type="file" class="hidden" id="mod-file" />
-                <a href="#">Drag and drop or click to browse</a>
+                <input type="file" class="hidden" id="mod-file" v-on:change="selectFile($event.target.files[0])" />
+                <a href="#" v-on:click.prevent="onUploadClick()">Drag and drop or click to browse</a>
             </div>
         </div>
         <div class="row" style="margin-top: 30px;">
@@ -62,10 +65,8 @@
                 <input id="mod-version" type="text" class="form-control input-block-level" placeholder="Version number" />
             </div>
             <div class="col-md-5 form-group">
-                <select id="mod-ksp-version" class="form-control">
-                    {% for v in game_versions %}
-                    <option value="{{v.friendly_version}}" {% if loop.first %}selected{% endif %}>KSP {{v.friendly_version}}</option>
-                    {% endfor %}
+                <select id="mod-game-version" class="form-control">
+                    <option v-bind:value="v.friendly_version" v-bind:selected="i == 0" v-for="(v,i) in game_versions">KSP ${v.friendly_version}<template v-if="v.beta"> (Beta Version)</template></option>
                 </select>
             </div>
             <div class="col-md-2 form-group">
@@ -76,7 +77,7 @@
                 </label>
             </div>
         </div>
-        <button id="submit" class="btn btn-success btn-lg btn-block" style="margin: 20px auto;">
+        <button id="submit" class="btn btn-success btn-lg btn-block" style="margin: 20px auto;" v-on:click="onSubmitClick()">
             <span class="progress-label">Create Your Mod</span>
             <div class="progress" id="progress">
                 <div class="progress-bar-striped progress-bar active" style="width: 0%"></div>
@@ -126,5 +127,5 @@
         </div>
     </div>
 </div>
-{% endif %}
+</template>
 {% endblock %}
