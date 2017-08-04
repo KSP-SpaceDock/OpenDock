@@ -128,11 +128,7 @@ function onSubmitClick() {
 }
 
 function selectFile(file) {
-    var reader = new FileReader();
-    reader.onloadend = function(evt) {
-        zipFile = btoa(evt.target.result);
-    };
-    reader.readAsBinaryString(file);
+    zipFile = file;
     var parent = document.querySelector('.upload-mod');
     parent.querySelector('a').classList.add('hidden');
     var p = document.createElement('p');

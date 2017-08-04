@@ -221,10 +221,27 @@ function createMod(name, gameshort, shortDescription, license, version, gameVers
                 'version': version,
                 'game-version': gameVersion,
                 'notify-followers': false, 
-                'is-beta': false,
-                'zipball': _zipFile
+                'is-beta': false
             }, function(__data) {
+                if (__data.error) {
                     callback(2, __data);
+                }
+                var form = new FormData();
+                form.append("file", zipFile);
+                $.ajax(backend + '/upload/' + __data.data.token, {
+                    data: form,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    success: function(retData) {
+                        callback(3, retData);
+                    },error: function(xhr, a, b) {
+                        callback(3, $.parseJSON(xhr.responseText));
+                    }
+                });
             });
         });
     })
