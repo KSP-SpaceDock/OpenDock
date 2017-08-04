@@ -64,6 +64,7 @@ function fillMod() {
                 'featureMod': featureMod,
                 'unfeatureMod': unfeatureMod,
                 'setDefaultVersion': setDefaultVersion,
+                'publishMod': publishMod
             },
             delimiters: ['${', '}']
         });

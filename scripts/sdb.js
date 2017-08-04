@@ -201,3 +201,7 @@ function setDefaultVersion(mod, version, callback) {
     console.log(callback);
     postJSON(backend + '/api/mods/' + mod.game_short + '/' + mod.id + '/versions/' + version.id + '/set-default', callback);
 }
+
+function publishMod(mod, callback) {
+    postJSON(backend + '/api/mods/' + mod.game_short + '/' + mod.id + '/publish', callback);
+}
