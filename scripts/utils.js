@@ -82,113 +82,74 @@ function loginUserHotbar() {
     loginUser($('input#username').val(), $('input#password').val(), $('input#remember-me').is(":checked"), window.location.href)
 }
 
-// $.getJSON clone that doesn't fail on 403
-function getJSON(url, callback) {
+// Base method for *JSON methods (get, post, put, delete)
+function requestJSON(url, data, method, callback) {
     return $.ajax(url, {
-        data: '',
+        data: data,
         xhrFields: {
             withCredentials: true
         },
-        type: "GET",
+        type: method,
         dataType: "json",
         contentType: "application/json",
         success: function(data) {
-            callback(data);
+            if (callback) {
+                callback(data);
+            }
         },error: function(xhr, a, b) {
-            callback($.parseJSON(xhr.responseText));
+            if (callback) {
+                callback($.parseJSON(xhr.responseText));
+            }
         }
-    });    
+    }).then(null, function(jqXHR, textStatus, errorThrown) {
+        return $.parseJSON(jqXHR.responseText);
+    }).then(function (data) {
+        return data;
+    }, function (err) {
+        console.log(err);
+    });  
 }
 
-function postJSON(url, callback) {
-    $.ajax(url, {
-        data: '',
-        xhrFields: {
-            withCredentials: true
-        },
-        type: "POST",
-        dataType: "json",
-        contentType: "application/json",
-        success: function(data) {
-            callback(data);
-        },error: function(xhr, a, b) {
-            callback($.parseJSON(xhr.responseText));
-        }
-    });
+// Submits a GET request to the URL
+function getJSON(url, data, callback) {
+    if (callback == null) {
+        callback = data;
+        data = '';
+    }
+    return requestJSON(url, '', 'GET', callback);
 }
 
+// Submits a POST request to the URL
 function postJSON(url, data, callback) {
     if (callback == null) {
         callback = data;
+        data = '';
+    } else {
+        data = JSON.stringify(data);
     }
-    $.ajax(url, {
-        data: JSON.stringify(data),
-        xhrFields: {
-            withCredentials: true
-        },
-        type: "POST",
-        dataType: "json",
-        contentType: "application/json",
-        success: function(retData) {
-            callback(retData);
-        },error: function(xhr, a, b) {
-            callback($.parseJSON(xhr.responseText));
-        }
-    });
+    return requestJSON(url, data, 'POST', callback);
 }
 
+// Submits a PUT request to the URL
 function putJSON(url, data, callback) {
-    $.ajax(url, {
-        data: JSON.stringify(data),
-        xhrFields: {
-            withCredentials: true
-        },
-        type: "PUT",
-        dataType: "json",
-        contentType: "application/json",
-        success: function(data) {
-            callback(data);
-        },error: function(xhr, a, b) {
-            callback($.parseJSON(xhr.responseText));
-        }
-    });
+    if (callback == null) {
+        callback = data;
+        data = '';
+    } else {
+        data = JSON.stringify(data);
+    }
+    return requestJSON(url, data, 'PUT', callback);
 }
 
-function deleteJSON(url, callback) {
-    $.ajax(url, {
-        data: '',
-        xhrFields: {
-            withCredentials: true
-        },
-        type: "DELETE",
-        dataType: "json",
-        contentType: "application/json",
-        success: function(data) {
-            callback(data);
-        },error: function(xhr, a, b) {
-            callback($.parseJSON(xhr.responseText));
-        }
-    });
-}
-
+// Submits a DELETE request to the URL
 function deleteJSON(url, data, callback) {
     if (callback == null) {
         callback = data;
+        data = '';
+    } else {
+        data = JSON.stringify(data);
     }
-    $.ajax(url, {
-        data: JSON.stringify(data),
-        xhrFields: {
-            withCredentials: true
-        },
-        type: "DELETE",
-        dataType: "json",
-        contentType: "application/json",
-        success: function(retData) {
-            callback(retData);
-        },error: function(xhr, a, b) {
-            callback($.parseJSON(xhr.responseText));
-        }
-    });
+    return requestJSON(url, data, 'DELETE', callback);
 }
 
 function readCookie(name) {
