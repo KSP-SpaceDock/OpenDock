@@ -1,11 +1,12 @@
-function fillViewProfile() {
-    getJSON(backend + '/api/users/current', function(currentUser) {
-    getJSON(backend + '/api/users/' + user_id, function(user) {    
+function fillViewProfile() {    
+    getJSON(backend + '/api/users/' + user_id, function(user) { 
     if (user.error) {
         window.location.href = "{{ path_for('not-found') }}";
     }
-    hasPermission('user-edit', false, {'userid': user_id}, function(editable) {
-    hasPermission('view-users-full', false, {}, function(viewFull) {
+    $.when(getJSON(backend + '/api/users/current'),
+           hasPermission('user-edit', false, {'userid': user_id}),
+           hasPermission('view-users-full', false, {})).
+      done(function (currentUser, editable, viewFull) {
         app = new Vue({
             el: '#site',
             data: {
@@ -25,22 +26,23 @@ function fillViewProfile() {
         window.setInterval(updateViewProfile, update_interval);
         document.title = user.data.username + ' on {{ site_name }}';
         $.loadingBlockHide();
-    })})})});
+    })});
 }
 
 function updateViewProfile() {
-    getJSON(backend + '/api/users/current', function(currentUser) {
-    getJSON(backend + '/api/users/' + user_id, function(user) {    
+    getJSON(backend + '/api/users/' + user_id, function(user) { 
     if (user.error) {
         window.location.href = "{{ path_for('not-found') }}";
     }
-    hasPermission('user-edit', false, {'userid': user_id}, function(editable) {
-    hasPermission('view-users-full', false, {}, function(viewFull) {
+    $.when(getJSON(backend + '/api/users/current'),
+           hasPermission('user-edit', false, {'userid': user_id}),
+           hasPermission('view-users-full', false, {})).
+      done(function (currentUser, editable, viewFull) {
         app.$data.currentUser = currentUser.error ? null : currentUser.data;
         app.$data.user = user.data;
         app.$data.editable = editable;
         app.$data.viewFull = viewFull;
         app.$data.window = window;
         document.title = user.data.username + ' on {{ site_name }}';
-    })})})});
+    })});
 }

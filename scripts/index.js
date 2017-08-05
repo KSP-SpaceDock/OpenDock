@@ -1,8 +1,9 @@
 function fillIndex() {
-    getJSON(backend + '/api/users/current', function(currentUser) {
-    getJSON(backend + '/api/mods/' + gameshort, function(mods) {
-    getJSON(backend + '/api/users', function(users) {
-    getJSON(backend + '/api/browse/' + gameshort, function(browse) {
+    $.when(getJSON(backend + '/api/users/current'), 
+           getJSON(backend + '/api/mods/' + gameshort), 
+           getJSON(backend + '/api/users'), 
+           getJSON(backend + '/api/browse/' + gameshort))
+      done(function(currentUser, mods, users, browse) {
         app = new Vue({ 
             el: '#site', 
             data: { 
@@ -26,14 +27,15 @@ function fillIndex() {
         }); 
         window.setInterval(updateIndex, update_interval);
         $.loadingBlockHide();
-    })})})});
+    });
 }
 
 function updateIndex() {
-    getJSON(backend + '/api/users/current', function(currentUser) {
-    getJSON(backend + '/api/mods/' + gameshort, function(mods) {
-    getJSON(backend + '/api/users', function(users) {
-    getJSON(backend + '/api/browse/' + gameshort, function(browse) {
+    $.when(getJSON(backend + '/api/users/current'), 
+           getJSON(backend + '/api/mods/' + gameshort), 
+           getJSON(backend + '/api/users'), 
+           getJSON(backend + '/api/browse/' + gameshort))
+      done(function(currentUser, mods, users, browse) {
         app.$data.currentUser = currentUser.error ? null : currentUser.data;
         app.$data.mods = mods;
         app.$data.users = users;
@@ -45,5 +47,5 @@ function updateIndex() {
             'yours': browse.data.yours
         };
         app.$data.window = window;
-    })})})});
+    });
 }

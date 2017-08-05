@@ -1,18 +1,19 @@
 function fillMod() {
-    getJSON(backend + '/api/users/current', function(currentUser) {
     getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id, function(mod) {
     if (mod.error) {
         window.location.href = "{{ path_for('not-found') }}";
     }
-    getJSON(backend + '/api/games/' + gameshort, function(game) {
-    getJSON(backend + '/api/games/' + gameshort + '/versions', function(gameversions) {
-    getJSON(backend + '/api/users/' + mod.data.user, function(modUser) {
-    getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id + '/stats/downloads', function(download_stats) {
-    getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id + '/stats/follower', function(follower_stats) {
-    getJSON(backend + '/api/featured/' + gameshort, function(featured) {
-    hasPermission('mods-edit', true, {'gameshort': gameshort, 'modid': mod_id}, function(editable) {
-    hasPermission('mods-remove', true, {'gameshort': gameshort, 'modid': mod_id}, function(deletable) {
-    hasPermission('mods-feature', true, {'gameshort': gameshort}, function(featureable) {
+    $.when(getJSON(backend + '/api/users/current'), 
+           getJSON(backend + '/api/games/' + gameshort), 
+           getJSON(backend + '/api/games/' + gameshort + '/versions'),
+           getJSON(backend + '/api/users/' + mod.data.user), 
+           getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id + '/stats/downloads'),
+           getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id + '/stats/follower'), 
+           getJSON(backend + '/api/featured/' + gameshort),
+           hasPermission('mods-edit', true, {'gameshort': gameshort, 'modid': mod_id}),
+           hasPermission('mods-feature', true, {'gameshort': gameshort}),
+           hasPermission('mods-remove', true, {'gameshort': gameshort, 'modid': mod_id})).
+      done(function(currentUser, game, gameversions, modUser, download_stats, follower_stats, featured, editable, deletable, featureable) {
         var mod_users = {}
         mod_users[mod.data.user] = modUser.data;
         mod.data.shared_authors.forEach(function(entry) {
@@ -72,19 +73,25 @@ function fillMod() {
         window.setInterval(updateMod, update_interval);
         document.title = mod.data.name + ' on {{ site_name }}';
         $.loadingBlockHide();
-    })})})})})})})})})})});
+    })});
 }
 
 function updateMod() {
-    getJSON(backend + '/api/users/current', function(currentUser) {
     getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id, function(mod) {
-    getJSON(backend + '/api/games/' + gameshort, function(game) {
-    getJSON(backend + '/api/games/' + gameshort + '/versions', function(gameversions) {
-    getJSON(backend + '/api/users/' + mod.data.user, function(modUser) {    
-    getJSON(backend + '/api/featured/' + gameshort, function(featured) {
-    hasPermission('mods-edit', true, {'gameshort': gameshort, 'modid': mod_id}, function(editable) {
-    hasPermission('mods-remove', true, {'gameshort': gameshort, 'modid': mod_id}, function(deletable) {
-    hasPermission('mods-feature', true, {'gameshort': gameshort}, function(featureable) {
+    if (mod.error) {
+        window.location.href = "{{ path_for('not-found') }}";
+    }
+    $.when(getJSON(backend + '/api/users/current'), 
+           getJSON(backend + '/api/games/' + gameshort), 
+           getJSON(backend + '/api/games/' + gameshort + '/versions'),
+           getJSON(backend + '/api/users/' + mod.data.user), 
+           getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id + '/stats/downloads'),
+           getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id + '/stats/follower'), 
+           getJSON(backend + '/api/featured/' + gameshort),
+           hasPermission('mods-edit', true, {'gameshort': gameshort, 'modid': mod_id}),
+           hasPermission('mods-feature', true, {'gameshort': gameshort}),
+           hasPermission('mods-remove', true, {'gameshort': gameshort, 'modid': mod_id})).
+      done(function(currentUser, game, gameversions, modUser, download_stats, follower_stats, featured, editable, deletable, featureable) {
         var mod_users = {}
         mod_users[mod.data.user] = modUser.data;
         mod.data.shared_authors.forEach(function(entry) {
@@ -109,7 +116,7 @@ function updateMod() {
         app.$data.outdated = new Date(mod.data.default_version.gameversion.created).getTime() < new Date(Enumerable.from(gameversions.data).first('v=>!v.beta').created).getTime();
         app.$data.window = window;
         app.$data.Enumerable = Enumerable;
-    })})})})})})})})});
+    })});
 }
 
 function onDownloadLinkClick(user) {

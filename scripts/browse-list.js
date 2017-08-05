@@ -12,9 +12,8 @@ function fillBrowseList() {
     if (url == "/browse/featured") {
         browseURL = "/api/browse/" + gameshort + "/featured?site=" + page + "&count=30";
     }    
-    getJSON(backend + '/api/users/current', function(currentUser) {
-    getJSON(backend + '/api/mods/' + gameshort, function(mods) {
-    getJSON(backend + browseURL, function (browse) {
+    $.when(getJSON(backend + '/api/users/current'), getJSON(backend + '/api/mods/' + gameshort), getJSON(backend + browseURL)).
+      done(function(currentUser, mods, browse) {
         app = new Vue({
             el: '#site',
             data: {
@@ -34,7 +33,7 @@ function fillBrowseList() {
         });
         window.setInterval(updateBrowseList, update_interval);
         $.loadingBlockHide();
-    })})});
+    });
 }
 
 function updateBrowseList() {
@@ -51,9 +50,8 @@ function updateBrowseList() {
     if (url == "/browse/featured") {
         browseURL = "/api/browse/" + gameshort + "/featured?site=" + page + "&count=30";
     }    
-    getJSON(backend + '/api/users/current', function(currentUser) {
-    getJSON(backend + '/api/mods/' + gameshort, function(mods) {
-    getJSON(backend + browseURL, function (browse) {
+    $.when(getJSON(backend + '/api/users/current'), getJSON(backend + '/api/mods/' + gameshort), getJSON(backend + browseURL)).
+      done(function(currentUser, mods, browse) {
         app.$data.currentUser = currentUser.error ? null : currentUser.data;
         app.$data.mods = mods;
         app.$data.browse = browse;
@@ -61,5 +59,5 @@ function updateBrowseList() {
         app.$data.page = page;
         app.$data.url = url;
         app.$data.search = search;
-    })})});
+    });
 }

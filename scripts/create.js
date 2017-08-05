@@ -1,6 +1,7 @@
 function fillCreate() {
-    getJSON(backend + '/api/users/current', function(currentUser) {
-    getJSON(backend + '/api/games/' + gameshort + '/versions', function(gameversions) {
+    $.when(getJSON(backend + '/api/users/current'), 
+           getJSON(backend + '/api/games/' + gameshort + '/versions')).
+      done(function(currentUser, gameversions) {
         if (currentUser.error) {
             window.location.href = "{{ path_for('accounts.login') }}";
             return;
@@ -33,12 +34,13 @@ function fillCreate() {
         $('#submit').removeAttr('disabled');
         $('[data-toggle="tooltip"]').tooltip();
         $.loadingBlockHide();
-    })});
+    });
 }
 
 function updateCreate() {
-    getJSON(backend + '/api/users/current', function(currentUser) {    
-    getJSON(backend + '/api/games/' + gameshort + '/versions', function(gameversions) {
+    $.when(getJSON(backend + '/api/users/current'), 
+           getJSON(backend + '/api/games/' + gameshort + '/versions')).
+      done(function(currentUser, gameversions) {
         if (currentUser.error) {
             window.location.href = "{{ path_for('accounts.login') }}";
             return;
@@ -46,7 +48,7 @@ function updateCreate() {
         app.$data.currentUser = currentUser.error ? null : currentUser.data;
         app.$data.game_versions = gameversions.data;
         app.$data.window = window;
-    })});
+    });
 }
 
 function onLicenseChange() {

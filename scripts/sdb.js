@@ -156,8 +156,29 @@ function unfollowMod(mod, callback) {
 }
 
 function hasPermission(permission, pub, params, callback) {
-    postJSON(backend + "/api/access/check", extend({"permission": permission, "public": pub, "params": Object.keys(params)}, params), function(data) {
-        callback(!data.error);
+    return $.ajax(backend + '/api/access/check', {
+        data: extend({"permission": permission, "public": pub, "params": Object.keys(params)}, params),
+        xhrFields: {
+            withCredentials: true
+        },
+        type: 'POST',
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data) {
+            if (callback) {
+                callback(!data.error);
+            }
+        },error: function(xhr, a, b) {
+            if (callback) {
+                callback(!$.parseJSON(xhr.responseText).error);
+            }
+        }
+    }).then(null, function(jqXHR, textStatus, errorThrown) {
+        return !$.parseJSON(jqXHR.responseText).error;
+    }).then(function (data) {
+        return !data.error;
+    }, function (err) {
+        console.log(err);
     });
 }
 
