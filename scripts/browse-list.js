@@ -12,7 +12,9 @@ function fillBrowseList() {
     if (url == "/browse/featured") {
         browseURL = "/api/browse/" + gameshort + "/featured?site=" + page + "&count=30";
     }    
-    $.when(getJSON(backend + '/api/users/current'), getJSON(backend + '/api/mods/' + gameshort), getJSON(backend + browseURL)).
+    when(getJSON(backend + '/api/users/current'), 
+           getJSON(backend + '/api/mods/' + gameshort), 
+           getJSON(backend + browseURL)).
       done(function(currentUser, mods, browse) {
         app = new Vue({
             el: '#site',
@@ -50,7 +52,9 @@ function updateBrowseList() {
     if (url == "/browse/featured") {
         browseURL = "/api/browse/" + gameshort + "/featured?site=" + page + "&count=30";
     }    
-    $.when(getJSON(backend + '/api/users/current'), getJSON(backend + '/api/mods/' + gameshort), getJSON(backend + browseURL)).
+    swhen(getJSON(backend + '/api/users/current'), 
+           getJSON(backend + '/api/mods/' + gameshort), 
+           getJSON(backend + browseURL)).
       done(function(currentUser, mods, browse) {
         app.$data.currentUser = currentUser.error ? null : currentUser.data;
         app.$data.mods = mods;

@@ -1,5 +1,5 @@
 function fillCreate() {
-    $.when(getJSON(backend + '/api/users/current'), 
+    when(getJSON(backend + '/api/users/current'), 
            getJSON(backend + '/api/games/' + gameshort + '/versions')).
       done(function(currentUser, gameversions) {
         if (currentUser.error) {
@@ -38,7 +38,7 @@ function fillCreate() {
 }
 
 function updateCreate() {
-    $.when(getJSON(backend + '/api/users/current'), 
+    when(getJSON(backend + '/api/users/current'), 
            getJSON(backend + '/api/games/' + gameshort + '/versions')).
       done(function(currentUser, gameversions) {
         if (currentUser.error) {

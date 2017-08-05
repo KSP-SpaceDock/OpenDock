@@ -3,7 +3,7 @@ function fillViewProfile() {
     if (user.error) {
         window.location.href = "{{ path_for('not-found') }}";
     }
-    $.when(getJSON(backend + '/api/users/current'),
+    when(getJSON(backend + '/api/users/current'),
            hasPermission('user-edit', false, {'userid': user_id}),
            hasPermission('view-users-full', false, {})).
       done(function (currentUser, editable, viewFull) {
@@ -34,7 +34,7 @@ function updateViewProfile() {
     if (user.error) {
         window.location.href = "{{ path_for('not-found') }}";
     }
-    $.when(getJSON(backend + '/api/users/current'),
+    when(getJSON(backend + '/api/users/current'),
            hasPermission('user-edit', false, {'userid': user_id}),
            hasPermission('view-users-full', false, {})).
       done(function (currentUser, editable, viewFull) {

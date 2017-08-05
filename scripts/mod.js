@@ -3,7 +3,7 @@ function fillMod() {
     if (mod.error) {
         window.location.href = "{{ path_for('not-found') }}";
     }
-    $.when(getJSON(backend + '/api/users/current'), 
+    when(getJSON(backend + '/api/users/current'), 
            getJSON(backend + '/api/games/' + gameshort), 
            getJSON(backend + '/api/games/' + gameshort + '/versions'),
            getJSON(backend + '/api/users/' + mod.data.user), 
@@ -81,7 +81,7 @@ function updateMod() {
     if (mod.error) {
         window.location.href = "{{ path_for('not-found') }}";
     }
-    $.when(getJSON(backend + '/api/users/current'), 
+    when(getJSON(backend + '/api/users/current'), 
            getJSON(backend + '/api/games/' + gameshort), 
            getJSON(backend + '/api/games/' + gameshort + '/versions'),
            getJSON(backend + '/api/users/' + mod.data.user), 

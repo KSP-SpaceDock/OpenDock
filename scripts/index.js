@@ -1,8 +1,8 @@
 function fillIndex() {
-    $.when(getJSON(backend + '/api/users/current'), 
+    when(getJSON(backend + '/api/users/current'), 
            getJSON(backend + '/api/mods/' + gameshort), 
            getJSON(backend + '/api/users'), 
-           getJSON(backend + '/api/browse/' + gameshort))
+           getJSON(backend + '/api/browse/' + gameshort)).
       done(function(currentUser, mods, users, browse) {
         app = new Vue({ 
             el: '#site', 
@@ -31,7 +31,7 @@ function fillIndex() {
 }
 
 function updateIndex() {
-    $.when(getJSON(backend + '/api/users/current'), 
+    when(getJSON(backend + '/api/users/current'), 
            getJSON(backend + '/api/mods/' + gameshort), 
            getJSON(backend + '/api/users'), 
            getJSON(backend + '/api/browse/' + gameshort))
