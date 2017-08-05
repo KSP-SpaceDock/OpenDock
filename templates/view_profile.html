@@ -118,13 +118,13 @@
                     <template v-if="user.confirmation == ''">Yes</template>
                     <template v-else>
                         No
-                        <a href="#">[Confirm Manually]</a>
+                        <a href="#" v-on:click.prevent="confirmUserManually(user, function(data) { updateViewProfile(); })" v-if="canConfirm">[Confirm Manually]</a>
                     </template>
                 <br />
                 <span class="text-muted">Public:</span> <template v-if="user.public">Yes</template><template v-else>No</template><br />
                 <span class="text-muted">Created:</span> ${user.created}
                 </p>
-                <a href="#" class="btn btn-primary" style="margin-bottom: 10px;">
+                <a href="#" class="btn btn-primary" style="margin-bottom: 10px;" v-on:click.prevent="impersonateUser(user, function(data) { window.location.reload(); })" v-if="canImpersonate">
                     <span class="fa fa-fire"></span>
                       Impersonate user
                 </a>
@@ -145,9 +145,9 @@
                 All of the info on this page will be shown to anyone who wants to see it, and you'll be listed in the profile directory.
             </div>
             <div class="modal-footer">
-                <form action="/profile/{{ user.username }}/make-public" method="POST">
+                <form>
                     <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
-                    <input type="submit" class="btn btn-primary" value="Publicize Profile">
+                    <input type="button" class="btn btn-primary" value="Publicize Profile" v-on:click="makeUserPublic(user, function(data) { updateViewProfile(); })">
                 </form>
             </div>
         </div>

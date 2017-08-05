@@ -157,7 +157,7 @@ function unfollowMod(mod, callback) {
 
 function hasPermission(permission, pub, params, callback) {
     return $.ajax(backend + '/api/access/check', {
-        data: extend({"permission": permission, "public": pub, "params": Object.keys(params)}, params),
+        data: JSON.stringify(extend({"permission": permission, "public": pub, "params": Object.keys(params)}, params)),
         xhrFields: {
             withCredentials: true
         },
@@ -173,12 +173,10 @@ function hasPermission(permission, pub, params, callback) {
                 callback(!$.parseJSON(xhr.responseText).error);
             }
         }
-    }).then(null, function(jqXHR, textStatus, errorThrown) {
-        return !$.parseJSON(jqXHR.responseText).error;
     }).then(function (data) {
         return !data.error;
-    }, function (err) {
-        console.log(err);
+    }, function(jqXHR, textStatus, errorThrown) {
+        return !jqXHR.responseJSON.error;
     });
 }
 
@@ -266,4 +264,16 @@ function createMod(name, gameshort, shortDescription, license, version, gameVers
             });
         });
     })
+}
+
+function confirmUserManually(user, callback) {
+    postJSON(backend + '/api/admin/manual-confirmation/' + user.id, callback);
+}
+
+function makeUserPublic(user, callback) {
+    putJSON(backend + '/api/users/' + user.id, {'public': true}, callback);
+}
+
+function impersonateUser(user, callback) {
+    postJSON(backend + '/api/admin/impersonate/' + user.id, callback);
 }

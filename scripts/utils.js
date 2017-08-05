@@ -101,12 +101,10 @@ function requestJSON(url, data, method, callback) {
                 callback($.parseJSON(xhr.responseText));
             }
         }
-    }).then(null, function(jqXHR, textStatus, errorThrown) {
-        return $.parseJSON(jqXHR.responseText);
     }).then(function (data) {
         return data;
-    }, function (err) {
-        console.log(err);
+    }, function(jqXHR, textStatus, errorThrown) {
+        return $.parseJSON(jqXHR.responseText);
     });  
 }
 
