@@ -266,12 +266,12 @@ function createMod(name, gameshort, shortDescription, license, version, gameVers
     });
 }
 
-function updateMod(mod, version, gameVersion, notifyFollowers, changelog, _zipFile, callback) {
+function updateMod(mod, version, gameVersion, notifyFollowers, isBeta, changelog, _zipFile, callback) {
     postJSON(backend + '/api/mods/' + gameshort + '/' + mod.id + '/versions', {
         'version': version,
         'game-version': gameVersion,
         'notify-followers': notifyFollowers, 
-        'is-beta': false,
+        'is-beta': isBeta,
         'changelog': changelog
     }, function(data) {
         if (data.error) {
