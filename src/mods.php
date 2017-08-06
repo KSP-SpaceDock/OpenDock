@@ -19,4 +19,10 @@ $app->get('/create/mod', function($request, $response, $args) {
     return $this->view->render($response, 'templates/create.html');
 })->setName('mod.create');
 
+$app->get('/update/mod/{id}[/{name}]', function($request, $response, $args) {
+    return $this->view->render($response, 'templates/update.html', [
+        'modid' => $args['id']
+    ]);
+})->setName('mod.update');
+
 ?>

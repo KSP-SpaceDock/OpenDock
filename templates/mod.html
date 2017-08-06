@@ -237,7 +237,7 @@
             <div class="col-md-8">
                 <a href="#" class="btn btn-success btn-block btn-lg" v-if="!mod.published" v-on:click.prevent="publishMod(mod, function(data) { updateMod(); })">Publish this Mod</a>
                 <a href="" class="btn btn-info btn-block btn-lg">Edit this Mod</a>
-                <a href="" class="btn btn-primary btn-block btn-lg">Update this Mod</a>
+                <a v-bind:href="'{{ path_for('mod.update', {'id': '<id>', 'name': '<name>'}) }}'.replace(/<id>/, mod.id).replace(/<name>/, mod.name)" class="btn btn-primary btn-block btn-lg">Update this Mod</a>
                 <a href="#" data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger btn-block btn-lg" v-if="deletable">Delete this Mod</a>
                 <template v-if="featureable && mod.published">
                 <a href="#" class="btn btn-default btn-block btn-lg feature-button" v-if="!isFeatured" v-on:click.prevent="featureMod(mod, function(data) { isFeatured = !isFeatured; })">

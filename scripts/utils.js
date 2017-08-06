@@ -1,5 +1,7 @@
 // Set vue settings
-Vue.config.debug = {{ debug }};
+{% if debug %}
+Vue.config.debug = true;
+{% endif %}
 
 // Vue instance
 var app = null;

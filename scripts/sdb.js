@@ -228,12 +228,12 @@ function publishMod(mod, callback) {
 function createMod(name, gameshort, shortDescription, license, version, gameVersion, _zipFile, callback) {
     postJSON(backend + '/api/mods', {'name': name, 'gameshort': gameshort, 'license': license}, function(data) {
         if (data.error) {
-            callback(0, data);
+            callback(0, data.data.id, data);
             return;
         }
         putJSON(backend + '/api/mods/' + gameshort + '/' + data.data.id, {'short_description': shortDescription}, function(_data) {
             if (_data.error) {
-                callback(1, _data);
+                callback(1, data.data.id, _data);
                 return;
             }
             postJSON(backend + '/api/mods/' + gameshort + '/' + data.data.id + '/versions', {
@@ -243,10 +243,10 @@ function createMod(name, gameshort, shortDescription, license, version, gameVers
                 'is-beta': false
             }, function(__data) {
                 if (__data.error) {
-                    callback(2, __data);
+                    callback(2, data.data.id, __data);
                 }
                 var form = new FormData();
-                form.append("file", zipFile);
+                form.append("file", _zipFile);
                 $.ajax(backend + '/upload/' + __data.data.token, {
                     data: form,
                     xhrFields: {
@@ -256,14 +256,44 @@ function createMod(name, gameshort, shortDescription, license, version, gameVers
                     processData: false,
                     contentType: false,
                     success: function(retData) {
-                        callback(3, retData);
+                        callback(3, data.data.id, retData);
                     },error: function(xhr, a, b) {
-                        callback(3, $.parseJSON(xhr.responseText));
+                        callback(3, data.data.id,  xhr.responseJSON);
                     }
                 });
             });
         });
-    })
+    });
+}
+
+function updateMod(mod, version, gameVersion, notifyFollowers, changelog, _zipFile, callback) {
+    postJSON(backend + '/api/mods/' + gameshort + '/' + mod.id + '/versions', {
+        'version': version,
+        'game-version': gameVersion,
+        'notify-followers': notifyFollowers, 
+        'is-beta': false,
+        'changelog': changelog
+    }, function(data) {
+        if (data.error) {
+            callback(0, data);
+        }
+        var form = new FormData();
+        form.append("file", _zipFile);
+        $.ajax(backend + '/upload/' + data.data.token, {
+            data: form,
+            xhrFields: {
+                withCredentials: true
+            },
+            type: "POST",
+            processData: false,
+            contentType: false,
+            success: function(retData) {
+                callback(1, retData);
+            },error: function(xhr, a, b) {
+                callback(1, xhr.responseJSON);
+            }
+        });
+    });
 }
 
 function confirmUserManually(user, callback) {

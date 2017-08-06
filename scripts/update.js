@@ -1,9 +1,15 @@
-function fillCreate() {
+function fillUpdate() {
+    hasPermission('mods-edit', true, {'gameshort': gameshort, 'modid': mod_id}, function(canUpdate) {
+    if (!canUpdate) {
+        window.location.href = "{{ path_for('not-found') }}";
+        return;
+    }
     when(getJSON(backend + '/api/users/current'), 
-           getJSON(backend + '/api/games/' + gameshort + '/versions')).
-      done(function(currentUser, gameversions) {
-        if (currentUser.error) {
-            window.location.href = "{{ path_for('accounts.login') }}";
+         getJSON(backend + '/api/games/' + gameshort + '/versions'),
+         getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id)).
+      done(function(currentUser, gameversions, mod) {
+        if (mod.error) {
+            window.location.href = "{{ path_for('not-found') }}";
             return;
         }
         app = new Vue({
@@ -11,19 +17,19 @@ function fillCreate() {
             data: {
                 'currentUser': currentUser.error ? null : currentUser.data,
                 'game_versions': gameversions.data,
+                'mod': mod.data,
                 'window': window
             },
             methods: {
                 'loginUserHotbar': loginUserHotbar,
                 'logoutUser': logoutUser,
-                'onLicenseChange': onLicenseChange,
                 'onUploadClick': onUploadClick,
                 'selectFile': selectFile,
                 'onSubmitClick': onSubmitClick
             },
             delimiters: ['${', '}']
         });
-        window.setInterval(updateCreate, update_interval);
+        window.setInterval(updateUpdate, update_interval);
         window.addEventListener('dragenter', dragNop, false);
         window.addEventListener('dragleave', dragNop, false);
         window.addEventListener('dragover', dragNop, false);
@@ -32,32 +38,28 @@ function fillCreate() {
             selectFile(e.dataTransfer.files[0]);
         }, false);
         $('#submit').removeAttr('disabled');
-        $('[data-toggle="tooltip"]').tooltip();
         $.loadingBlockHide();
-    });
+    })});
 }
 
-function updateCreate() {
+function updateUpdate() {
+hasPermission('mods-edit', true, {'gameshort': gameshort, 'modid': mod_id}, function(canUpdate) {
+    if (!canUpdate) {
+        window.location.href = "{{ path_for('not-found') }}";
+        return;
+    }
     when(getJSON(backend + '/api/users/current'), 
-           getJSON(backend + '/api/games/' + gameshort + '/versions')).
-      done(function(currentUser, gameversions) {
-        if (currentUser.error) {
-            window.location.href = "{{ path_for('accounts.login') }}";
+         getJSON(backend + '/api/games/' + gameshort + '/versions'),
+         getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id)).
+      done(function(currentUser, gameversions, mod) {
+        if (mod.error) {
+            window.location.href = "{{ path_for('not-found') }}";
             return;
         }
         app.$data.currentUser = currentUser.error ? null : currentUser.data;
         app.$data.game_versions = gameversions.data;
         app.$data.window = window;
-    });
-}
-
-function onLicenseChange() {
-    var license = $('#mod-license').val()
-    if (license == 'Other') {
-        $('#mod-other-license').removeClass('hidden');
-    } else {
-        $('#mod-other-license').addClass('hidden');
-    }
+    })});
 }
 
 function onUploadClick() {
@@ -72,35 +74,22 @@ function dragNop(e) {
 var zipFile;
 var loading = false;
 
-function onSubmitClick() {
+function onSubmitClick(mod) {
     $('.has-error').removeClass('has-error');
     $('#error-alert').addClass('hidden');
-
-    var name = $('#mod-name').val()
-    var shortDescription = $('#mod-short-description').val();
-    var license = $('#mod-license').val();
-    if (license == "Other") {
-        license = $('#mod-other-license').val()
-    }
+    
     var version = $('#mod-version').val();
     var gameVersion = $('#mod-game-version').val();
-    var ckan = $('#ckan').is(":checked");
+    var changelog = $('#changelog').val();
+    var notifyFollowers = $('#notify-followers').is(":checked");
 
     var valid = true;
-    if (name == '') {
-        error('mod-name');
-        valid = false;
-    }
-    if (shortDescription == '') {
-        error('mod-short-description');
-        valid = false;
-    }
-    if (license == '') {
-        error('mod-license');
-        valid = false;
-    }
     if (version == '') {
         error('mod-version');
+        valid = false;
+    }
+    if (gameVersion == '') {
+        error('mod-game-version');
         valid = false;
     }
     if (zipFile == null) {
@@ -116,7 +105,7 @@ function onSubmitClick() {
     loading = true;
     showLoading();
 
-    createMod(name, gameshort, shortDescription, license, version, gameVersion, zipFile, function(i, id, data) {
+    updateMod(mod, version, gameVersion, notifyFollowers, changelog, zipFile, function(i, data) {
         $('#progress').removeClass('active');
         if (!data.error) {
             window.location.href = `{{ path_for("mod.view", {"id": "${mod.id}", "name": "${mod.name}"}) }}`;
