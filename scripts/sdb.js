@@ -148,11 +148,11 @@ function followMod(user, mod, callback) {
         window.location.href = "path_for('register')";
         return;
     }
-    getJSON(backend + '/api/mods/' + gameshort + '/' + mod.id + '/follow', callback)
+    getJSON(backend + '/api/mods/' + mod.game_short + '/' + mod.id + '/follow', callback)
 }
 
 function unfollowMod(mod, callback) {
-    getJSON(backend + '/api/mods/' + gameshort + '/' + mod.id + '/unfollow', callback);
+    getJSON(backend + '/api/mods/' + mod.game_short + '/' + mod.id + '/unfollow', callback);
 }
 
 function hasPermission(permission, pub, params, callback) {
@@ -267,7 +267,7 @@ function createMod(name, gameshort, shortDescription, license, version, gameVers
 }
 
 function updateMod(mod, version, gameVersion, notifyFollowers, isBeta, changelog, _zipFile, callback) {
-    postJSON(backend + '/api/mods/' + gameshort + '/' + mod.id + '/versions', {
+    postJSON(backend + '/api/mods/' + mod.game_short + '/' + mod.id + '/versions', {
         'version': version,
         'game-version': gameVersion,
         'notify-followers': notifyFollowers, 

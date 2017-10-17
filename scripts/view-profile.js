@@ -4,11 +4,11 @@ function fillViewProfile() {
         window.location.href = "{{ path_for('not-found') }}";
     }
     when(getJSON(backend + '/api/users/current'),
-           hasPermission('user-edit', false, {'userid': user_id}),
-           hasPermission('admin-impersonate', true, {'userid': user_id}),
-           hasPermission('admin-confirm', true, {}),
-           hasPermission('view-users-full', false, {})).
-      done(function (currentUser, editable, canImpersonate, canConfirm, viewFull) {
+         hasPermission('user-edit', false, {'userid': user_id}),
+         hasPermission('admin-impersonate', true, {'userid': user_id}),
+         hasPermission('admin-confirm', true, {}),
+         hasPermission('view-users-full', false, {})).
+    done(function (currentUser, editable, canImpersonate, canConfirm, viewFull) {
         app = new Vue({
             el: '#site',
             data: {
@@ -42,11 +42,11 @@ function updateViewProfile() {
         window.location.href = "{{ path_for('not-found') }}";
     }
     when(getJSON(backend + '/api/users/current'),
-           hasPermission('user-edit', false, {'userid': user_id}),
-           hasPermission('admin-impersonate', true, {'userid': user_id}),
-           hasPermission('admin-confirm', true, {}),
-           hasPermission('view-users-full', false, {})).
-      done(function (currentUser, editable, canImpersonate, canConfirm, viewFull) {
+         hasPermission('user-edit', false, {'userid': user_id}),
+         hasPermission('admin-impersonate', true, {'userid': user_id}),
+         hasPermission('admin-confirm', true, {}),
+         hasPermission('view-users-full', false, {})).
+    done(function (currentUser, editable, canImpersonate, canConfirm, viewFull) {
         app.$data.currentUser = currentUser.error ? null : currentUser.data;
         app.$data.user = user.data;
         app.$data.editable = editable;

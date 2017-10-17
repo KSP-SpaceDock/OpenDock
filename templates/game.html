@@ -7,8 +7,9 @@
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'listing.css'}) }}" />
 {% endblock %}
 {% block scripts %}
-<script src="{{ path_for('scripts', {'filename' : 'index.js'}) }}"></script>
+<script src="{{ path_for('scripts', {'filename' : 'game.js'}) }}"></script>
 <script>
+    var gameshort = "{{ gameshort }}";
     fillIndex();
 </script>
 {% endblock %}

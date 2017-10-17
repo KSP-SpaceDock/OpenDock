@@ -1,7 +1,7 @@
 function fillCreate() {
     when(getJSON(backend + '/api/users/current'), 
-           getJSON(backend + '/api/games/' + gameshort + '/versions')).
-      done(function(currentUser, gameversions) {
+         getJSON(backend + '/api/games/' + gameshort + '/versions')).
+    done(function(currentUser, gameversions) {
         if (currentUser.error) {
             window.location.href = "{{ path_for('accounts.login') }}";
             return;
@@ -39,8 +39,8 @@ function fillCreate() {
 
 function updateCreate() {
     when(getJSON(backend + '/api/users/current'), 
-           getJSON(backend + '/api/games/' + gameshort + '/versions')).
-      done(function(currentUser, gameversions) {
+         getJSON(backend + '/api/games/' + gameshort + '/versions')).
+    done(function(currentUser, gameversions) {
         if (currentUser.error) {
             window.location.href = "{{ path_for('accounts.login') }}";
             return;

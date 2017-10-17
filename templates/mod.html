@@ -57,7 +57,7 @@
             </h1>
         </div>
         <div v-bind:class="currentUser == null ? 'col-md-4' : 'col-md-2'" id="downloadWrapper">
-            <a class="btn btn-block btn-lg btn-primary piwik_download" id="download-link-primary" v-on:click="onDownloadLinkClick(currentUser)" v-bind:href="'//{{ backend_url }}/api/mods/{{ gameshort }}/{{ modid }}/download/' + mod.default_version.friendly_version">
+            <a class="btn btn-block btn-lg btn-primary piwik_download" id="download-link-primary" v-on:click="onDownloadLinkClick(currentUser)" v-bind:href="'//{{ backend_url }}/api/mods/' + mod.game_short + '/{{ modid }}/download/' + mod.default_version.friendly_version">
                 Download
             </a>
         </div>
@@ -289,7 +289,7 @@
                             <span v-if="v.changelog" v-html="marked(v.changelog)"></span>
                             <span v-else><p><em>No changelog provided</em></p></span>
                             <p v-bind:data-version="v.id">
-                                <a class="btn btn-primary piwik_download" v-bind:href="'//{{ backend_url }}/api/mods/{{ gameshort }}/{{ modid }}/download/' + v.friendly_version">
+                                <a class="btn btn-primary piwik_download" v-bind:href="'//{{ backend_url }}/api/mods/' + mod.game_short + '/{{ modid }}/download/' + v.friendly_version">
                                     <span class="fa fa-download"></span> Download
                                 </a>
                                 <template v-if="editable">

@@ -34,7 +34,7 @@ $container['view'] = function ($container) {
     $view->getEnvironment()->addGlobal('irc_channel', $container->get('settings')['irc-channel']);
     $view->getEnvironment()->addGlobal('donation_link', $container->get('settings')['donation-link']);
     $view->getEnvironment()->addGlobal('backend_url', $container->get('settings')['backend-url']);
-    $view->getEnvironment()->addGlobal('gameshort', $container->get('settings')['gameshort']);
+    // $view->getEnvironment()->addGlobal('gameshort', $container->get('settings')['gameshort']);
     $view->getEnvironment()->addGlobal('debug', $container->get('settings')['debug']);
     $view->getEnvironment()->addGlobal('update_interval', $container->get('settings')['update-interval']);
     $view->getEnvironment()->addGlobal('registration', $container->get('settings')['registration']);

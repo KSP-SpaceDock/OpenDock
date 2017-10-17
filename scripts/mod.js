@@ -1,19 +1,20 @@
 function fillMod() {
-    getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id, function(mod) {
+    getJSON(backend + '/api/adapter/mods/' + mod_id, function(mod) {
     if (mod.error) {
         window.location.href = "{{ path_for('not-found') }}";
     }
+    var gameshort = mod.data.game_short;    
     when(getJSON(backend + '/api/users/current'), 
-           getJSON(backend + '/api/games/' + gameshort), 
-           getJSON(backend + '/api/games/' + gameshort + '/versions'),
-           getJSON(backend + '/api/users/' + mod.data.user), 
-           getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id + '/stats/downloads'),
-           getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id + '/stats/follower'), 
-           getJSON(backend + '/api/featured/' + gameshort),
-           hasPermission('mods-edit', true, {'gameshort': gameshort, 'modid': mod_id}),
-           hasPermission('mods-feature', true, {'gameshort': gameshort}),
-           hasPermission('mods-remove', true, {'gameshort': gameshort, 'modid': mod_id})).
-      done(function(currentUser, game, gameversions, modUser, download_stats, follower_stats, featured, editable, deletable, featureable) {
+         getJSON(backend + '/api/games/' + gameshort), 
+         getJSON(backend + '/api/games/' + gameshort + '/versions'),
+         getJSON(backend + '/api/users/' + mod.data.user),
+         getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id + '/stats/downloads'),
+         getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id + '/stats/follower'),
+         getJSON(backend + '/api/featured/' + gameshort),
+         hasPermission('mods-edit', true, {'gameshort': gameshort, 'modid': mod_id}),
+         hasPermission('mods-feature', true, {'gameshort': gameshort}),
+         hasPermission('mods-remove', true, {'gameshort': gameshort, 'modid': mod_id})).
+    done(function(currentUser, game, gameversions, modUser, download_stats, follower_stats, featured, editable, deletable, featureable) {
         var mod_users = {}
         mod_users[mod.data.user] = modUser.data;
         mod.data.shared_authors.forEach(function(entry) {
@@ -77,21 +78,22 @@ function fillMod() {
 }
 
 function updateMod() {
-    getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id, function(mod) {
+    getJSON(backend + '/api/adapter/mods/' + mod_id, function(mod) {
     if (mod.error) {
         window.location.href = "{{ path_for('not-found') }}";
     }
+    var gameshort = mod.data.game_short;    
     when(getJSON(backend + '/api/users/current'), 
-           getJSON(backend + '/api/games/' + gameshort), 
-           getJSON(backend + '/api/games/' + gameshort + '/versions'),
-           getJSON(backend + '/api/users/' + mod.data.user), 
-           getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id + '/stats/downloads'),
-           getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id + '/stats/follower'), 
-           getJSON(backend + '/api/featured/' + gameshort),
-           hasPermission('mods-edit', true, {'gameshort': gameshort, 'modid': mod_id}),
-           hasPermission('mods-feature', true, {'gameshort': gameshort}),
-           hasPermission('mods-remove', true, {'gameshort': gameshort, 'modid': mod_id})).
-      done(function(currentUser, game, gameversions, modUser, download_stats, follower_stats, featured, editable, deletable, featureable) {
+         getJSON(backend + '/api/games/' + gameshort), 
+         getJSON(backend + '/api/games/' + gameshort + '/versions'),
+         getJSON(backend + '/api/users/' + mod.data.user),
+         getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id + '/stats/downloads'),
+         getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id + '/stats/follower'),
+         getJSON(backend + '/api/featured/' + gameshort),
+         hasPermission('mods-edit', true, {'gameshort': gameshort, 'modid': mod_id}),
+         hasPermission('mods-feature', true, {'gameshort': gameshort}),
+         hasPermission('mods-remove', true, {'gameshort': gameshort, 'modid': mod_id})).
+    done(function(currentUser, game, gameversions, modUser, download_stats, follower_stats, featured, editable, deletable, featureable) {
         var mod_users = {}
         mod_users[mod.data.user] = modUser.data;
         mod.data.shared_authors.forEach(function(entry) {
