@@ -119,7 +119,7 @@ function onSubmitClick() {
     createMod(name, gameshort, shortDescription, license, version, gameVersion, zipFile, function(i, id, data) {
         $('#progress').removeClass('active');
         if (!data.error) {
-            window.location.href = `{{ path_for("mod.view", {"id": "${mod.id}", "name": "${mod.name}"}) }}`;
+            window.location.href = `{{ path_for("mod.view", {"gameshort": "${gameshort}", "id": "${mod.id}", "name": "${mod.name}"}) }}`;
             return;
         } else {
             $('#error-alert').removeClass('hidden');

@@ -231,7 +231,7 @@
             <div class="col-md-4">
                 <h2 style="margin-top: 0">Author Tools</h2>
                 <p>These are the tools you can use to manage your mod listing. You can also
-                <a v-bind:href="'{{ path_for('mod.view', {'id': '<id>', 'name': '<name>'}) }}?noedit'.replace(/<id>/, mod.id).replace(/<name>/, mod.name)">view your mod</a> as if you were not logged
+                <a v-bind:href="'{{ path_for('mod.view', {'gameshort': '<gameshort>', 'id': '<id>', 'name': '<name>'}) }}?noedit'.replace(/<gameshort>/, mod.game_short).replace(/<id>/, mod.id).replace(/<name>/, mod.name)">view your mod</a> as if you were not logged
                 in.</p>
             </div>
             <div class="col-md-8">

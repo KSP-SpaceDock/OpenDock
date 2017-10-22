@@ -111,7 +111,7 @@ function onSubmitClick(mod) {
     updateMod(mod, version, gameVersion, notifyFollowers, isBeta, changelog, zipFile, function(i, data) {
         $('#progress').removeClass('active');
         if (!data.error) {
-            window.location.href = `{{ path_for("mod.view", {"id": "${mod.id}", "name": "${mod.name}"}) }}`;W
+            window.location.href = `{{ path_for("mod.view", {"gameshort": "${gameshort}", "id": "${mod.id}", "name": "${mod.name}"}) }}`;W
             return;
         } else {
             $('#error-alert').removeClass('hidden');

@@ -63,7 +63,7 @@
                 <div class="progress-bar-striped progress-bar active" style="width: 0%"></div>
             </div>
         </button>
-        <a class="btn btn-default btn-block" style="margin: 20px auto;" v-bind:href="'{{ path_for('mod.view', {'id': '<id>', 'name': '<name>'}) }}'.replace(/<id>/, mod.id).replace(/<name>/, mod.name)">Cancel</a>
+        <a class="btn btn-default btn-block" style="margin: 20px auto;" v-bind:href="'{{ path_for('mod.view', {'gameshort': '<gameshort>', 'id': '<id>', 'name': '<name>'}) }}'.replace(/<gameshort>/, mod.game_short).replace(/<id>/, mod.id).replace(/<name>/, mod.name)">Cancel</a>
         <div class="alert alert-danger hidden" id="error-alert">
             You've missed some things! Go back and fix them first.
         </div>
