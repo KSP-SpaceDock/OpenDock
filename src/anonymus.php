@@ -1,8 +1,17 @@
 <?php
 
 $app->get('/', function($request, $response) {
-    return $this->view->render($response, 'templates/index.html');
+    // return $this->view->render($response, 'templates/index.html');
+    // TODO: Add index page
+    $gameshort = $this->get('settings')['gameshort'];
+    return $response->withRedirect("/{$gameshort}", 302);
 })->setName('index');
+
+$app->get('/{gameshort}', function($request, $response, $args) {
+    return $this->view->render($response, 'templates/game.html' [
+        'gameshort' => $args['gameshort']
+    ]);
+})->setName('game');
 
 $app->get('/privacy', function($request, $response) {
     return $this->view->render($response, 'templates/privacy.html');
