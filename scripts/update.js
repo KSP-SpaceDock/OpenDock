@@ -1,17 +1,17 @@
 function fillUpdate() {
-    getJSON(backend + '/api/adapter/mods/' + mod_id, function (mod) {
-    if (mod.error) {
-        window.location.href = "{{ path_for('not-found') }}";
-        return;
-    }
-    hasPermission('mods-edit', true, {'gameshort': mod.data.game_short, 'modid': mod_id}, function(canUpdate) {
+    hasPermission('mods-edit', true, {'gameshort': gameshort, 'modid': mod_id}, function(canUpdate) {
     if (!canUpdate) {
         window.location.href = "{{ path_for('not-found') }}";
         return;
     }
     when(getJSON(backend + '/api/users/current'), 
-         getJSON(backend + '/api/games/' + mod.data.game_short + '/versions')).
-    done(function(currentUser, gameversions) {        
+         getJSON(backend + '/api/games/' + gameshort + '/versions'),
+         getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id)).
+      done(function(currentUser, gameversions, mod) {
+        if (mod.error) {
+            window.location.href = "{{ path_for('not-found') }}";
+            return;
+        }
         app = new Vue({
             el: '#site',
             data: {
@@ -39,29 +39,27 @@ function fillUpdate() {
         }, false);
         $('#submit').removeAttr('disabled');
         $.loadingBlockHide();
-    })})});
+    })});
 }
-    
-
 
 function updateUpdate() {
-    getJSON(backend + '/api/adapter/mods/' + mod_id, function (mod) {
-    if (mod.error) {
-        window.location.href = "{{ path_for('not-found') }}";
-        return;
-    }
-    hasPermission('mods-edit', true, {'gameshort': mod.data.game_short, 'modid': mod_id}, function(canUpdate) {
+hasPermission('mods-edit', true, {'gameshort': gameshort, 'modid': mod_id}, function(canUpdate) {
     if (!canUpdate) {
         window.location.href = "{{ path_for('not-found') }}";
         return;
     }
     when(getJSON(backend + '/api/users/current'), 
-         getJSON(backend + '/api/games/' + mod.data.game_short + '/versions')).
-    done(function(currentUser, gameversions) {
+         getJSON(backend + '/api/games/' + gameshort + '/versions'),
+         getJSON(backend + '/api/mods/' + gameshort + '/' + mod_id)).
+      done(function(currentUser, gameversions, mod) {
+        if (mod.error) {
+            window.location.href = "{{ path_for('not-found') }}";
+            return;
+        }
         app.$data.currentUser = currentUser.error ? null : currentUser.data;
         app.$data.game_versions = gameversions.data;
         app.$data.window = window;
-    })})});
+    })});
 }
 
 function onUploadClick() {
