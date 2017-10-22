@@ -8,6 +8,7 @@
 {% block scripts %}
 <script src="{{ path_for('scripts', {'filename': 'create.js'}) }}"></script>
 <script type="text/javascript">
+    var gameshort = "{{ gameshort }}";
     fillCreate();
 </script>
 {% endblock %}

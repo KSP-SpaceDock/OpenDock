@@ -1,9 +1,9 @@
-function fillIndex() {
+function fillGame() {
     when(getJSON(backend + '/api/users/current'), 
-           getJSON(backend + '/api/mods/' + gameshort), 
-           getJSON(backend + '/api/users'), 
-           getJSON(backend + '/api/browse/' + gameshort)).
-      done(function(currentUser, mods, users, browse) {
+         getJSON(backend + '/api/mods/' + gameshort), 
+         getJSON(backend + '/api/users'),
+         getJSON(backend + '/api/browse/' + gameshort)).
+    done(function(currentUser, mods, users, browse) {
         app = new Vue({ 
             el: '#site', 
             data: { 
@@ -25,17 +25,17 @@ function fillIndex() {
             }, 
             delimiters: ['${', '}'] 
         }); 
-        window.setInterval(updateIndex, update_interval);
+        window.setInterval(updateGame, update_interval);
         $.loadingBlockHide();
     });
 }
 
-function updateIndex() {
+function updateGame() {
     when(getJSON(backend + '/api/users/current'), 
-           getJSON(backend + '/api/mods/' + gameshort), 
-           getJSON(backend + '/api/users'), 
-           getJSON(backend + '/api/browse/' + gameshort))
-      done(function(currentUser, mods, users, browse) {
+         getJSON(backend + '/api/mods/' + gameshort),
+         getJSON(backend + '/api/users'),
+         getJSON(backend + '/api/browse/' + gameshort))
+    done(function(currentUser, mods, users, browse) {
         app.$data.currentUser = currentUser.error ? null : currentUser.data;
         app.$data.mods = mods;
         app.$data.users = users;

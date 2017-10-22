@@ -1,6 +1,6 @@
 <?php
 
-$app->get('/browse/new[/{page}]', function($request, $response, $args) {
+$app->get('/{gameshort}/browse/new[/{page}]', function($request, $response, $args) {
     $page = "";
     if (isset($args['page'])) {
         $page = $args['page'];
@@ -8,6 +8,7 @@ $app->get('/browse/new[/{page}]', function($request, $response, $args) {
         $page = '1';
     }
     return $this->view->render($response, 'templates/browse-list.html', [
+        'gameshort' => $args['gameshort'],
         'page' => $page,
         'url' => '/browse/new',
         'name' => 'Newest Mods', 
@@ -16,7 +17,7 @@ $app->get('/browse/new[/{page}]', function($request, $response, $args) {
     ]);
 })->setName('browse.new');
 
-$app->get('/browse/updated[/{page}]', function($request, $response, $args) {
+$app->get('/{gameshort}/browse/updated[/{page}]', function($request, $response, $args) {
     $page = "";
     if (isset($args['page'])) {
         $page = $args['page'];
@@ -24,6 +25,7 @@ $app->get('/browse/updated[/{page}]', function($request, $response, $args) {
         $page = '1';
     }
     return $this->view->render($response, 'templates/browse-list.html', [
+        'gameshort' => $args['gameshort'],
         'page' => $page,
         'url' => '/browse/updated',
         'name' => 'Recently Updated Mods', 
@@ -32,7 +34,7 @@ $app->get('/browse/updated[/{page}]', function($request, $response, $args) {
     ]);
 })->setName('browse.updated');
 
-$app->get('/browse/top[/{page}]', function($request, $response, $args) {
+$app->get('/{gameshort}/browse/top[/{page}]', function($request, $response, $args) {
     $page = "";
     if (isset($args['page'])) {
         $page = $args['page'];
@@ -40,6 +42,7 @@ $app->get('/browse/top[/{page}]', function($request, $response, $args) {
         $page = '1';
     }
     return $this->view->render($response, 'templates/browse-list.html', [
+        'gameshort' => $args['gameshort'],
         'page' => $page,
         'url' => '/browse/top',
         'name' => 'Popular Mods', 
@@ -48,7 +51,7 @@ $app->get('/browse/top[/{page}]', function($request, $response, $args) {
     ]);
 })->setName('browse.top');
 
-$app->get('/browse/featured[/{page}]', function($request, $response, $args) {
+$app->get('/{gameshort}/browse/featured[/{page}]', function($request, $response, $args) {
     $page = "";
     if (isset($args['page'])) {
         $page = $args['page'];
@@ -56,6 +59,7 @@ $app->get('/browse/featured[/{page}]', function($request, $response, $args) {
         $page = '1';
     }
     return $this->view->render($response, 'templates/browse-list.html', [
+        'gameshort' => $args['gameshort'],
         'page' => $page,
         'url' => '/browse/featured',
         'name' => 'Featured Mods', 

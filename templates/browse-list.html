@@ -1,4 +1,5 @@
 {% extends "templates/layout.html" %}
+
 {% block styles %}
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'index.css'}) }}" />
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'stylesheet.css'}) }}" />
@@ -6,17 +7,20 @@
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'navigation.css'}) }}" />
 <link rel="stylesheet" type="text/css" href="{{ path_for('styles', {'filename': 'listing.css'}) }}" />
 {% endblock %}
+
 {% block scripts %}
 <script type="text/javascript">
-var page = {{ page }};
-var url = "{{ url }}";
-var search = {{ search }};
+    var gameshort = "{{ gameshort }}";
+    var page = {{ page }};
+    var url = "{{ url }}";
+    var search = {{ search }};
 </script>
 <script src="{{ path_for('scripts', {'filename' : 'browse-list.js'}) }}"></script>
 <script type="text/javascript">
     fillBrowseList();
 </script>
 {% endblock %}
+
 {% block title %}
 {% if search == "true" %}
 <title>Search {{ site_name }}</title>
@@ -24,6 +28,7 @@ var search = {{ search }};
 <title>{{ name }} on {{ site_name }}</title>
 {% endif %}
 {% endblock %}
+
 {% block search %}
 <form class="navbar-form navbar-right" role="search" action="/search" method="GET" style="margin-right: 5px;">
     <div class="form-group">
@@ -31,6 +36,7 @@ var search = {{ search }};
     </div>
 </form>
 {% endblock %}
+
 {% block body %}
 <div class="well">
     <div class="container">

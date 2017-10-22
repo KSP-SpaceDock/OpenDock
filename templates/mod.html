@@ -12,6 +12,7 @@
 <script src="{{ path_for('scripts', {'filename': 'stats.js'}) }}"></script>
 <script type="text/javascript">
     var mod_id = {{ modid }};
+    var gameshort = '{{ gameshort }}';
     fillMod();
 </script>
 {% endblock %}
@@ -57,7 +58,7 @@
             </h1>
         </div>
         <div v-bind:class="currentUser == null ? 'col-md-4' : 'col-md-2'" id="downloadWrapper">
-            <a class="btn btn-block btn-lg btn-primary piwik_download" id="download-link-primary" v-on:click="onDownloadLinkClick(currentUser)" v-bind:href="'//{{ backend_url }}/api/mods/{{ gameshort }}/{{ modid }}/download/' + mod.default_version.friendly_version">
+            <a class="btn btn-block btn-lg btn-primary piwik_download" id="download-link-primary" v-on:click="onDownloadLinkClick(currentUser)" v-bind:href="'//{{ backend_url }}/api/mods/' + mod.game_short + '/{{ modid }}/download/' + mod.default_version.friendly_version">
                 Download
             </a>
         </div>
@@ -231,7 +232,7 @@
             <div class="col-md-4">
                 <h2 style="margin-top: 0">Author Tools</h2>
                 <p>These are the tools you can use to manage your mod listing. You can also
-                <a v-bind:href="'{{ path_for('mod.view', {'id': '<id>', 'name': '<name>'}) }}?noedit'.replace(/<id>/, mod.id).replace(/<name>/, mod.name)">view your mod</a> as if you were not logged
+                <a v-bind:href="'{{ path_for('mod.view', {'gameshort': '<gameshort>', 'id': '<id>', 'name': '<name>'}) }}?noedit'.replace(/<gameshort>/, mod.game_short).replace(/<id>/, mod.id).replace(/<name>/, mod.name)">view your mod</a> as if you were not logged
                 in.</p>
             </div>
             <div class="col-md-8">
@@ -289,7 +290,7 @@
                             <span v-if="v.changelog" v-html="marked(v.changelog)"></span>
                             <span v-else><p><em>No changelog provided</em></p></span>
                             <p v-bind:data-version="v.id">
-                                <a class="btn btn-primary piwik_download" v-bind:href="'//{{ backend_url }}/api/mods/{{ gameshort }}/{{ modid }}/download/' + v.friendly_version">
+                                <a class="btn btn-primary piwik_download" v-bind:href="'//{{ backend_url }}/api/mods/' + mod.game_short + '/{{ modid }}/download/' + v.friendly_version">
                                     <span class="fa fa-download"></span> Download
                                 </a>
                                 <template v-if="editable">

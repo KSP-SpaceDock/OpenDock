@@ -1,7 +1,7 @@
 function fillCreate() {
     when(getJSON(backend + '/api/users/current'), 
-           getJSON(backend + '/api/games/' + gameshort + '/versions')).
-      done(function(currentUser, gameversions) {
+         getJSON(backend + '/api/games/' + gameshort + '/versions')).
+    done(function(currentUser, gameversions) {
         if (currentUser.error) {
             window.location.href = "{{ path_for('accounts.login') }}";
             return;
@@ -39,8 +39,8 @@ function fillCreate() {
 
 function updateCreate() {
     when(getJSON(backend + '/api/users/current'), 
-           getJSON(backend + '/api/games/' + gameshort + '/versions')).
-      done(function(currentUser, gameversions) {
+         getJSON(backend + '/api/games/' + gameshort + '/versions')).
+    done(function(currentUser, gameversions) {
         if (currentUser.error) {
             window.location.href = "{{ path_for('accounts.login') }}";
             return;
@@ -119,7 +119,7 @@ function onSubmitClick() {
     createMod(name, gameshort, shortDescription, license, version, gameVersion, zipFile, function(i, id, data) {
         $('#progress').removeClass('active');
         if (!data.error) {
-            window.location.href = `{{ path_for("mod.view", {"id": "${mod.id}", "name": "${mod.name}"}) }}`;
+            window.location.href = `{{ path_for("mod.view", {"gameshort": "${gameshort}", "id": "${mod.id}", "name": "${mod.name}"}) }}`;
             return;
         } else {
             $('#error-alert').removeClass('hidden');
