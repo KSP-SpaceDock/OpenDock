@@ -1,4 +1,4 @@
-function fillIndex() {
+function fillGame() {
     when(getJSON(backend + '/api/users/current'), 
          getJSON(backend + '/api/mods/' + gameshort), 
          getJSON(backend + '/api/users'),
@@ -25,12 +25,12 @@ function fillIndex() {
             }, 
             delimiters: ['${', '}'] 
         }); 
-        window.setInterval(updateIndex, update_interval);
+        window.setInterval(updateGame, update_interval);
         $.loadingBlockHide();
     });
 }
 
-function updateIndex() {
+function updateGame() {
     when(getJSON(backend + '/api/users/current'), 
          getJSON(backend + '/api/mods/' + gameshort),
          getJSON(backend + '/api/users'),
