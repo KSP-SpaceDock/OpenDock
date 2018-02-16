@@ -43,6 +43,13 @@ $container['view'] = function ($container) {
     return $view;
 };
 
+//Override the default Not Found Handler
+$container['notFoundHandler'] = function ($container) {
+    return function ($request, $response) {
+        return $response->withStatus(301)->withHeader("Location", $request->getUri()->getBasePath() . "/not-found");
+    };
+};
+
 // Routes here.
 require 'src/anonymus.php';
 require 'src/browse.php';
