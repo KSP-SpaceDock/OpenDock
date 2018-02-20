@@ -22,6 +22,30 @@ github.com/KSP-SpaceDock/SpaceDock-Extras/plugins/search
 github.com/KSP-SpaceDock/SpaceDock-Extras/plugins/transformers
 ```
 
+### Web server
+
+You'll need a PHP-enabled web server to run OpenDock.
+
+If you have Apache2, you can point it to your OpenDock folder like this (modifying the paths as needed):
+
+```apache2
+	Alias "/OpenDock/" "/path/to/gopath/src/github.com/KSP-SpaceDock/OpenDock/"
+	<Directory "/path/to/gopath/src/github.com/KSP-SpaceDock/OpenDock/">
+		AllowOverride All
+		Require all granted
+	</Directory>
+```
+
+### Configuration
+
+Copy `config.example.php` to `config.php` and edit to taste:
+
+- `backend-url` should tell OpenDock how to access your running instance of [SpaceDock-Backend](https://github.com/KSP-SpaceDock/SpaceDock-Backend), in format `host:port` with no trailing slash.
+
+```
+'gameshort' => 'kerbal-space-program'
+```
+
 ### Authors
 The list of authors can be found in the [THANKS file](THANKS).
 
