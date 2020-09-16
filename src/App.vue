@@ -1,18 +1,19 @@
 <template>
   <div id="app">
-    <b-card
-      title="Card title"
-      tag="article"
-    >
-      <b-card-text>Lorem ipsum dolor sit amet</b-card-text>
-    </b-card>
+    <div class="container">
+      <ModList />
+    </div>
   </div>
 </template>
 
 <script>
+import ModList from './components/ModList.vue'
 
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    ModList
+  }
 }
 </script>
 
@@ -22,5 +23,9 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.container {
+  width: 100%;
 }
 </style>
