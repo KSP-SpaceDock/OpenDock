@@ -1,31 +1,36 @@
 <template>
   <div id="app">
-    <div class="container">
-      <ModList />
-    </div>
+    <Header />
+    <b-container class="container">
+      <sd-mod-list />
+    </b-container>
   </div>
 </template>
 
 <script>
-import ModList from './components/ModList.vue'
+import ModList from './components/mods/ModList.vue'
+import Header from './components/header/Header.vue'
 
 export default {
   name: 'App',
   components: {
-    ModList
+    'sd-mod-list': ModList,
+    Header
   }
 }
 </script>
 
 <style>
+
+body {
+  margin: 0 auto;
+  float: none;
+}
+
 #app {
-  width: 960px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .container {
-  width: 100%;
+  max-width: 960px;
 }
 </style>
