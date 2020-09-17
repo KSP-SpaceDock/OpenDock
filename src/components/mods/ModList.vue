@@ -43,7 +43,7 @@ export default {
   },
 
   created () {
-    axios.get('http://localhost:8000/api/browse')
+    axios.get(`http://localhost:8000/api/browse?page=${this.$route.params.page}`)
       .then(response => {
         console.log(response)
         this.mods = response.data.result
